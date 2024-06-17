@@ -1,0 +1,98 @@
+<div class="container-fluid vh-100 d-flex align-items-center justify-content-center" class="container-fluid vh-100 d-flex align-items-center justify-content-end pe-5">
+
+  <div class="omb_login col-12 col-md-8 col-lg-6 col-xl-5">
+    <div>
+      <img src="../../assets/logosinfondo.png" style="max-width: 200px;">
+    </div>
+    <br>
+    <div class="row omb_socialButtons justify-content-center">
+      <div class="col-4 col-sm col-md-3">
+        <a href="#" class="btn btn-lg btn-block omb_btn-facebook">
+          <i class="fab fa-facebook-f"></i>
+          <span class="d-none d-sm-inline">&nbsp;Facebook</span>
+        </a>
+      </div>
+      <div class="col-4 col-sm col-md-3">
+        <a href="#" class="btn btn-lg btn-block omb_btn-twitter">
+          <i class="fab fa-twitter"></i>
+          <span class="d-none d-sm-inline">&nbsp;Twitter</span>
+        </a>
+      </div>
+      <div class="col-4 col-sm col-md-3">
+        <a href="#" class="btn btn-lg btn-block omb_btn-google">
+          <i class="fab fa-google-plus-g"></i>
+          <span class="d-none d-sm-inline">&nbsp;Google+</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="row omb_loginOr">
+      <div class="col-12">
+        <hr class="omb_hrOr">
+        <span class="omb_spanOr">o</span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <form class="omb_loginForm" [formGroup]="formLogin" (ngSubmit)="login()" autocomplete="off">
+
+          <div class="input-group" class="input-group mb-3">           
+            <input required type="email" formControlName="email" autocomplete="off" class="input" placeholder="">
+            <label class="user-label">Correo</label>
+          </div>
+          <div *ngIf="formLogin.controls['email'].invalid && formLogin.controls['email'].touched" class="text-danger">
+            El correo electrónico es obligatorio.
+          </div>
+
+          <div class="input-group" class="input-group mb-3">           
+            <input required type="text" formControlName="password" autocomplete="off" class="input" placeholder="">     
+            <label class="user-label">Contraseña</label>       
+          </div>
+          <div *ngIf="formLogin.controls['password'].invalid && formLogin.controls['password'].touched" class="text-danger">
+            La contraseña es obligatoria.
+          </div>
+          
+          
+          <div class="row mt-1">
+            <button class="cssbuttons-io-button" type="submit" [disabled]="formLogin.invalid">
+              Iniciar Sesión
+              <div class="icon">
+                <svg
+                  height="14"
+                  width="24"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M0 0h24v24H0z" fill="none"></path>
+                  <path
+                    d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
+                    fill="currentColor"
+                  ></path>
+                </svg>
+              </div>
+            </button>
+            
+            <div class="col-6 text-start">              
+                <h6>¿No tienes cuenta? <a routerLink="/registro">Regístrate aquí</a></h6>              
+            </div>
+          </div>
+          
+        </form>
+      </div>
+    </div>
+    <br>
+    <div class="row mt-1">
+      <div class="col-6">
+        <label class="container">
+          <input checked="checked" type="checkbox" type="checkbox" value="remember-me">&nbsp;Recuérdame
+          <div class="checkmark"></div>
+        </label>
+        
+      </div>
+      <div class="col-6">        
+          <a href="#">¿Olvidaste tu contraseña?</a>       
+      </div>
+    </div>
+  </div>
+</div>

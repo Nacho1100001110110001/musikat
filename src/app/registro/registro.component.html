@@ -1,0 +1,47 @@
+<div  class="container-fluid vh-100 d-flex align-items-center justify-content-center" class="container-fluid vh-100 d-flex align-items-center justify-content-end pe-5">
+    <div class="omb_login col-12 col-md-8 col-lg-6 col-xl-5">
+        <img src="../../../assets/logosinfondo.png" alt="Logo" class="img-fluid mb-4 mx-auto d-block" style="width: 50%;">
+        <form>
+            <div class="input-group" class="input-group mb-3">
+                <input required type="email" formControlName="email" autocomplete="off" class="input"
+                    placeholder="">
+                <label class="user-label">Correo</label>
+            </div>
+            <div class="input-group" class="input-group mb-3" >
+                <input required type="text" formControlName="username" autocomplete="off" class="input"
+                    placeholder="">
+                <label class="user-label">Nombre de usuario</label>
+            </div>
+            <div class="input-group" class="input-group mb-3">
+                <input required type="text" formControlName="password" autocomplete="off" class="input"
+                    placeholder="">
+                <label class="user-label">Contraseña</label>
+            </div>
+            <div class="input-group" class="input-group mb-3">
+                <input required type="text" formControlName="password" autocomplete="off" class="input"
+                    placeholder="">
+                <label class="user-label">Confirmar Contraseña</label>
+            </div>
+            
+            <div class="row mt-1">
+                <button class="cssbuttons-io-button" type="submit" [disabled]="">
+                  Registrarse
+                  <div class="icon">
+                    <svg
+                      height="14"
+                      width="24"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M0 0h24v24H0z" fill="none"></path>
+                      <path
+                        d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
+                        fill="currentColor"
+                      ></path>
+                    </svg>
+                  </div>
+                </button>
+            </div>    
+        </form>
+    </div>
+</div>

@@ -1,4 +1,4 @@
-.body {
+.container {
     color: #E1FCFF;
     font-family: 'Rubik';
     font-size: 24px;
@@ -67,6 +67,39 @@
     font-weight: 600;
 }
 
+.nav-container {
+    background-color: #001121;
+    padding: 1rem;
+  }
 
-
-// NAV
+  .custom-nav-tabs {
+    border-bottom: 1px solid #ffffff;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .custom-nav-tabs .nav-item {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .custom-nav-tabs .nav-link {
+    color: #ffffff;
+    background-color: #001121;
+    border: none;
+    padding: 1rem;
+    font-size: 1.2rem;
+  }
+  
+  .custom-nav-tabs .nav-link.active {
+    background-color: #001121;
+    color: #e0f7ff;
+    border-radius: 0.25rem 0.25rem 0 0;
+    border-bottom: 3px solid transparent;
+  }
+  
+  .custom-nav-tabs .nav-link:hover {
+    color: #e0f7ff;
+    background-color: #003144;
+  }

@@ -1,4 +1,4 @@
-<div class="body">
+<div class="container">
 
     <!-- Primer contenedor azul -->
     <div class="row container-top">
@@ -25,22 +25,30 @@
 
     <div class="container-medium">
         <!--  nav -->
-        <ul class="nav nav-tabs">
+        <ul class="nav custom-nav-tabs">
             <li class="nav-item">
                 <button class="nav-link active" (click)="selectTab('song')">Cancion favorita</button>
             </li>
             <li class="nav-item">
-                <button class="nav-link active" (click)="selectTab('artist')">Artista favorito</button>
+                <button class="nav-link" (click)="selectTab('artist')">Artista favorito</button>
             </li>
             <li class="nav-item">
-                <button class="nav-link active" (click)="selectTab('gender')">Genero favorito</button>
+                <button class="nav-link" (click)="selectTab('gender')">Genero favorito</button>
             </li>
         </ul>
+        
 
         <div [ngSwitch]="selectedTab">
-            <div *ngSwitchCase="'song'">meoww</div>
-            <div *ngSwitchCase="'artist'">Link 1 content...</div>
-            <div *ngSwitchCase="'gender'">Link 2</div>
+            <div *ngSwitchCase="'song'">
+                <div class="row">
+                    <div class="col-6">
+
+                    </div>
+                </div>
+            
+            </div>
+            <div *ngSwitchCase="'artist'"></div>
+            <div *ngSwitchCase="'gender'"></div>
         </div>
 
     </div>
@@ -52,7 +60,6 @@
                 <button type="button" class="btn-save">Guardar cambios</button>
             </div>
         </div>
-
 
 
 </div>

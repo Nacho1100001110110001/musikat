@@ -1,0 +1,58 @@
+<div class="body">
+
+    <!-- Primer contenedor azul -->
+    <div class="row container-top">
+        <div class="col-4 d-flex justify-content-center align-items-center">
+            <div class="photo">
+                <img src="../../../assets/images/Perfil.svg"><img>
+            </div>
+        </div>
+        <div class="col-5 mt-4">
+            <div>
+                <div class="mt-4 mb-4">
+                    <label for="exampleFormControlInput1" class="form-label">Nombre de usuario</label>
+                    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="mt-3 form-label">Fecha de nacimiento</label>
+                    <input type="date" class="form-control" id="exampleFormControlInput1" placeholder="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="container-medium">
+        <!--  nav -->
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <button class="nav-link active" (click)="selectTab('song')">Cancion favorita</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link active" (click)="selectTab('artist')">Artista favorito</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link active" (click)="selectTab('gender')">Genero favorito</button>
+            </li>
+        </ul>
+
+        <div [ngSwitch]="selectedTab">
+            <div *ngSwitchCase="'song'">meoww</div>
+            <div *ngSwitchCase="'artist'">Link 1 content...</div>
+            <div *ngSwitchCase="'gender'">Link 2</div>
+        </div>
+
+    </div>
+
+        <!-- botomnes -->
+        <div class="container-bot">
+            <div class="d-flex justify-content-end align-items-center">
+                <button type="button" class="btn-cancel">Cancelar</button>
+                <button type="button" class="btn-save">Guardar cambios</button>
+            </div>
+        </div>
+
+
+
+</div>

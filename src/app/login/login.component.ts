@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from '../services/login/login.service';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -20,18 +20,18 @@ export class LoginComponent {
   constructor(private formBuilder: FormBuilder, private loginService:LoginService){
     this.formLogin= this.formBuilder.group({
       email:['',[Validators.required]],
-      password: ['',[Validators.required]],
-      passworddos: ['', [Validators.required]]
+      password: ['',[Validators.required]]
     });
   }
   
   login(){
-    console.log(this.formLogin.value.email);
-    console.log(this.formLogin.value.password);
+    if(!this.formLogin.valid) alert("Rellena los campos");
+    console.log(this.formLogin.get('email')?.value);
+    console.log(this.formLogin.get('password')?.value);
 
     this.loginService.login(this.formLogin.value.email, this.formLogin.value.password)
-      .subscribe((res: any[])=>{
-        console.log(res),
+      .subscribe((res: HttpResponse<any>)=>{
+        console.log(res.headers.keys()),
         (err: HttpErrorResponse) => {  // Especifica el tipo aquí
           console.log(err);
         }

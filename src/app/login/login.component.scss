@@ -1,14 +1,19 @@
-body {
-  background-color: #f0f2f5;
-  color: var(--bs-body-color);
+.left-container {
+  width: 60%;
   height: 100vh;
+  background-color: #001121;
+  z-index: -1;
 }
 
+h2, input, h6, a {
+  color: #001121;
+  font-family: 'Rubik', sans-serif;
+}
 
 .omb_login {
   max-width: 100%;
   padding: 30px;
-  background-color: white;
+  background: none;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   text-align: center;
@@ -65,8 +70,6 @@ body {
   width: 3em;
 }
 
-
-
 .text-end {
   text-align: end !important;
 }
@@ -84,26 +87,25 @@ input[type="password"] {
   max-width: 400px;
   padding: 10px 15px;
   font-size: 16px;
-  border: 2px solid #ddd;
+  border: 2px solid #001121;
   border-radius: 25px;
   transition: border 0.3s, box-shadow 0.3s, transform 0.3s, background-color 0.3s;
   outline: none;
-  background-color: #f8f8f8;
+  background: none;
 }
 
 /* Interacción al enfocar */
 input[type="text"]:focus,
 input[type="password"]:focus {
-  border: 2px solid #007BFF;
-  box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+  border: 2px solid #001121;
+  box-shadow: 0 0 10px rgba(0, 17, 33, 0.5);
   transform: scale(1.05);
-  background-color: #fff;
 }
 
 /* Placeholder */
 input[type="text"]::placeholder,
 input[type="password"]::placeholder {
-  color: #aaa;
+  color: #001121;
   font-style: italic;
   transition: opacity 0.3s;
 }
@@ -128,7 +130,6 @@ input[type="password"].error + label {
 /* Estilo del contenedor y label */
 .input-container {
   position: relative;
-  margin: 20px 0;
 }
 
 label {
@@ -136,7 +137,7 @@ label {
   top: 12px;
   left: 20px;
   font-size: 16px;
-  color: #999;
+  color: #001121;
   pointer-events: none;
   transition: 0.3s;
   background: transparent;
@@ -146,20 +147,19 @@ input[type="text"]:focus + label,
 input[type="text"]:not(:placeholder-shown) + label,
 input[type="password"]:focus + label,
 input[type="password"]:not(:placeholder-shown) + label {
-  top: -15px;
-  left: 15px;
+  top: -20px;
+  left: 0px;
   font-size: 12px;
-  color: #007BFF;
-  background: #ffffffbb;
+  color: #001121;
+  background: none;
   padding: 0 5px;
   border-radius: 25px;
 }
 
-
 //boton ingresar sesion
  .cssbuttons-io-button {
-  background: #34baab;
-  color: white;
+  background: #001121;
+  color: #E1FCFF;
   font-family: inherit;
   padding: 0.35em;
   padding-left: 1.2em;
@@ -170,7 +170,6 @@ input[type="password"]:not(:placeholder-shown) + label {
   letter-spacing: 0.05em;
   display: flex;
   align-items: center;
-  box-shadow: inset 0 0 1.6em -0.6em #466067;
   overflow: hidden;
   position: relative;
   height: 2.8em;
@@ -179,7 +178,7 @@ input[type="password"]:not(:placeholder-shown) + label {
 }
 
 .cssbuttons-io-button .icon {
-  background: #484450;
+  background: #E1FCFF;
   margin-left: 1em;
   position: absolute;
   display: flex;
@@ -188,7 +187,6 @@ input[type="password"]:not(:placeholder-shown) + label {
   height: 2.2em;
   width: 2.2em;
   border-radius: 0.7em;
-  box-shadow: 0.1em 0.1em 0.6em 0.2em #459a96;
   right: 0.3em;
   transition: all 0.3s;
 }
@@ -200,7 +198,7 @@ input[type="password"]:not(:placeholder-shown) + label {
 .cssbuttons-io-button .icon svg {
   width: 1.1em;
   transition: transform 0.3s;
-  color: #34baab;
+  color: #001121;
 }
 
 .cssbuttons-io-button:hover .icon svg {
@@ -218,10 +216,7 @@ input[type="password"]:not(:placeholder-shown) + label {
   top: 50%; /* Centrado vertical */
   transform: translateY(-50%); /* Centrado vertical */
   width: 40%; /* Ajusta el ancho según sea necesario */
-  padding: 20px; /* Espaciado interno opcional */
-  background-color: #fff; /* Fondo blanco o según sea necesario */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra opcional */
-  border-radius: 10px; /* Bordes redondeados opcionales */
+  background-color: #E1FCFF; /* Fondo blanco o según sea necesario */
 }
 
 /* Ajuste en diferentes tamaños de pantalla */
@@ -294,14 +289,10 @@ input[type="password"]:not(:placeholder-shown) + label {
   background: none;
   border: none;
   cursor: pointer;
-  color: #797979;
+  color: #001121;
   font-size: 18px;
   padding: 0;
   display: flex;
   align-items: center;
+  transition: all 0.3s;
 }
-
-.toggle-password:hover {
-  color: #2196f3;
-}
-

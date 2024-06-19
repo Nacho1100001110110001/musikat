@@ -1,0 +1,119 @@
+<div class="container">
+
+    <!-- Primer contenedor azul -->
+    <div class="row container-top">
+        <div class="col-4 d-flex justify-content-center align-items-center">
+            <div class="photo">
+                <input type="file" class="photo-input" #fileInput>
+                <img src="../../../assets/images/profile-icon.png">
+                <div class="photo-hover" >
+                    <span class="material-symbols-outlined icon" (click)="triggerClick()">
+                        upload_file
+                        </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-5 mt-4">
+            <div>
+                <div class="mt-4 mb-4">
+                    <label for="exampleFormControlInput1" class="form-label">Nombre de usuario</label>
+                    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="mt-3 form-label">Fecha de nacimiento</label>
+                    <input type="date" class="form-control" id="exampleFormControlInput1" placeholder="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="container-medium">
+        <!--  nav -->
+        <ul class="nav custom-nav-tabs">
+            <li class="nav-item">
+                <button class="nav-link" [ngClass]="selectedTab=='song'? 'active':''" (click)="selectTab('song')">Canción favorita</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" [ngClass]="selectedTab=='artist'? 'active':''" (click)="selectTab('artist')">Artista favorito</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" [ngClass]="selectedTab=='gender'? 'active':''" (click)="selectTab('gender')">Género favorito</button>
+            </li>
+        </ul>
+        
+
+        @switch (selectedTab) {
+            @case ('song') {
+                <div class="row pb-4 pt-4">
+                    <div class="col-6 d-flex justify-content-center">
+                        <div class="col-8 search-bar d-flex align-items-center">
+                            <div class="w-100">
+                                <label for="exampleFormControlInput1" class="form-label">Buscar</label>
+                                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 justify-content-center align-items-center d-flex">
+                        <div class="col-4 justify-content-center">
+                            <img [src]="favoriteSong.image" class="w-100" alt="">
+                        </div>
+                        <div class="col-8 d-flex align-items-start flex-column h-100 justify-content-center ms-3">
+                            <h1>{{favoriteSong.name}}</h1>
+                            <h3>{{favoriteSong.artist?.name}}</h3>
+                        </div>
+                    </div>
+                </div>
+            }
+            @case ('artist') {
+                <div class="row pb-4 pt-4">
+                    <div class="col-6 d-flex justify-content-center">
+                        <div class="col-8 search-bar d-flex align-items-center">
+                            <div class="w-100">
+                                <label for="exampleFormControlInput1" class="form-label">Buscar</label>
+                                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 justify-content-center align-items-center d-flex">
+                        <div class="col-4 justify-content-center">
+                            <img [src]="favoriteArtist.image" class="w-100" alt="">
+                        </div>
+                        <div class="col-8 d-flex align-items-start flex-column h-100 justify-content-center ms-3">
+                            <h1>{{favoriteArtist.name}}</h1>
+                        </div>
+                    </div>
+                </div>
+            }
+            @case ('gender') {
+                <div class="row pb-4 pt-4">
+                    <div class="col-6 d-flex justify-content-center">
+                        <div class="col-8 search-bar d-flex align-items-center">
+                            <div class="w-100">
+                                <label for="exampleFormControlInput1" class="form-label">Buscar</label>
+                                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 justify-content-center align-items-center d-flex">
+                        <div class="col-8 d-flex align-items-start flex-column h-100 justify-content-center ms-3">
+                            <h1>{{favoriteGender.name}}</h1>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+    </div>
+
+        <!-- botomnes -->
+        <div class="container-bot">
+            <div class="d-flex justify-content-end align-items-center">
+                <button type="button" class="btn-cancel" (click)="cancelar()">Cancelar</button>
+                <button type="button" class="btn-save">Guardar cambios</button>
+            </div>
+        </div>
+
+
+</div>

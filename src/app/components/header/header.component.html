@@ -1,0 +1,35 @@
+<div class="header">
+    <button class="boton" (click)="nav.toggleVisibility()">
+        <span class="material-symbols-outlined menuicon">
+            menu
+            </span>
+    </button>
+    <div class="icon-search">
+        <button class="boton">
+            <img src="../../../assets/images/musikat_logo2.png" alt="" height="50">
+        </button>
+
+        <div class="search">
+            <span class="material-symbols-outlined searchicon">
+                search
+                </span>
+            <input type="text" class="searchbar">
+        </div>
+    </div>
+
+    <div class="profile">
+        <button class="boton boton-perfil" [routerLink]="['perfil']">
+            <div class="profile-pic">
+                <img src="../../../assets/images/profile-icon.png" alt="">
+            </div>
+        </button>
+        <h2>John Doe</h2>
+        <button class="boton">
+            <span class="material-symbols-outlined menuicon">
+                keyboard_arrow_down
+                </span>
+        </button>
+    </div>
+</div>
+
+<app-friends-menu #nav></app-friends-menu>

@@ -1,0 +1,146 @@
+.container {
+    color: #E1FCFF;
+    max-width: 100%;
+    margin-top: 60px;
+    background-color: #001121;
+    font-family: 'Rubik';
+    font-size: 24px;
+    min-height: 100vh;
+}
+
+.container-top {
+    background-color: #001121;
+    height: 390px;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.container-medium {
+    background-color: #001121;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.container-bot {
+    width: 100%;
+    height: 100px;
+    background-color: #001121;
+}
+
+.photo {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    & img {
+      width: 100%;
+    }
+}
+
+.photo-input {
+  display: none;
+}
+
+.photo-hover{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 301px;
+  height: 301px;
+
+  &:hover {
+    background-color: #000000a2;
+    & .icon {
+      display: inline-block;
+    }
+  }
+  & .icon {
+    font-size: 55px;
+    fill: #E1FCFF;
+    display: none;
+    cursor: pointer;
+  }
+}
+
+.form-control {
+    border-radius: 70px;
+    border: 3px solid #E1FCFF;
+    background-color: #00000000;
+    color: #E1FCFF;
+    fill: #E1FCFF;
+    height: 75px;
+    font-size: 24px;
+    &::-webkit-calendar-picker-indicator {
+      filter: invert(1);
+  }
+}
+
+.btn-cancel {
+    width: 239.4px;
+    height: 75px;
+    border-radius: 70px;
+    border: 3px solid #E1FCFF;
+    background-color: #00000000;
+    color: #E1FCFF;
+    font-weight: 600;
+}
+
+.btn-save {
+    width: 239.4px;
+    height: 75px;
+    border-radius: 70px;
+    background-color: #E1FCFF;
+    color: #001121;
+    border: none;
+    margin-left: 40px;
+    margin-right: 50px;
+    font-weight: 600;
+}
+
+.nav-container {
+    background-color: #001121;
+    padding: 1rem;
+  }
+
+  .active {
+    background-color: #E1FCFF !important;
+    color: #001121 !important;
+    border-radius: 0.25rem 0.25rem 0 0;
+    border-bottom: 3px solid transparent;
+  }
+
+  .custom-nav-tabs {
+    border-bottom: 3px solid #E1FCFF;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .custom-nav-tabs .nav-item {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .custom-nav-tabs .nav-link {
+    color: #E1FCFF;
+    text-align: center;
+    width: 100%;
+    background-color: #001121;
+    border: none;
+    padding: 1rem;
+    font-size: 1.2rem;
+  }
+
+  .search-bar{
+    aspect-ratio: 5 / 3;
+  }

@@ -1,0 +1,307 @@
+body {
+  background-color: #f0f2f5;
+  color: var(--bs-body-color);
+  height: 100vh;
+}
+
+
+.omb_login {
+  max-width: 100%;
+  padding: 30px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.omb_authTitle {
+  margin-bottom: 20px;
+}
+
+.omb_socialButtons .btn {
+  color: white;
+  opacity: 0.9;
+  margin-bottom: 10px;
+}
+
+.omb_socialButtons .btn:hover {
+  color: white;
+  opacity: 1;
+}
+
+.omb_socialButtons .omb_btn-facebook { background: #3b5998; }
+.omb_socialButtons .omb_btn-twitter { background: #00aced; }
+.omb_socialButtons .omb_btn-google { background: #c32f10; }
+
+.omb_loginOr {
+  position: relative;
+  font-size: 1.2em;
+  color: #aaa;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+
+.omb_loginOr .omb_hrOr {
+  background-color: #cdcdcd;
+  height: 1px;
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}
+
+.omb_loginOr .omb_spanOr {
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: -0.6em;
+  margin-left: -1.5em;
+  background-color: white;
+  width: 3em;
+  text-align: center;
+}
+
+.omb_loginForm .input-group-text {
+  width: 3em;
+}
+
+
+
+.text-end {
+  text-align: end !important;
+}
+
+.text-danger {
+  font-size: 0.875em;
+  margin-top: -10px;
+}
+
+
+/* Estilo Entradas de texto y contraseñas */
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px 15px;
+  font-size: 16px;
+  border: 2px solid #ddd;
+  border-radius: 25px;
+  transition: border 0.3s, box-shadow 0.3s, transform 0.3s, background-color 0.3s;
+  outline: none;
+  background-color: #f8f8f8;
+}
+
+/* Interacción al enfocar */
+input[type="text"]:focus,
+input[type="password"]:focus {
+  border: 2px solid #007BFF;
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+  transform: scale(1.05);
+  background-color: #fff;
+}
+
+/* Placeholder */
+input[type="text"]::placeholder,
+input[type="password"]::placeholder {
+  color: #aaa;
+  font-style: italic;
+  transition: opacity 0.3s;
+}
+
+/* Cambios en el placeholder al enfocar */
+input[type="text"]:focus::placeholder,
+input[type="password"]:focus::placeholder {
+  opacity: 0;
+}
+
+/* Estilo de error */
+input[type="text"].error,
+input[type="password"].error {
+  border-color: #FF0000;
+}
+
+input[type="text"].error + label,
+input[type="password"].error + label {
+  color: #FF0000;
+}
+
+/* Estilo del contenedor y label */
+.input-container {
+  position: relative;
+  margin: 20px 0;
+}
+
+label {
+  position: absolute;
+  top: 12px;
+  left: 20px;
+  font-size: 16px;
+  color: #999;
+  pointer-events: none;
+  transition: 0.3s;
+  background: transparent;
+}
+
+input[type="text"]:focus + label,
+input[type="text"]:not(:placeholder-shown) + label,
+input[type="password"]:focus + label,
+input[type="password"]:not(:placeholder-shown) + label {
+  top: -15px;
+  left: 15px;
+  font-size: 12px;
+  color: #007BFF;
+  background: #ffffffbb;
+  padding: 0 5px;
+  border-radius: 25px;
+}
+
+
+//boton ingresar sesion
+ .cssbuttons-io-button {
+  background: #34baab;
+  color: white;
+  font-family: inherit;
+  padding: 0.35em;
+  padding-left: 1.2em;
+  font-size: 17px;
+  font-weight: 500;
+  border-radius: 0.9em;
+  border: none;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  box-shadow: inset 0 0 1.6em -0.6em #466067;
+  overflow: hidden;
+  position: relative;
+  height: 2.8em;
+  padding-right: 3.3em;
+  cursor: pointer;
+}
+
+.cssbuttons-io-button .icon {
+  background: #484450;
+  margin-left: 1em;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.2em;
+  width: 2.2em;
+  border-radius: 0.7em;
+  box-shadow: 0.1em 0.1em 0.6em 0.2em #459a96;
+  right: 0.3em;
+  transition: all 0.3s;
+}
+
+.cssbuttons-io-button:hover .icon {
+  width: calc(100% - 0.6em);
+}
+
+.cssbuttons-io-button .icon svg {
+  width: 1.1em;
+  transition: transform 0.3s;
+  color: #34baab;
+}
+
+.cssbuttons-io-button:hover .icon svg {
+  transform: translateX(0.1em);
+}
+
+.cssbuttons-io-button:active .icon {
+  transform: scale(0.95);
+}
+
+/* Estilo básico para el contenedor a la derecha */
+.right-container {
+  position: absolute; /* o 'fixed' si deseas que permanezca fijo al hacer scroll */
+  right: 0; /* Alínealo a la derecha */
+  top: 50%; /* Centrado vertical */
+  transform: translateY(-50%); /* Centrado vertical */
+  width: 40%; /* Ajusta el ancho según sea necesario */
+  padding: 20px; /* Espaciado interno opcional */
+  background-color: #fff; /* Fondo blanco o según sea necesario */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra opcional */
+  border-radius: 10px; /* Bordes redondeados opcionales */
+}
+
+/* Ajuste en diferentes tamaños de pantalla */
+@media (max-width: 768px) {
+  .right-container {
+    width: 50%; /* Ancho ajustado para pantallas más pequeñas */
+  }
+}
+
+@media (max-width: 480px) {
+  .right-container {
+    width: 80%; /* Ancho ajustado para pantallas aún más pequeñas */
+    left: 10%; /* Centrado en pantallas pequeñas */
+    transform: translateY(-50%); /* Centrado vertical */
+  }
+}
+
+
+/*CheckBox*/
+.cyberpunk-checkbox {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #30cfd0;
+  border-radius: 5px;
+  background-color: transparent;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
+
+.cyberpunk-checkbox-label {
+  font-size: 18px;
+  color: #34baab;
+  cursor: pointer;
+  user-select: none;
+  display: inline-block; /* Cambia a inline-block para alineación horizontal */
+  vertical-align: middle; /* Alinea verticalmente con el checkbox */
+  margin-left: 8px; /* Ajusta el espacio a la izquierda del label */
+}
+
+.cyberpunk-checkbox:before {
+  content: "";
+  background-color: #30cfd0;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  transition: all 0.3s ease-in-out;
+}
+
+.cyberpunk-checkbox:checked:before {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Estilo del contenedor de la contraseña */
+.password-container {
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #797979;
+  font-size: 18px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.toggle-password:hover {
+  color: #2196f3;
+}
+

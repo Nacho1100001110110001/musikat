@@ -11,11 +11,17 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class LoginComponent {
 
   formLogin: FormGroup;
+  title= 'Login'
+  passwordVisible: { [key: string]: boolean } = {
+    password: false,
+    passworddos: false
+  };
 
   constructor(private formBuilder: FormBuilder, private loginService:LoginService){
     this.formLogin= this.formBuilder.group({
       email:['',[Validators.required]],
-      password: ['',[Validators.required]]
+      password: ['',[Validators.required]],
+      passworddos: ['', [Validators.required]]
     });
   }
   
@@ -30,6 +36,16 @@ export class LoginComponent {
           console.log(err);
         }
       });
+  }
+
+  togglePasswordVisibility(field: string) {
+    this.passwordVisible[field] = !this.passwordVisible[field];
+    const input = document.getElementById(field) as HTMLInputElement;
+    if (this.passwordVisible[field]) {
+      input.type = 'text';
+    } else {
+      input.type = 'password';
+    }
   }
 
 

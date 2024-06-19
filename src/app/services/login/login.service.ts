@@ -40,4 +40,13 @@ export class LoginService {
     const url = enviroments.apiConnect.logged;
     return this.http.get<any>(url, {observe: "response", withCredentials: true}).pipe();
   }
+
+  public register (user: any){
+    const url = enviroments.apiConnect.register;
+    return this.http.post<any>(url, user).pipe(map((res: any)=>{
+      alert("Usuario creado con exito");
+      this.router.navigate(['login']);
+      return res;
+    }));
+  }
 }

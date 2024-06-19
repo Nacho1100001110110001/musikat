@@ -5,7 +5,8 @@ import { song } from '../../../models/song';
 import { SongService } from '../../services/song.service';
 import { ArtistService } from '../../services/artist.service';
 import { GenderService } from '../../services/gender.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UserService } from '../../services/user.service';
 
 
 @Component({
@@ -15,8 +16,12 @@ import { Router } from '@angular/router';
 })
 export class ProfileComponent {
    userProfile: boolean = true;
-   friend: boolean = true;
+   notFound: boolean = false;
+   friend: boolean = false;
+   followed: boolean = false;
+   blocked: boolean = false;
    selectedTab: string = 'song';
+   user!: any;
 
    favoriteGender!: gender;
    favoriteArtist!: artist;
@@ -29,11 +34,53 @@ export class ProfileComponent {
   constructor(private songService: SongService,
     private artistService: ArtistService,
     private genderService: GenderService,
-    private router: Router
+    private userService: UserService,
+    private router: Router,
+    private route: ActivatedRoute
   ){
     this.getSong();
     this.getArtist();
     this.getGender();
+    this.getUser();
+  }
+
+  ngOnInit(){
+    this.route.params.subscribe((params) =>{
+      let username = params['nombre'];
+      if(!username || username == this.user.username) {
+        this.userProfile = true;
+        return;
+      }
+
+      this.getUserByName(username);
+    });
+  }
+
+  getUser(){
+    this.userService.getUserProfile().subscribe({
+      next: (result) => {
+        this.user = result;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {},
+    });
+  }
+
+  getUserByName(username: string){
+    this.userService.getUserByName(username).subscribe({
+      next: (result) => {
+        if(this.user.friends.find((user: { userId: any; }) => user.userId == result.userId)) this.friend = true;
+        if(this.user.followed.find((user: { userId: any; }) => user.userId == result.userId)) this.followed = true;
+        if(this.user.blocked.find((user: { userId: any; }) => user.userId == result.userId)) this.blocked = true;
+        this.user = result;
+      },
+      error: (error) => {
+        this.notFound = true;
+      },
+      complete: () => {},
+    });
   }
 
   getSong(){

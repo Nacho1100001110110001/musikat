@@ -13,7 +13,7 @@
             <span class="material-symbols-outlined searchicon">
                 search
                 </span>
-            <input type="text" class="searchbar">
+            <input type="text" class="searchbar" formControlName="buscador" (keydown.enter)="search()">
         </div>
     </div>
 
@@ -23,7 +23,7 @@
                 <img src="../../../assets/images/profile-icon.png" alt="">
             </div>
         </button>
-        <h2>John Doe</h2>
+        <h2>{{user.username}}</h2>
         <button class="boton">
             <span class="material-symbols-outlined menuicon">
                 keyboard_arrow_down

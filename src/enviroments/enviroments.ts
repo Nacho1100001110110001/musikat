@@ -6,6 +6,6 @@ export const enviroments = {
         logout: pathBase + "/auth/logout",
         logged: pathBase + "/auth/status",
         userProfile: pathBase + "/user/profile",
-
+        register: pathBase + "/auth/register",
     }
 }

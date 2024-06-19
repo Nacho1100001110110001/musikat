@@ -5,7 +5,9 @@ import { song } from '../../../models/song';
 import { SongService } from '../../services/song.service';
 import { ArtistService } from '../../services/artist.service';
 import { GenderService } from '../../services/gender.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UserService } from '../../services/user.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-profile',
@@ -16,6 +18,7 @@ export class EditProfileComponent {
   favoriteGender!: gender;
   favoriteArtist!: artist;
   favoriteSong!: song;
+  formUser: FormGroup;
 
   selectedTab: string = 'song';
   @ViewChild('fileInput') fileInput!: ElementRef;
@@ -23,11 +26,45 @@ export class EditProfileComponent {
   constructor(private songService: SongService,
     private artistService: ArtistService,
     private genderService: GenderService,
-    private router: Router
+    private userService: UserService,
+    private router: Router,
+    private formBuilder: FormBuilder
   ){
+    this.formUser = this.formBuilder.group({
+      username:['',[Validators.required]],
+      birthDate: ['',[Validators.required]]
+    })
+
     this.getSong();
     this.getArtist();
     this.getGender();
+    this.getUser();
+  }
+
+  getUser(){
+    this.userService.getUserProfile().subscribe({
+      next: (result) => {
+        this.formUser.patchValue(result);
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {},
+    });
+  }
+
+  updateUser(){
+    let user = {username: this.formUser.value.username, birthDate: this.formUser.value.birthDate};
+    this.userService.updateUser(user).subscribe({
+      next: (result) => {
+        location.reload();
+        console.log(result);
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {},
+    });
   }
 
   getSong(){

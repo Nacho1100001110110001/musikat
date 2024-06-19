@@ -8,19 +8,19 @@
                         </span>
                 </button>
             </div>
-            <div class="col-6 justify-content-center d-flex flex-column align-items-center">
+            <div class="col-6 justify-content-center d-flex flex-column align-items-center" [formGroup]="registerForm">
                 <img src="../../../assets/images/musikat_logo.png" alt="Logo" class="img-fluid d-block w-50">
                 <h2>Regístrate</h2>
                 <div class="input-container mt-4 w-100">
-                    <input type="text" id="correo" placeholder=" " />
+                    <input type="text" id="correo" placeholder=" " formControlName="email" />
                     <label for="correo">Correo</label>
                 </div>
                 <div class="input-container mt-4 w-100">
-                    <input type="text" id="username" placeholder=" " />
+                    <input type="text" id="username" placeholder=" " formControlName="username" />
                     <label for="username">Nombre de usuario</label>
                 </div>
                 <div class="input-container password-container mt-4 w-100">
-                    <input type="password" id="password" placeholder=" " />
+                    <input type="password" id="password" placeholder=" " formControlName="password" />
                     <label for="password">Contraseña</label>
                     <button type="button" class="toggle-password me-2" (click)="togglePasswordVisibility('password')">
                         <span>
@@ -40,7 +40,7 @@
                     </button>
                 </div>
                 <div class="input-container password-container mt-4 w-100">
-                    <input type="password" id="passworddos" placeholder=" " />
+                    <input type="password" id="passworddos" placeholder=" " formControlName="passworddos" />
                     <label for="passworddos">Confirmar contraseña</label>
                     <button type="button" class="toggle-password me-2" (click)="togglePasswordVisibility('passworddos')">
                         <span>
@@ -59,9 +59,12 @@
                           </span>
                     </button>
                 </div>
+                <div *ngIf="(registerForm.value.password != registerForm.value.passworddos) && registerForm.controls['passworddos'].touched" class="text-danger mt-2">
+                  Las contraseñas deben coincidir.
+                </div>
                 <br>
                 <div class="row mt-1">
-                    <button class="cssbuttons-io-button" type="submit">
+                    <button class="cssbuttons-io-button" type="submit" (click)="onSubmit()">
                         Registrarse
                         <div class="icon">
                             <svg height="14" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

@@ -1,17 +1,21 @@
 <div class="nav" [ngClass]="{'show' : isVisible}">
     <h2>Amigos</h2>
 
-    <div class="amigos">
-        <div class="img-cont">
-            <img src="../../../assets/images/profile-icon.png" alt="">
+    @for (friend of user.friends; track $index) {
+        <div class="amigos">
+            <div class="img-cont">
+                <img src="../../../assets/images/profile-icon.png" alt="">
+            </div>
+            <h4>{{friend.userId}}</h4>
+            <div class="button">
+                <button class="boton">
+                    <span class="material-symbols-outlined icon-more">
+                        more_vert
+                        </span>
+                </button>
+            </div>
         </div>
-        <h4>John Doe</h4>
-        <div class="button">
-            <button class="boton">
-                <span class="material-symbols-outlined icon-more">
-                    more_vert
-                    </span>
-            </button>
-        </div>
-    </div>
+    }@empty {
+        <h3>Aún no tienes amigos :(</h3>
+    }
 </div>

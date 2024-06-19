@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { LoginService } from '../services/login/login.service';
 
 @Component({
   selector: 'app-registro',
@@ -14,7 +15,7 @@ export class RegistroComponent {
     passworddos: false
   };
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private loginService: LoginService) {
     this.registerForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       username: ['', Validators.required],
@@ -25,8 +26,12 @@ export class RegistroComponent {
 
   onSubmit() {
     if (this.registerForm.valid) {
-      console.log(this.registerForm.value);
-      // Lógica para el envío del formulario
+      if(this.registerForm.value.password != this.registerForm.value.passworddos){
+        alert("Las contraseñas deben coincidir");
+        return;
+      }
+      let user = {email: this.registerForm.value.email, username: this.registerForm.value.username, password: this.registerForm.value.password};
+      this.loginService.register(user).subscribe();
     }
   }
 

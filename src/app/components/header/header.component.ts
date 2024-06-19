@@ -7,14 +7,7 @@ import { LoginService } from '../../services/login/login.service';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  logged: boolean = false;
 
-  constructor(private loginService: LoginService){
-    this.logged = this.loginService.logeado;
-  }
-
-  ngOnInit(){
-    this.logged = this.loginService.logeado;
-    console.log(this.loginService.logeado)
+  constructor(public loginService: LoginService){
   }
 }

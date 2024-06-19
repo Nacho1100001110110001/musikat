@@ -1,7 +1,9 @@
 .body {
+    margin-top: 60px;
     width: 100%;
     min-height: calc(100vh - 60px);
     background-color: #001121;
+    overflow: hidden;
 }
 
 .profile-data {
@@ -44,7 +46,7 @@
     }
 }
 
-h1, h4 {
+h1, h3, h4 {
     margin: 0;
     padding: 0;
     color: #E1FCFF;
@@ -70,3 +72,51 @@ h1, h4 {
     font-size: 30px;
     margin-right: 5px;
 }
+
+.container-medium {
+    background-color: #001121;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 10px;
+    margin-top: 30px;
+    box-sizing: border-box;
+}
+
+.nav-container {
+    background-color: #001121;
+    padding: 1rem;
+  }
+
+  .active {
+    background-color: #E1FCFF !important;
+    color: #001121 !important;
+    border-radius: 0.25rem 0.25rem 0 0;
+    border-bottom: 3px solid transparent;
+  }
+
+  .custom-nav-tabs {
+    border-bottom: 3px solid #E1FCFF;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .custom-nav-tabs .nav-item {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .custom-nav-tabs .nav-link {
+    color: #E1FCFF;
+    text-align: center;
+    width: 100%;
+    background-color: #001121;
+    border: none;
+    padding: 1rem;
+    font-size: 1.2rem;
+  }
+
+  .song-photo {
+    aspect-ratio: 1/1;
+  }

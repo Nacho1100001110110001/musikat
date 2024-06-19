@@ -22,9 +22,7 @@ import { RouterModule } from '@angular/router';
     BrowserModule,
     AppRoutingModule,
     NgxBootstrapIconsModule.pick(allIcons),
-    RouterModule.forRoot([
-      {path: 'perfil', component: ProfileComponent}
-    ])
+    RouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]

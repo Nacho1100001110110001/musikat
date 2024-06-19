@@ -10,7 +10,7 @@
             </div>
             <div class="bottom">
                 @if (userProfile) {
-                    <button class="boton">
+                    <button class="boton" (click)="editarPerfil()">
                         <h4>Editar perfil</h4>
                     </button>
                 }@else {
@@ -30,11 +30,80 @@
                         <span class="material-symbols-outlined icon">
                             priority_high
                             </span>
-                        <h4>Eliminar</h4>
+                        <h4>Bloquear</h4>
                     </button>
                 }
             </div>
         </div>
+    </div>
+
+    <div class="container-medium">
+        <!--  nav -->
+        <ul class="nav custom-nav-tabs">
+            <li class="nav-item">
+                <button class="nav-link" [ngClass]="selectedTab=='song'? 'active':''" (click)="selectTab('song')">Canción favorita</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" [ngClass]="selectedTab=='artist'? 'active':''" (click)="selectTab('artist')">Artista favorito</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" [ngClass]="selectedTab=='gender'? 'active':''" (click)="selectTab('gender')">Género favorito</button>
+            </li>
+        </ul>
+        
+        @switch (selectedTab) {
+            @case ('song') {
+                <div class="row pb-4 pt-4">
+                    <div class="col-6 d-flex justify-content-end">
+                        <div class="col-5 song-photo">
+                            <img [src]="favoriteSong.image" class="w-100" alt="">
+                        </div>
+                    </div>
+                    <div class="col-6 justify-content-center">
+                        <div class="col-8 d-flex align-items-start flex-column h-100 justify-content-center">
+                            <h1>{{favoriteSong.name}}</h1>
+                            <h3>{{favoriteSong.artist?.name}}</h3>
+                        </div>
+                    </div>
+                </div>
+            }
+            @case ('artist') {
+                <div class="row pb-4 pt-4">
+                    <div class="col-6 d-flex justify-content-center">
+                        <div class="col-5 song-photo d-flex justify-content-center flex-column align-items-center">
+                            <img [src]="favoriteArtist.image" class="w-75" alt="">
+                            <h1>{{favoriteArtist.name}}</h1>
+                        </div>
+                    </div>
+                    <div class="col-6 justify-content-center">
+                        <div class="col-8 d-flex align-items-start flex-column h-100 justify-content-center">
+                            <h1>Top canciones</h1>
+                            @for (song of favoriteArtist.songs; track $index) {
+                                <h3 class="mt-2">{{($index + 1) + ".  " + song.name}}</h3>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+            @case ('gender') {
+                <div class="row pb-4 pt-4">
+                    <div class="col-6 d-flex justify-content-center">
+                        <div class="col-5 song-photo d-flex align-items-center">
+                            <h1>{{favoriteGender.name}}</h1>
+                        </div>
+                    </div>
+                    <div class="col-6 justify-content-center">
+                        <div class="col-8 d-flex align-items-start flex-column h-100 justify-content-center">
+                            <h1>Top canciones</h1>
+                            @for (song of favoriteGender.topSongs; track $index) {
+                                <h3 class="mt-2">{{($index + 1) + ".  " + song.name}}</h3>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
     </div>
 
     <div class="publicaciones">

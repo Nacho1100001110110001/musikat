@@ -9,7 +9,7 @@
             <img src="../../../assets/images/musikat_logo2.png" alt="" height="50">
         </button>
 
-        <div class="search">
+        <div class="search" [formGroup]="buscadorGrupo">
             <span class="material-symbols-outlined searchicon">
                 search
                 </span>
@@ -24,10 +24,14 @@
             </div>
         </button>
         <h2>{{user.username}}</h2>
-        <button class="boton">
+        <button class="boton" (click)="toggleMenu()">
             <span class="material-symbols-outlined menuicon">
                 keyboard_arrow_down
                 </span>
+                <div class="dropdown-content" [ngClass]="showMenu ? '':'hide'">
+                    <button class="boton" (click)="editarPerfil()">Editar perfil</button>
+                    <button class="boton" (click)="cerrarSesion()">Cerrar sesión</button>
+                </div>
         </button>
     </div>
 </div>

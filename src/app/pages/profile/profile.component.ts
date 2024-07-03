@@ -41,17 +41,22 @@ export class ProfileComponent {
     this.getSong();
     this.getArtist();
     this.getGender();
-    this.getUser();
   }
 
   ngOnInit(){
     this.route.params.subscribe((params) =>{
+      this.userProfile= true;
+     this.notFound = false;
+     this.friend = false;
+     this.followed = false;
+     this.blocked = false;
+      this.getUser();
       let username = params['nombre'];
       if(!username || username == this.user.username) {
         this.userProfile = true;
         return;
       }
-
+      this.userProfile = false;
       this.getUserByName(username);
     });
   }
@@ -71,9 +76,11 @@ export class ProfileComponent {
   getUserByName(username: string){
     this.userService.getUserByName(username).subscribe({
       next: (result) => {
-        if(this.user.friends.find((user: { userId: any; }) => user.userId == result.userId)) this.friend = true;
-        if(this.user.followed.find((user: { userId: any; }) => user.userId == result.userId)) this.followed = true;
-        if(this.user.blocked.find((user: { userId: any; }) => user.userId == result.userId)) this.blocked = true;
+        if(this.user){
+          if(this.user.friends.find((user: { userId: any; }) => user.userId == result.userId)) this.friend = true;
+          if(this.user.followed.find((user: { userId: any; }) => user.userId == result.userId)) this.followed = true;
+          if(this.user.blocked.find((user: { userId: any; }) => user.userId == result.userId)) this.blocked = true;
+        }
         this.user = result;
       },
       error: (error) => {

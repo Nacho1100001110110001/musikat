@@ -45,6 +45,7 @@ export class EditProfileComponent {
     this.userService.getUserProfile().subscribe({
       next: (result) => {
         this.formUser.patchValue(result);
+        this.formUser.get('birthDate')?.setValue(result.birthDate.split("T")[0]);
       },
       error: (error) => {
         console.error(error);
@@ -57,7 +58,7 @@ export class EditProfileComponent {
     let user = {username: this.formUser.value.username, birthDate: this.formUser.value.birthDate};
     this.userService.updateUser(user).subscribe({
       next: (result) => {
-        location.reload();
+        this.router.navigate(["perfil"])
         console.log(result);
       },
       error: (error) => {

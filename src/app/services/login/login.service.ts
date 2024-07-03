@@ -29,7 +29,7 @@ export class LoginService {
 
   public logout () {
     const url = enviroments.apiConnect.logout;
-    return this.http.post<any>(url, null).pipe(map((res: any)=>{
+    return this.http.post<any>(url, null, {withCredentials: true}).pipe(map((res: any)=>{
       this.logeado = false;
       this.router.navigate(['login']);
       return res;

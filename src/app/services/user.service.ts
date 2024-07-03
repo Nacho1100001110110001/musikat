@@ -13,21 +13,21 @@ export class UserService {
 
   public getUserProfile(){
     const url = enviroments.apiConnect.userProfile;
-    return this.http.get<any>(url).pipe(map((res: any)=>{
+    return this.http.get<any>(url, { withCredentials: true}).pipe(map((res: any)=>{
       return res;
     }));
   }
 
   public getUserByName(name: string){
     const url = enviroments.apiConnect.userProfile + "/" + name;
-    return this.http.get<any>(url).pipe(map((res: any)=>{
+    return this.http.get<any>(url, { withCredentials: true}).pipe(map((res: any)=>{
       return res;
     }));
   }
 
   public updateUser(user: any){
     const url = enviroments.apiConnect.userProfile;
-    return this.http.put<any>(url, user).pipe(map((res: any)=>{
+    return this.http.put<any>(url, user, { withCredentials: true}).pipe(map((res: any)=>{
       return res;
     }));
   }

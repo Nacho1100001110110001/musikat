@@ -1,4 +1,4 @@
-const pathBase = "http://192.168.0.8:3000/api";
+const pathBase = "http://localhost:3000/api";
 
 export const enviroments = {
     apiConnect: {

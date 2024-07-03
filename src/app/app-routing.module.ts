@@ -12,8 +12,8 @@ const routes: Routes = [
   { path: 'editar-perfil', component: EditProfileComponent, canActivate: [loginGuard] },
   { path: 'perfil', component: ProfileComponent, canActivate: [loginGuard] },
   { path: '', redirectTo: '/login', pathMatch: 'full' }, // Redirigir al login por defecto
-  { path: '**', redirectTo: '/login' }, // Redirigir a login en caso de una ruta no encontrada
   { path: 'perfil/:nombre', component: ProfileComponent, canActivate: [loginGuard] },
+  { path: '**', redirectTo: '/login' }, // Redirigir a login en caso de una ruta no encontrada
 ];
 
 @NgModule({

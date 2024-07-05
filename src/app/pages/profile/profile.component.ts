@@ -7,6 +7,8 @@ import { ArtistService } from '../../services/artist.service';
 import { GenderService } from '../../services/gender.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
+import { PostService } from '../../services/post.service';
+import { post } from '../../../models/post';
 
 
 @Component({
@@ -26,6 +28,8 @@ export class ProfileComponent {
    favoriteGender!: gender;
    favoriteArtist!: artist;
    favoriteSong!: song;
+   SinglePost!: post;
+   Posts!: post[];
 
   selectTab(tab: string) {
     this.selectedTab = tab;
@@ -33,11 +37,14 @@ export class ProfileComponent {
 
   constructor(private songService: SongService,
     private artistService: ArtistService,
+    private postService: PostService,
     private genderService: GenderService,
     private userService: UserService,
     private router: Router,
     private route: ActivatedRoute
   ){
+    this.getPosts();
+    this.getPostById();
     this.getSong();
     this.getArtist();
     this.getGender();
@@ -95,6 +102,16 @@ export class ProfileComponent {
     if(song) this.favoriteSong = song;
   }
 
+  getPostById(){
+    let post= this.postService.getPostById(3);
+    if(post) this.SinglePost= post;
+  }
+
+  getPosts(){
+    let posts= this.postService.getPosts();
+    if(posts) this.Posts= posts;
+  }
+
   getArtist(){
     let artist = this.artistService.getArtist(2);
     if(artist) {
@@ -113,5 +130,10 @@ export class ProfileComponent {
 
   editarPerfil(){
     this.router.navigate(['editar-perfil']);
+  }
+
+  // Añade trackByPostId
+  trackByPostId(index: number, post: post): number {
+    return post.postId;
   }
 }

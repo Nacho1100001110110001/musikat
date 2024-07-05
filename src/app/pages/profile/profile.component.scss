@@ -120,3 +120,222 @@ h1, h3, h4 {
   .song-photo {
     aspect-ratio: 1/1;
   }
+
+  /* Estilos para el contenedor de la publicación */
+.post-container {
+    max-width: 700px;
+    margin: auto;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    background-color: #2f2f2f;
+}
+
+.post-container .card-body {
+    padding: 20px;
+}
+
+.post-container .card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    padding: 10px;
+    color: #E1FCFF; /* Título de la publicación */
+}
+
+.post-container .card-text {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    color:#ffffff ;
+}
+
+.post-container img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* icono de persona en la publicacion (tamaño) */
+.img-profile {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Contenedor del corazón */
+.heart-container {
+    --heart-color: #30cfd0; /* Color del corazón */
+    position: relative;
+    width: 50px;
+    height: 50px;
+    transition: transform 0.3s;
+}
+
+/* Checkbox para alternar el estado */
+.heart-container .checkbox {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: 20;
+    cursor: pointer;
+}
+
+/* Contenedor de SVG */
+.heart-container .svg-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Corazón vacío */
+.heart-container .svg-outline,
+.heart-container .svg-filled {
+    fill: var(--heart-color);
+    position: absolute;
+}
+
+/* Corazón lleno */
+.heart-container .svg-filled {
+    display: none;
+}
+
+/* Celebración */
+.heart-container .svg-celebrate {
+    position: absolute;
+    display: none;
+    stroke: var(--heart-color);
+    fill: var(--heart-color);
+    stroke-width: 2px;
+}
+
+/* Mostrar corazón lleno al hacer clic */
+.heart-container .checkbox:checked~.svg-container .svg-filled {
+    display: block;
+}
+
+/* Mostrar celebración al hacer clic */
+.heart-container .checkbox:checked~.svg-container .svg-celebrate {
+    display: block;
+    animation: keyframes-svg-celebrate 0.5s;
+    animation-fill-mode: forwards;
+}
+
+/* Animación del corazón */
+@keyframes keyframes-svg-filled {
+    0% {
+        transform: scale(0);
+    }
+    25% {
+        transform: scale(1.2);
+    }
+    50% {
+        transform: scale(1);
+        filter: brightness(1.5);
+    }
+}
+
+/* Animación de la celebración */
+@keyframes keyframes-svg-celebrate {
+    0% {
+        transform: scale(0);
+    }
+    50% {
+        opacity: 1;
+        filter: brightness(1.5);
+    }
+    100% {
+        transform: scale(1.4);
+        opacity: 0;
+    }
+}
+
+//boton de comentario
+.button-custom {
+    background: #30cfd0;
+    font-family: inherit;
+    padding: 0.6em 1.3em;
+    font-weight: 900;
+    font-size: 18px;
+    border: 3px solid black;
+    border-radius: 0.4em;
+    box-shadow: 0.1em 0.1em;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    transform: translate(-0.05em, -0.05em);
+    box-shadow: 0.15em 0.15em;
+  }
+  
+  button:active {
+    transform: translate(0.05em, 0.05em);
+    box-shadow: 0.05em 0.05em;
+  }
+
+  /* Estilos para el contenedor de creación de publicación */
+.post-create-container {
+    max-width: 700px;
+    margin: auto;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    background-color: #2f2f2f; /* Fondo del contenedor de creación */
+}
+
+.post-create-container .card-body {
+    padding: 20px;
+}
+
+.post-create-container img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+
+.post-create-container .post-textarea {
+    resize: none;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 1rem;
+    background-color: #ffffff; /* Fondo del área de texto */
+    color: #000000; /* Color del texto */
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.post-create-container .file-upload-wrapper {
+    position: relative;
+}
+
+.post-create-container .file-upload-input {
+    display: none;
+}
+
+.post-create-container .file-upload-wrapper label {
+    background: #30cfd0;
+    font-family: inherit;
+    padding: 0.6em 1.3em;
+    font-weight: 900;
+    font-size: 18px;
+    border: 3px solid black;
+    border-radius: 0.4em;
+    box-shadow: 0.1em 0.1em;
+    cursor: pointer;
+} 
+
+.post-create-container .file-upload-wrapper i {
+    margin-right: 5px;
+}
+
+.post-create-container .post-button {
+    padding: 5px 20px;
+    border-radius: 20px;
+    background-color: #001121; /* Fondo del botón de publicar */
+    color: #ffffff; /* Color del texto */
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.post-create-container .post-button:hover {
+    background-color: #00aced; /* Fondo del botón al pasar el ratón */
+}

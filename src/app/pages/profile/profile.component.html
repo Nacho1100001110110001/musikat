@@ -110,9 +110,89 @@
             }
     
         </div>
-    
+        <!--  contenedor para crear una publicacion -->
         <div class="publicaciones">
             <h1>Publicaciones</h1>
+            <div class="container mt-5">
+                <div class="card post-create-container">
+                    <div class="card-body">
+                        <div class="d-flex mb-3">
+                            <img src="../../../assets/images/profile-icon.png" class="rounded-circle me-3" alt="User Avatar">
+                            <textarea class="form-control post-textarea" placeholder="¿Qué estás pensando?" rows="3"></textarea>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="file-upload-wrapper">
+                                <input type="file" class="file-upload-input" id="file-upload" accept="image/*">
+                                <label for="file-upload" class="button-custom">
+                                    Agregar Imagen
+                                </label>
+                            </div>
+                            <button class="button-custom">Publicar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+            
+            <!--  contenedor de publicaciones hechas -->
+            <div class="container mt-5">
+                @for (post of Posts; track post.content) {
+                    <div class="card post-container">                                  
+                        <div class="card-body">
+                            <div class="d-flex mb-3">
+                                <div class="img-profile">
+                                    <img src="../../../assets/images/profile-icon.png" class="img-fluid rounded mb-3" alt="User Avatar">
+                                </div>
+                                <div>
+                                    <h5 class="card-title mb-0">{{user.username}}</h5>                       
+                                </div>
+                            </div>
+                            <p class="card-text">
+                                {{post.content}}
+                            </p>
+                            <img [src]="post.image" class="img-fluid rounded mb-3"
+                                alt="Post Image">
+                            <div class="d-flex justify-content-end align-items-center">
+                                <div title="Like" class="heart-container">
+                                    <input id="Give-It-An-Id" class="checkbox" type="checkbox">
+                                    <div class="svg-container">
+                                        <!-- Corazón vacío -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="svg-outline" viewBox="0 0 24 24">
+                                            <path
+                                                d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Zm-3.585,18.4a2.973,2.973,0,0,1-3.83,0C4.947,16.006,2,11.87,2,8.967a4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,11,8.967a1,1,0,0,0,2,0,4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,22,8.967C22,11.87,19.053,16.006,13.915,20.313Z">
+                                            </path>
+                                        </svg>
+                                        <!-- Corazón lleno -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="svg-filled" viewBox="0 0 24 24">
+                                            <path
+                                                d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Z">
+                                            </path>
+                                        </svg>
+                                        <!-- Celebración -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="100" width="100" class="svg-celebrate">
+                                            <polygon points="10,10 20,20"></polygon>
+                                            <polygon points="10,50 20,50"></polygon>
+                                            <polygon points="20,80 30,70"></polygon>
+                                            <polygon points="90,10 80,20"></polygon>
+                                            <polygon points="90,50 80,50"></polygon>
+                                            <polygon points="80,80 70,70"></polygon>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <button class="button-custom" style="margin-left: 10px;">Comentarios</button>
+                            </div>
+                        </div>
+                    </div>
+                    <br>        
+                }@empty {
+                    <li>There are no items.</li>
+                    }   
+                
+            </div>
         </div>
+
+        
+  
     }
 </div>

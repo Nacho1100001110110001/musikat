@@ -3,6 +3,8 @@ import { SongService } from '../../services/song.service';
 import { ArtistService } from '../../services/artist.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
+import { PostService } from '../../services/post.service';
+import { post } from '../../../models/post';
 
 
 @Component({
@@ -22,6 +24,8 @@ export class ProfileComponent {
    favoriteSong!: any;
    favoriteArtist!: any;
    topArtistSongs!: any;
+   SinglePost!: post;
+   Posts!: post[];
 
   selectTab(tab: string) {
     this.selectedTab = tab;
@@ -29,6 +33,7 @@ export class ProfileComponent {
 
   constructor(private songService: SongService,
     private artistService: ArtistService,
+    private postService: PostService,
     private userService: UserService,
     private router: Router,
     private route: ActivatedRoute
@@ -60,6 +65,8 @@ export class ProfileComponent {
         this.user = result;
         this.getSong();
         this.getArtist();
+        this.getPosts();
+        this.getPostById();
         console.log(this.user)
       },
       error: (error) => {
@@ -80,6 +87,8 @@ export class ProfileComponent {
         this.user = result;
         this.getSong();
         this.getArtist();
+        this.getPosts();
+        this.getPostById();
       },
       error: (error) => {
         this.notFound = true;
@@ -98,6 +107,16 @@ export class ProfileComponent {
       },
       complete: () => {},
     });
+  }
+
+  getPostById(){
+    let post= this.postService.getPostById(3);
+    if(post) this.SinglePost= post;
+  }
+
+  getPosts(){
+    let posts= this.postService.getPosts();
+    if(posts) this.Posts= posts;
   }
 
   getArtist(){
@@ -128,5 +147,10 @@ export class ProfileComponent {
 
   editarPerfil(){
     this.router.navigate(['editar-perfil']);
+  }
+
+  // Añade trackByPostId
+  trackByPostId(index: number, post: post): number {
+    return post.postId;
   }
 }

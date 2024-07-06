@@ -9,12 +9,14 @@ import { map } from 'rxjs';
 })
 export class UserService {
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient) { }
 
   public getUserProfile(){
     const url = enviroments.apiConnect.userProfile;
-    return this.http.get<any>(url, { withCredentials: true}).pipe(map((res: any)=>{
-      return res;
+    return this.http.get<any>(url
+      , { withCredentials: true}
+    ).pipe(map((res: any)=>{
+      return res[0];
     }));
   }
 

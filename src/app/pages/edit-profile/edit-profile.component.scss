@@ -144,3 +144,14 @@
   .search-bar{
     aspect-ratio: 5 / 3;
   }
+
+  .item:hover {
+    background-color: #002344;
+  }
+
+  .item-selected {
+    background-color: #E1FCFF;
+    h3{
+      color: #001121;
+    }
+  }

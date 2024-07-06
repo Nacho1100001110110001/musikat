@@ -9,10 +9,16 @@ import { loginGuard } from './guard/login.guard';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registro', component: RegistroComponent },
-  { path: 'editar-perfil', component: EditProfileComponent, canActivate: [loginGuard] },
-  { path: 'perfil', component: ProfileComponent, canActivate: [loginGuard] },
+  { path: 'editar-perfil', component: EditProfileComponent, 
+    canActivate: [loginGuard] 
+  },
+  { path: 'perfil', component: ProfileComponent, 
+    canActivate: [loginGuard]
+   },
   { path: '', redirectTo: '/login', pathMatch: 'full' }, // Redirigir al login por defecto
-  { path: 'perfil/:nombre', component: ProfileComponent, canActivate: [loginGuard] },
+  { path: 'perfil/:nombre', component: ProfileComponent, 
+    canActivate: [loginGuard] 
+  },
   { path: '**', redirectTo: '/login' }, // Redirigir a login en caso de una ruta no encontrada
 ];
 

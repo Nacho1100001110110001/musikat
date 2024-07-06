@@ -1,31 +1,34 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { artist } from '../../models/artist';
+import { enviroments } from '../../enviroments/enviroments';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArtistService {
-  artists: artist[] = [{
-    artistId: 1,
-    name: "Mago de Oz",
-    image: "",
-    songs: null
-  },{
-    artistId: 2,
-    name: "Soda Stereo",
-    image: "../../../assets/images/sodastereo.jpg",
-    songs: null
-  },{
-    artistId: 3,
-    name: "Los Enanitos Verdes",
-    image: "",
-    songs: null
-  }]
-  constructor() { }
+  
+  constructor(private http: HttpClient) { }
 
-  getArtist(id: number): artist | null{
-    let foundedArtist = this.artists.find(artist => artist.artistId == id);
-    if(foundedArtist !== undefined) return foundedArtist;
-    return null;
+  getArtistById(id: number){
+    const url = enviroments.musicApiConnet.getArtistById + "/" + id;
+    return this.http.get<any>(url).pipe(map((res: any)=>{
+      return res;
+    }));
+  }
+
+  searchArtist(query: string){
+    const url = enviroments.musicApiConnet.searchArtists + '/?q="' + query + "'";
+    return this.http.get<any>(url).pipe(map((res: any)=>{
+      return res;
+    }));
+  }
+
+  getTopSongs(id: number){
+    const url = enviroments.musicApiConnet.getArtistById + '/' + id + "/top?limit=5";
+    return this.http.get<any>(url).pipe(map((res: any)=>{
+      return res;
+    }));
+    
   }
 }

@@ -1,10 +1,6 @@
 import { Component } from '@angular/core';
-import { gender } from '../../../models/gender';
-import { artist } from '../../../models/artist';
-import { song } from '../../../models/song';
 import { SongService } from '../../services/song.service';
 import { ArtistService } from '../../services/artist.service';
-import { GenderService } from '../../services/gender.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 
@@ -23,9 +19,9 @@ export class ProfileComponent {
    selectedTab: string = 'song';
    user!: any;
 
-   favoriteGender!: gender;
-   favoriteArtist!: artist;
-   favoriteSong!: song;
+   favoriteSong!: any;
+   favoriteArtist!: any;
+   topArtistSongs!: any;
 
   selectTab(tab: string) {
     this.selectedTab = tab;
@@ -33,38 +29,38 @@ export class ProfileComponent {
 
   constructor(private songService: SongService,
     private artistService: ArtistService,
-    private genderService: GenderService,
     private userService: UserService,
     private router: Router,
     private route: ActivatedRoute
-  ){
-    this.getSong();
-    this.getArtist();
-    this.getGender();
-  }
+  ){ }
 
   ngOnInit(){
     this.route.params.subscribe((params) =>{
       this.userProfile= true;
-     this.notFound = false;
-     this.friend = false;
-     this.followed = false;
-     this.blocked = false;
+      this.notFound = false;
+      this.friend = false;
+      this.followed = false;
+      this.blocked = false;
       this.getUser();
       let username = params['nombre'];
       if(!username || username == this.user.username) {
         this.userProfile = true;
+        
         return;
       }
       this.userProfile = false;
       this.getUserByName(username);
     });
+    
   }
 
   getUser(){
     this.userService.getUserProfile().subscribe({
       next: (result) => {
         this.user = result;
+        this.getSong();
+        this.getArtist();
+        console.log(this.user)
       },
       error: (error) => {
         console.error(error);
@@ -82,6 +78,8 @@ export class ProfileComponent {
           if(this.user.blocked.find((user: { userId: any; }) => user.userId == result.userId)) this.blocked = true;
         }
         this.user = result;
+        this.getSong();
+        this.getArtist();
       },
       error: (error) => {
         this.notFound = true;
@@ -91,24 +89,41 @@ export class ProfileComponent {
   }
 
   getSong(){
-    let song = this.songService.getSong(1);
-    if(song) this.favoriteSong = song;
+    this.songService.getSongById(this.user.favoriteSong).subscribe({
+      next: (result) => {
+        this.favoriteSong = result;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {},
+    });
   }
 
   getArtist(){
-    let artist = this.artistService.getArtist(2);
-    if(artist) {
-      this.favoriteArtist = artist;
-      this.favoriteArtist.songs = this.songService.getSongsByArtist(artist.artistId);
-    }
+    this.artistService.getArtistById(this.user.favoriteArtist).subscribe({
+      next: (result) => {
+        this.favoriteArtist = result;
+        this.getArtistTopSongs();
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {},
+    });
   }
 
-  getGender(){
-    let gender = this.genderService.getGender(1);
-    if(gender) {
-      this.favoriteGender = gender;
-      this.favoriteGender.topSongs = this.songService.getSongsByGenders(gender.genderId);
-    }
+  getArtistTopSongs(){
+    this.artistService.getTopSongs(this.user.favoriteArtist).subscribe({
+      next: (result) => {
+        this.topArtistSongs = result;
+        console.log(this.topArtistSongs)
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {},
+    });
   }
 
   editarPerfil(){

@@ -1,0 +1,45 @@
+[
+    {
+      "request": {
+        "method": "POST",
+        "url": "/auth/login"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": [
+            {
+              "id": 1,
+              "username": "El pepe",
+              "favoriteSong": "3135556",
+              "favoriteArtist": "13",
+              "friends": "",
+              "birthDate": "27/05/2000Telpepe"
+            }
+          ]
+      }
+    },
+    {
+        "request": {
+          "method": "GET",
+          "url": "/user/profile"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Type": "application/json"
+          },
+          "body": [
+            {
+              "id": 1,
+              "username": "El pepe",
+              "favoriteSong": "3135556",
+              "favoriteArtist": "13"
+            }
+          ]
+        }
+      }
+  ]
+  

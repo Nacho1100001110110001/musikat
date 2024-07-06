@@ -31,8 +31,7 @@ export class EditProfileComponent {
     private formBuilder: FormBuilder
   ){
     this.formUser = this.formBuilder.group({
-      username:['',[Validators.required]],
-      birthDate: ['',[Validators.required]]
+      username:['',[Validators.required]]
     })
     this.buscador = this.formBuilder.group({
       song:['', Validators.required],
@@ -47,8 +46,6 @@ export class EditProfileComponent {
       next: (result) => {
         this.user = result;
         this.formUser.patchValue(result);
-        let fechaNac: string = result.birthDate;
-        // this.formUser.get('birthDate')?.setValue(fechaNac.split("T")[0]);
         this.getSong();
         this.getArtist();
       },
@@ -60,7 +57,7 @@ export class EditProfileComponent {
   }
 
   updateUser(){
-    let user = {username: this.formUser.value.username, birthDate: this.formUser.value.birthDate};
+    let user = {username: this.formUser.value.username, favoriteSong: this.favoriteSong.id, favoriteArtiste: this.favoriteArtist.id};
     this.userService.updateUser(user).subscribe({
       next: (result) => {
         this.router.navigate(["perfil"])

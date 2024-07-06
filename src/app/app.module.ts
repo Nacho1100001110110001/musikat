@@ -14,6 +14,7 @@ import { FriendsMenuComponent } from './components/friends-menu/friends-menu.com
 import { ProfileComponent } from './pages/profile/profile.component';
 import { RegistroComponent } from './registro/registro.component';
 import { LoginComponent } from './login/login.component';
+import { FeedComponent } from './pages/feed/feed.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { LoginComponent } from './login/login.component';
     EditProfileComponent,
     HeaderComponent,
     FriendsMenuComponent,
-    ProfileComponent
+    ProfileComponent,
+    FeedComponent
   ],
   imports: [
     ReactiveFormsModule,

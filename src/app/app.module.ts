@@ -16,6 +16,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { RegistroComponent } from './registro/registro.component';
 import { LoginComponent } from './login/login.component';
 import { FeedComponent } from './pages/feed/feed.component';
+import { SearchComponent } from './pages/search/search.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { FeedComponent } from './pages/feed/feed.component';
     HeaderComponent,
     FriendsMenuComponent,
     ProfileComponent,
-    FeedComponent
+    FeedComponent,
+    SearchComponent
   ],
   imports: [
     ReactiveFormsModule,

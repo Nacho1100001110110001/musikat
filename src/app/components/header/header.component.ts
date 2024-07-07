@@ -13,6 +13,7 @@ export class HeaderComponent {
   user!: any;
   buscadorGrupo: FormGroup;
   showMenu: boolean = false;
+  showHeader: boolean = false;
 
   constructor(public loginService: LoginService,
     private userService: UserService,
@@ -24,7 +25,12 @@ export class HeaderComponent {
   }
 
   ngOnInit(){
-    this.getUser();
+    this.loginService._logeado.subscribe(value => {
+      this.showHeader = value;
+      if(value){
+        this.getUser();
+      }
+    });
   }
 
   getUser(){
@@ -41,9 +47,12 @@ export class HeaderComponent {
 
   search(){
     if(this.buscadorGrupo.valid){
-      let name: string = this.buscadorGrupo.value.buscador;
-      name.replace(" ", "%20");
-      this.router.navigate(["perfil/"+ name]);
+      let busqueda: string = this.buscadorGrupo.value.buscador;
+      busqueda.replace(" ", "%20");
+      this.router.navigate(["busqueda/"+ busqueda]);
+      setTimeout(() => {
+        window.location.reload();
+      }, 100)
     }
   }
 

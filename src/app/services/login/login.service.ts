@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { map } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
 import { Router } from '@angular/router';
 import { enviroments } from '../../../enviroments/enviroments';
 
@@ -11,7 +11,12 @@ import { enviroments } from '../../../enviroments/enviroments';
 
 export class LoginService {
 
-  public logeado: boolean=false;
+  public _logeado = new BehaviorSubject<boolean>(false);
+
+
+  set logeado(value: boolean){
+    this._logeado.next(value);
+  }
 
   constructor(private http: HttpClient, private router: Router) { }
 

@@ -1,0 +1,149 @@
+.body {
+    margin-top: 60px;
+    width: 100%;
+    min-height: calc(100vh - 60px);
+    background-color: #001121;
+    overflow: hidden;
+}
+
+.nav-container {
+    background-color: #001121;
+    padding: 1rem;
+}
+
+.active {
+    background-color: #E1FCFF !important;
+    color: #001121 !important;
+    border-radius: 0.25rem 0.25rem 0 0;
+    border-bottom: 3px solid transparent;
+}
+
+.custom-nav-tabs {
+    border-bottom: 3px solid #E1FCFF;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.custom-nav-tabs .nav-item {
+    flex: 1;
+    text-align: center;
+}
+
+.custom-nav-tabs .nav-link {
+    color: #E1FCFF;
+    text-align: center;
+    width: 100%;
+    background-color: #001121;
+    border: none;
+    padding: 1rem;
+    font-size: 1.2rem;
+}
+
+.song-photo {
+    aspect-ratio: 1/1;
+}
+
+h1,
+h3,
+h4 {
+    margin: 0;
+    padding: 0;
+    color: #E1FCFF;
+    font-family: 'Rubik', sans-serif;
+}
+
+/* Contenedor del corazón */
+.heart-container {
+    --heart-color: #30cfd0;
+    /* Color del corazón */
+    position: relative;
+    width: 50px;
+    height: 50px;
+    transition: transform 0.3s;
+}
+
+/* Checkbox para alternar el estado */
+.heart-container .checkbox {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: 20;
+    cursor: pointer;
+}
+
+/* Contenedor de SVG */
+.heart-container .svg-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Corazón vacío */
+.heart-container .svg-outline,
+.heart-container .svg-filled {
+    fill: var(--heart-color);
+    position: absolute;
+}
+
+/* Corazón lleno */
+.heart-container .svg-filled {
+    display: none;
+}
+
+/* Celebración */
+.heart-container .svg-celebrate {
+    position: absolute;
+    display: none;
+    stroke: var(--heart-color);
+    fill: var(--heart-color);
+    stroke-width: 2px;
+}
+
+/* Mostrar corazón lleno al hacer clic */
+.heart-container .checkbox:checked~.svg-container .svg-filled {
+    display: block;
+}
+
+/* Mostrar celebración al hacer clic */
+.heart-container .checkbox:checked~.svg-container .svg-celebrate {
+    display: block;
+    animation: keyframes-svg-celebrate 0.5s;
+    animation-fill-mode: forwards;
+}
+
+/* Animación del corazón */
+@keyframes keyframes-svg-filled {
+    0% {
+        transform: scale(0);
+    }
+
+    25% {
+        transform: scale(1.2);
+    }
+
+    50% {
+        transform: scale(1);
+        filter: brightness(1.5);
+    }
+}
+
+/* Animación de la celebración */
+@keyframes keyframes-svg-celebrate {
+    0% {
+        transform: scale(0);
+    }
+
+    50% {
+        opacity: 1;
+        filter: brightness(1.5);
+    }
+
+    100% {
+        transform: scale(1.4);
+        opacity: 0;
+    }
+}

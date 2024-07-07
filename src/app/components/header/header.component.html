@@ -1,4 +1,4 @@
-<div class="header">
+<div class="header" [ngClass]="showHeader ? '':'hide'">
     <button class="boton" (click)="nav.toggleVisibility()">
         <span class="material-symbols-outlined menuicon">
             menu

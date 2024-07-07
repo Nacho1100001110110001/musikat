@@ -7,6 +7,7 @@ import { ChatComponent } from './chat/chat.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { loginGuard } from './guard/login.guard';
 import { FeedComponent } from './pages/feed/feed.component';
+import { SearchComponent } from './pages/search/search.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -16,9 +17,8 @@ const routes: Routes = [
   { path: 'perfil', component: ProfileComponent, canActivate: [loginGuard] },
   {path: 'inicio', component: FeedComponent, canActivate: [loginGuard]}, //Ruta para el feed
   { path: '', redirectTo: '/login', pathMatch: 'full' }, // Redirigir al login por defecto
-  { path: 'perfil/:nombre', component: ProfileComponent, 
-    canActivate: [loginGuard] 
-  },
+  { path: 'perfil/:nombre', component: ProfileComponent, canActivate: [loginGuard] },
+  { path: 'busqueda/:busqueda', component: SearchComponent, canActivate: [loginGuard] },
   { path: '**', redirectTo: '/login' }, // Redirigir a login en caso de una ruta no encontrada
 ];
 

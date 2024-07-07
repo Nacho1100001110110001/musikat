@@ -1,0 +1,139 @@
+<div class="body">
+    <!--  nav -->
+<ul class="nav custom-nav-tabs mt-3">
+    <li class="nav-item">
+        <button class="nav-link" [ngClass]="selectedTab=='person'? 'active':''" (click)="selectTab('person')">Personas</button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link" [ngClass]="selectedTab=='playlist'? 'active':''" (click)="selectTab('playlist')">Playlists</button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link" [ngClass]="selectedTab=='song'? 'active':''" (click)="selectTab('song')">Canciones</button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link" [ngClass]="selectedTab=='artist'? 'active':''" (click)="selectTab('artist')">Artistas</button>
+    </li>
+</ul>
+
+@switch (selectedTab) {
+    @case ('person') {
+        <div class="row pb-4 pt-4">
+            @if (personList?.length > 0) {
+                <h1>Aqui van las personas</h1>
+            }@else {
+                <h1 class="w-100 text-center mt-4">No se encontraron personas :(</h1>
+            }
+        </div>
+    }
+    @case ('playlist') {
+        <div class="row pb-4 pt-4">
+            @if (playlistList?.length > 0) {
+                <h1>Aqui van las playlists</h1>
+            }@else {
+                <h1 class="w-100 text-center mt-4">No se encontraron playlists :(</h1>
+            }
+        </div>
+    }
+    @case ('song') {
+        <div class="row pb-4 pt-4 justify-content-center">
+            @if (songList?.length > 0) {
+                @for (song of songList; track $index) {
+                    <div class="col-6 d-flex justify-content-end mt-4 mb-4">
+                        <div class="col-5 song-photo">
+                            <img [src]="song.album.cover_xl" class="w-100" alt="">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row h-100 align-items-center">
+                            <div class="col-8 d-flex align-items-start flex-column h-100 justify-content-center">
+                                <h1>{{song.title}}</h1>
+                                <h3>{{song.artist?.name}}</h3>
+                            </div>
+                            <div class="col-4">
+                                <div title="Like" class="heart-container">
+                                    <input id="Give-It-An-Id" class="checkbox" type="checkbox" [checked]="$index == index">
+                                    <div class="svg-container">
+                                        <!-- Corazón vacío -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="svg-outline" viewBox="0 0 24 24">
+                                            <path
+                                                d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Zm-3.585,18.4a2.973,2.973,0,0,1-3.83,0C4.947,16.006,2,11.87,2,8.967a4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,11,8.967a1,1,0,0,0,2,0,4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,22,8.967C22,11.87,19.053,16.006,13.915,20.313Z">
+                                            </path>
+                                        </svg>
+                                        <!-- Corazón lleno -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="svg-filled" viewBox="0 0 24 24">
+                                            <path
+                                                d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Z">
+                                            </path>
+                                        </svg>
+                                        <!-- Celebración -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="100" width="100" class="svg-celebrate">
+                                            <polygon points="10,10 20,20"></polygon>
+                                            <polygon points="10,50 20,50"></polygon>
+                                            <polygon points="20,80 30,70"></polygon>
+                                            <polygon points="90,10 80,20"></polygon>
+                                            <polygon points="90,50 80,50"></polygon>
+                                            <polygon points="80,80 70,70"></polygon>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }@else {
+                <h1 class="w-100 text-center mt-4">No se encontraron canciones :(</h1>
+            }
+        </div>
+    }
+    @case ('artist') {
+        <div class="row pb-4 pt-4">
+            @if (artistList?.length > 0) {
+                @for (artist of artistList; track $index) {
+                    <div class="col-6 d-flex justify-content-end mt-4 mb-4">
+                        <div class="col-5 song-photo">
+                            <img [src]="artist.picture_xl" class="w-100" alt="">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row h-100 align-items-center">
+                            <div class="col-8 d-flex align-items-start flex-column h-100 justify-content-center">
+                                <h1>{{artist.name}}</h1>
+                            </div>
+                            <div class="col-4">
+                                <div title="Like" class="heart-container">
+                                    <input id="Give-It-An-Id" class="checkbox" type="checkbox" [checked]="$index == index">
+                                    <div class="svg-container">
+                                        <!-- Corazón vacío -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="svg-outline" viewBox="0 0 24 24">
+                                            <path
+                                                d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Zm-3.585,18.4a2.973,2.973,0,0,1-3.83,0C4.947,16.006,2,11.87,2,8.967a4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,11,8.967a1,1,0,0,0,2,0,4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,22,8.967C22,11.87,19.053,16.006,13.915,20.313Z">
+                                            </path>
+                                        </svg>
+                                        <!-- Corazón lleno -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="svg-filled" viewBox="0 0 24 24">
+                                            <path
+                                                d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Z">
+                                            </path>
+                                        </svg>
+                                        <!-- Celebración -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="100" width="100" class="svg-celebrate">
+                                            <polygon points="10,10 20,20"></polygon>
+                                            <polygon points="10,50 20,50"></polygon>
+                                            <polygon points="20,80 30,70"></polygon>
+                                            <polygon points="90,10 80,20"></polygon>
+                                            <polygon points="90,50 80,50"></polygon>
+                                            <polygon points="80,80 70,70"></polygon>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }@else {
+                <h1 class="w-100 text-center mt-4">No se encontraron artistas :(</h1>
+            }
+        </div>
+    }
+}
+</div>

@@ -62,8 +62,8 @@ export class EditProfileComponent {
 
   updateUser(){
     let user: any = {username: this.formUser.value.username};
-    if(this.favoriteSong) user.favoriteSong = this.favoriteSong.id;
-    if(this.favoriteArtist) user.favoriteArtist = this.favoriteArtist.id;
+    if(this.favoriteSong) user.favoriteSong = this.favoriteSong.id + "";
+    if(this.favoriteArtist) user.favoriteArtist = this.favoriteArtist.id + "";
     console.log(user);
     this.userService.updateUser(user).subscribe({
       next: (result) => {

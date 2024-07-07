@@ -1,21 +1,23 @@
-<div class="body">
+<div class="container" [formGroup]="formUser">
 
     <!-- Primer contenedor azul -->
     <div class="row container-top">
         <div class="col-4 d-flex justify-content-center align-items-center">
             <div class="photo">
-                <img src="../../../assets/images/Perfil.svg"><img>
+                <input type="file" class="photo-input" #fileInput>
+                <img src="../../../assets/images/profile-icon.png">
+                <div class="photo-hover" >
+                    <span class="material-symbols-outlined icon" (click)="triggerClick()">
+                        upload_file
+                        </span>
+                </div>
             </div>
         </div>
         <div class="col-5 mt-4">
             <div>
                 <div class="mt-4 mb-4">
                     <label for="exampleFormControlInput1" class="form-label">Nombre de usuario</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="">
-                </div>
-                <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="mt-3 form-label">Fecha de nacimiento</label>
-                    <input type="date" class="form-control" id="exampleFormControlInput1" placeholder="">
+                    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="" formControlName="username">
                 </div>
             </div>
         </div>
@@ -25,34 +27,103 @@
 
     <div class="container-medium">
         <!--  nav -->
-        <ul class="nav nav-tabs">
+        <ul class="nav custom-nav-tabs">
             <li class="nav-item">
-                <button class="nav-link active" (click)="selectTab('song')">Cancion favorita</button>
+                <button class="nav-link" [ngClass]="selectedTab=='song'? 'active':''" (click)="selectTab('song')">Canción favorita</button>
             </li>
             <li class="nav-item">
-                <button class="nav-link active" (click)="selectTab('artist')">Artista favorito</button>
-            </li>
-            <li class="nav-item">
-                <button class="nav-link active" (click)="selectTab('gender')">Genero favorito</button>
+                <button class="nav-link" [ngClass]="selectedTab=='artist'? 'active':''" (click)="selectTab('artist')">Artista favorito</button>
             </li>
         </ul>
+        
 
-        <div [ngSwitch]="selectedTab">
-            <div *ngSwitchCase="'song'">meoww</div>
-            <div *ngSwitchCase="'artist'">Link 1 content...</div>
-            <div *ngSwitchCase="'gender'">Link 2</div>
-        </div>
+        @switch (selectedTab) {
+            @case ('song') {
+                <div class="row pb-4 pt-4">
+                    <div class="col-6 d-flex justify-content-center">
+                        <div class="col-8 search-bar d-flex align-items-center">
+                            <div class="w-100" [formGroup]="buscador">
+                                <label for="exampleFormControlInput1" class="form-label">Buscar</label>
+                                <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="song" placeholder="" (keydown.enter)="search(0)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 justify-content-center align-items-center d-flex" [ngClass]="seacrhing[0]? 'overflow-y-scroll':''" style="max-height: 320px;">
+                        @if (!seacrhing[0]) {
+                            @if (favoriteSong) {
+                                <div class="col-4 justify-content-center">
+                                    <img [src]="favoriteSong.album.cover_xl" class="w-100" alt="">
+                                </div>
+                                <div class="col-8 d-flex align-items-start flex-column h-100 justify-content-center ms-3">
+                                    <h1>{{favoriteSong.title}}</h1>
+                                    <h3>{{favoriteSong.artist?.name}}</h3>
+                                </div>
+                            }@else {
+                                <div class="col-12 d-flex justify-content-center">
+                                    <h1>Selecciona una canción para mostrar</h1>
+                                </div>
+                            }
+                        }@else {
+                            <div class="col-8 d-flex align-items-start flex-column h-100 w-100">
+                                @for (song of songList; track $index) {
+                                    <div class="d-flex align-items-center justify-content-start w-100 ps-3 pe-3" [ngClass]="favoriteSong?.id == song.id ? 'item-selected':'item'" (click)="select(0, song.id)">
+                                        <img [src]="song.album.cover" class="ms-1 me-2" width="30" height="30" alt="">
+                                        <h3 class="mt-2">{{song.title}}</h3>
+                                    </div>
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+            @case ('artist') {
+                <div class="row pb-4 pt-4">
+                    <div class="col-6 d-flex justify-content-center">
+                        <div class="col-8 search-bar d-flex align-items-center">
+                            <div class="w-100" [formGroup]="buscador">
+                                <label for="exampleFormControlInput1" class="form-label">Buscar</label>
+                                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="" formControlName="artist" (keydown.enter)="search(1)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 justify-content-center align-items-center d-flex" [ngClass]="seacrhing[1]? 'overflow-y-scroll':''" style="max-height: 320px;">
+                        @if (!seacrhing[1]) {
+                            @if (favoriteArtist) {
+                                <div class="col-4 justify-content-center">
+                                    <img [src]="favoriteArtist.picture_xl" class="w-100" alt="">
+                                </div>
+                                <div class="col-8 d-flex align-items-start flex-column h-100 justify-content-center ms-3">
+                                    <h1>{{favoriteArtist.name}}</h1>
+                                </div>
+                            }@else {
+                                <div class="col-12 d-flex justify-content-center">
+                                    <h1>Selecciona un artista para mostrar</h1>
+                                </div>
+                            }
+                        }@else {
+                            <div class="col-8 d-flex align-items-start flex-column h-100 w-100">
+                                @for (artist of artistList; track $index) {
+                                    <div class="d-flex align-items-center justify-content-start w-100 ps-3 pe-3" [ngClass]="favoriteArtist?.id == artist.id ? 'item-selected':'item'" (click)="select(1, artist.id)">
+                                        <img [src]="artist.picture" class="ms-1 me-2" width="30" height="30" alt="">
+                                        <h3 class="mt-2">{{artist.name}}</h3>
+                                    </div>
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        }
 
     </div>
 
         <!-- botomnes -->
         <div class="container-bot">
             <div class="d-flex justify-content-end align-items-center">
-                <button type="button" class="btn-cancel">Cancelar</button>
-                <button type="button" class="btn-save">Guardar cambios</button>
+                <button type="button" class="btn-cancel" (click)="cancelar()">Cancelar</button>
+                <button type="button" class="btn-save" (click)="updateUser()">Guardar cambios</button>
             </div>
         </div>
-
 
 
 </div>

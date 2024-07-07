@@ -156,10 +156,16 @@ router.get("/api/pub/:id",
         }
         try{
             const data = matchedData(request);
-            const publicacion = await Publication.findById(data.id);
+            const publicacion = await Publication.findById(data.id).lean();
             if(!publicacion){
                 return response.status(400).send({error: "no se pudo encontrar la publicación"});
             }
+            console.log(request.user.id);
+            const hasLiked = publicacion.likes.some(like => {
+                return like.toString() == request.user.id;
+            });
+            delete publicacion.likes;
+            publicacion.hasLiked = hasLiked;
             response.status(200).send(publicacion);
         }catch(err){
             response.status(400).send({error: err.message});

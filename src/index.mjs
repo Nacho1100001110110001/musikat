@@ -8,19 +8,18 @@ import cookieParser from "cookie-parser";
 import session from "express-session";
 import passport from "passport";
 import "./sessionStrategy/local-strategy.mjs"
-import { isAuthtenticated } from "./utils/middlewares.mjs";
 import cors from "cors";
 import fileUpload from "express-fileupload";
 
 const app= express();
 //mongodb://mongodb/musikat
 mongoose
-	.connect("mongodb://localhost/musikat", {connectTimeoutMS: 10000})
+	.connect("mongodb://mongodb/musikat", {connectTimeoutMS: 10000})
 	.then(() => console.log("Connected to data base"))
 	.catch((err) => console.log(`Error: ${err}`))
 
 app.use(cors({
-	origin: process.env.CORS_URL || "http://localhost",
+	origin: process.env.CORS_URL || "http://chanchometricas.duckdns.org",
 	credentials: true
 }));
 
@@ -45,28 +44,17 @@ app.use(passport.session());
 //poner al final
 app.use(authRouter);
 app.use(userRouter);
-app.use(publicationRouter);
+//app.use(publicationRouter);
 
 
 const PORT = process.env.PORT || 3000;
 
-app.get("/api/", 
-	isAuthtenticated, 
-	(req, res) => {
-	console.log(req.session);
-	console.log(req.session.passport.user);
-	console.log(req.session.id);
-	console.log(req.user);
-	res.status(200).send({msg: req.user});
+
+app.listen(PORT, (err) => {
+	if (err) {
+	  console.error(`Error starting server: ${err.message}`);
+	} else {
+	  console.log(`Express Server - puerto ${PORT} online`);
+	}
 });
 
-app.listen(PORT, ()=>{
-    console.log('Express Server - puerto 3000 online');
-});
-
-/*app.use((req, res, next) => {
-	res.header('Access-Control-Allow-Origin', 'http://localhost:4200'); // Reemplaza con la URL de tu aplicación Angular
-	res.header('Access-Control-Allow-Credentials', 'true');
-	res.header('Access-Control-Expose-Headers', 'Set-Cookie, Authorization, Content-Length'); // Cabeceras a exponer
-	next();
-});*/

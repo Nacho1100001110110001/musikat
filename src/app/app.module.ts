@@ -5,11 +5,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgxBootstrapIconsModule, allIcons } from 'ngx-bootstrap-icons';
 import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
+import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    EditProfileComponent
+    EditProfileComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,

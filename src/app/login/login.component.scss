@@ -84,7 +84,6 @@ h2, input, h6, a {
 input[type="text"],
 input[type="password"] {
   width: 100%;
-  max-width: 400px;
   padding: 10px 15px;
   font-size: 16px;
   border: 2px solid #001121;
@@ -283,7 +282,7 @@ input[type="password"]:not(:placeholder-shown) + label {
 
 .toggle-password {
   position: absolute;
-  right: 10px;
+  right: 20px;
   top: 50%;
   transform: translateY(-50%);
   background: none;

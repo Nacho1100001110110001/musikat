@@ -20,7 +20,7 @@ import { FeedComponent } from './pages/feed/feed.component';
 @NgModule({
   declarations: [
     AppComponent,
-    ChatComponent
+    ChatComponent,
     LoginComponent,
     RegistroComponent,
     EditProfileComponent,

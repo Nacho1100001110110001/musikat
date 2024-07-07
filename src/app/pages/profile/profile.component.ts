@@ -63,8 +63,12 @@ export class ProfileComponent {
     this.userService.getUserProfile().subscribe({
       next: (result) => {
         this.user = result;
-        this.getSong();
-        this.getArtist();
+        if(this.user.favoriteSong){
+          this.getSong();
+        }
+        if(this.user.favoriteArtist){
+          this.getArtist();
+        }
         this.getPosts();
         this.getPostById();
         console.log(this.user)
@@ -85,8 +89,12 @@ export class ProfileComponent {
           if(this.user.blocked.find((user: { userId: any; }) => user.userId == result.userId)) this.blocked = true;
         }
         this.user = result;
-        this.getSong();
-        this.getArtist();
+        if(this.user.favoriteSong){
+          this.getSong();
+        }
+        if(this.user.favoriteArtist){
+          this.getArtist();
+        }
         this.getPosts();
         this.getPostById();
       },

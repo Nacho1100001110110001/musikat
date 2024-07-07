@@ -50,17 +50,23 @@
                     </div>
                     <div class="col-6 justify-content-center align-items-center d-flex" [ngClass]="seacrhing[0]? 'overflow-y-scroll':''" style="max-height: 320px;">
                         @if (!seacrhing[0]) {
-                        <div class="col-4 justify-content-center">
-                            <img [src]="favoriteSong.album.cover_xl" class="w-100" alt="">
-                        </div>
-                        <div class="col-8 d-flex align-items-start flex-column h-100 justify-content-center ms-3">
-                            <h1>{{favoriteSong.title}}</h1>
-                            <h3>{{favoriteSong.artist?.name}}</h3>
-                        </div>
+                            @if (favoriteSong) {
+                                <div class="col-4 justify-content-center">
+                                    <img [src]="favoriteSong.album.cover_xl" class="w-100" alt="">
+                                </div>
+                                <div class="col-8 d-flex align-items-start flex-column h-100 justify-content-center ms-3">
+                                    <h1>{{favoriteSong.title}}</h1>
+                                    <h3>{{favoriteSong.artist?.name}}</h3>
+                                </div>
+                            }@else {
+                                <div class="col-12 d-flex justify-content-center">
+                                    <h1>Selecciona una canción para mostrar</h1>
+                                </div>
+                            }
                         }@else {
                             <div class="col-8 d-flex align-items-start flex-column h-100 w-100">
                                 @for (song of songList; track $index) {
-                                    <div class="d-flex align-items-center justify-content-start w-100 ps-3 pe-3" [ngClass]="favoriteSong.id == song.id ? 'item-selected':'item'" (click)="select(0, song.id)">
+                                    <div class="d-flex align-items-center justify-content-start w-100 ps-3 pe-3" [ngClass]="favoriteSong?.id == song.id ? 'item-selected':'item'" (click)="select(0, song.id)">
                                         <img [src]="song.album.cover" class="ms-1 me-2" width="30" height="30" alt="">
                                         <h3 class="mt-2">{{song.title}}</h3>
                                     </div>
@@ -82,16 +88,22 @@
                     </div>
                     <div class="col-6 justify-content-center align-items-center d-flex" [ngClass]="seacrhing[1]? 'overflow-y-scroll':''" style="max-height: 320px;">
                         @if (!seacrhing[1]) {
-                            <div class="col-4 justify-content-center">
-                                <img [src]="favoriteArtist.picture_xl" class="w-100" alt="">
-                            </div>
-                            <div class="col-8 d-flex align-items-start flex-column h-100 justify-content-center ms-3">
-                                <h1>{{favoriteArtist.name}}</h1>
-                            </div>
+                            @if (favoriteArtist) {
+                                <div class="col-4 justify-content-center">
+                                    <img [src]="favoriteArtist.picture_xl" class="w-100" alt="">
+                                </div>
+                                <div class="col-8 d-flex align-items-start flex-column h-100 justify-content-center ms-3">
+                                    <h1>{{favoriteArtist.name}}</h1>
+                                </div>
+                            }@else {
+                                <div class="col-12 d-flex justify-content-center">
+                                    <h1>Selecciona un artista para mostrar</h1>
+                                </div>
+                            }
                         }@else {
                             <div class="col-8 d-flex align-items-start flex-column h-100 w-100">
                                 @for (artist of artistList; track $index) {
-                                    <div class="d-flex align-items-center justify-content-start w-100 ps-3 pe-3" [ngClass]="favoriteArtist.id == artist.id ? 'item-selected':'item'" (click)="select(1, artist.id)">
+                                    <div class="d-flex align-items-center justify-content-start w-100 ps-3 pe-3" [ngClass]="favoriteArtist?.id == artist.id ? 'item-selected':'item'" (click)="select(1, artist.id)">
                                         <img [src]="artist.picture" class="ms-1 me-2" width="30" height="30" alt="">
                                         <h3 class="mt-2">{{artist.name}}</h3>
                                     </div>

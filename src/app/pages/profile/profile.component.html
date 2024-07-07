@@ -56,39 +56,59 @@
             @switch (selectedTab) {
                 @case ('song') {
                     <div class="row pb-4 pt-4">
-                        <div class="col-6 d-flex justify-content-end">
-                            <div class="col-5 song-photo">
-                                <img [src]="favoriteSong.album.cover_xl" class="w-100" alt="">
+                        @if (user.favoriteSong) {
+                            <div class="col-6 d-flex justify-content-end">
+                                <div class="col-5 song-photo">
+                                    <img [src]="favoriteSong.album.cover_xl" class="w-100" alt="">
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-6 justify-content-center">
-                            <div class="col-8 d-flex align-items-start flex-column h-100 justify-content-center">
-                                <h1>{{favoriteSong.title}}</h1>
-                                <h3>{{favoriteSong.artist?.name}}</h3>
+                            <div class="col-6 justify-content-center">
+                                <div class="col-8 d-flex align-items-start flex-column h-100 justify-content-center">
+                                    <h1>{{favoriteSong.title}}</h1>
+                                    <h3>{{favoriteSong.artist?.name}}</h3>
+                                </div>
                             </div>
-                        </div>
+                        }@else {
+                            <div class="col-12 d-flex justify-content-center pt-4 pb-4 mt-4 mb-4">
+                                @if (userProfile) {
+                                    <h1>Selecciona una canción favorita para mostrar en tu perfil</h1>
+                                }@else {
+                                    <h1>Este usuario no ha seleccionado una canción favorita:(</h1>
+                                }
+                            </div>
+                        }
                     </div>
                 }
                 @case ('artist') {
                     <div class="row pb-4 pt-4">
-                        <div class="col-6 d-flex justify-content-center">
-                            <div class="col-5 song-photo d-flex justify-content-center flex-column align-items-center">
-                                <img [src]="favoriteArtist.picture_xl" class="w-75" alt="">
-                                <h1>{{favoriteArtist.name}}</h1>
+                        @if (user.favoriteArtist) {
+                            <div class="col-6 d-flex justify-content-center">
+                                <div class="col-5 song-photo d-flex justify-content-center flex-column align-items-center">
+                                    <img [src]="favoriteArtist.picture_xl" class="w-75" alt="">
+                                    <h1>{{favoriteArtist.name}}</h1>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-6 justify-content-center">
-                            <div class="col-8 d-flex align-items-start flex-column h-100 justify-content-center">
-                                <h1>Top canciones</h1>
-                                @for (song of topArtistSongs.data; track $index) {
-                                    <div class="d-flex align-items-center">
-                                        <h3 class="mt-2">{{($index + 1) + ".  "}}</h3>
-                                        <img [src]="song.album.cover" class="ms-1 me-1" width="30" height="30" alt="">
-                                        <h3 class="mt-2">{{song.title}}</h3>
-                                    </div>
+                            <div class="col-6 justify-content-center">
+                                <div class="col-8 d-flex align-items-start flex-column h-100 justify-content-center">
+                                    <h1>Top canciones</h1>
+                                    @for (song of topArtistSongs.data; track $index) {
+                                        <div class="d-flex align-items-center">
+                                            <h3 class="mt-2">{{($index + 1) + ".  "}}</h3>
+                                            <img [src]="song.album.cover" class="ms-1 me-1" width="30" height="30" alt="">
+                                            <h3 class="mt-2">{{song.title}}</h3>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }@else {
+                            <div class="col-12 d-flex justify-content-center pt-4 pb-4 mt-4 mb-4">
+                                @if (userProfile) {
+                                    <h1>Selecciona un artista favorito para mostrar en tu perfil</h1>
+                                }@else {
+                                    <h1>Este usuario no ha seleccionado un artista favorito:(</h1>
                                 }
                             </div>
-                        </div>
+                        }
                     </div>
                 }
             }

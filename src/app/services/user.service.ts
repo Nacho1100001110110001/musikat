@@ -16,7 +16,7 @@ export class UserService {
     return this.http.get<any>(url
       , { withCredentials: true}
     ).pipe(map((res: any)=>{
-      return res[0];
+      return res;
     }));
   }
 

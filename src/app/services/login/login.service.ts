@@ -22,7 +22,7 @@ export class LoginService {
     .pipe(map((res: HttpResponse<any>)=>{
       this.logeado = true;
       console.log(res);
-      this.router.navigate(['perfil']);
+      this.router.navigate(['inicio']);
       return res;
     }));
   }

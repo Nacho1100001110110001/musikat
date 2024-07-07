@@ -41,7 +41,6 @@ export class HeaderComponent {
 
   search(){
     if(this.buscadorGrupo.valid){
-      console.log("elpepe")
       let name: string = this.buscadorGrupo.value.buscador;
       name.replace(" ", "%20");
       this.router.navigate(["perfil/"+ name]);

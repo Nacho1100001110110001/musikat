@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from '../services/login/login.service';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -17,10 +18,21 @@ export class LoginComponent {
     passworddos: false
   };
 
-  constructor(private formBuilder: FormBuilder, private loginService:LoginService){
+  constructor(private formBuilder: FormBuilder, private loginService:LoginService, private router: Router){
     this.formLogin= this.formBuilder.group({
       email:['',[Validators.required]],
       password: ['',[Validators.required]]
+    });
+  }
+
+  ngOnInit(){
+    this.loginService.logged().subscribe({
+      next: (result) => {
+        this.router.navigate(['inicio']);
+      },
+      error: (error) => {
+      },
+      complete: () => {},
     });
   }
   

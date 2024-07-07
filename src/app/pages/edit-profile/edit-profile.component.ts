@@ -46,8 +46,12 @@ export class EditProfileComponent {
       next: (result) => {
         this.user = result;
         this.formUser.patchValue(result);
-        this.getSong();
-        this.getArtist();
+        if(this.user.favoriteSong){
+          this.getSong();
+        }
+        if(this.user.favoriteArtist){
+          this.getArtist();
+        }
       },
       error: (error) => {
         console.error(error);
@@ -57,11 +61,14 @@ export class EditProfileComponent {
   }
 
   updateUser(){
-    let user = {username: this.formUser.value.username, favoriteSong: this.favoriteSong.id, favoriteArtiste: this.favoriteArtist.id};
+    let user: any = {username: this.formUser.value.username};
+    if(this.favoriteSong) user.favoriteSong = this.favoriteSong.id;
+    if(this.favoriteArtist) user.favoriteArtist = this.favoriteArtist.id;
+    console.log(user);
     this.userService.updateUser(user).subscribe({
       next: (result) => {
-        this.router.navigate(["perfil"])
         console.log(result);
+        this.router.navigate(["perfil"])
       },
       error: (error) => {
         console.error(error);

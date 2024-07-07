@@ -32,6 +32,45 @@ router.put("/api/user/profile",
     }
 );
 
+router.put("/api/user/profilepic",
+    isAuthtenticated,
+    async (request, response) => {
+        request.user.id;
+
+        if(!request.files){
+            return response.status(400).json({
+                error: "Debe proporcionar imagen"
+            });
+        }
+        const file = request.files.imagen;
+        const parsedName = file.name.split('.');
+        const extention = parsedName[parsedName.length - 1];
+
+        const validExtentions = ["png", "jpg", "gif", "jpeg"];
+
+        if(validExtentions.indexOf(extention) > 0){
+            return response.status(400).json({
+                error: "Extension no valida"
+            })
+        }
+
+        const fileName = `${request.user.id}.${extention}`;
+        const path = `upload/profilepic/${fileName}`;
+
+        file.mv("../../" + path , err => {
+            if(err){
+                return request.status(500).json({
+                    error: "No se pudo subir el archivo"
+                });
+            }
+        })
+        
+        return response.status(201).send({
+            url: "poner url" + path
+        });
+    }
+);
+
 router.get("/api/user/profile/:otherUserName", 
     isAuthtenticated,
     check("otherUserName")
@@ -181,8 +220,7 @@ router.put("/api/user/block/:otherUserId",
             return response.status(400).send({error: err.message});
         }finally{
             session.endSession();
-        }
-        
+        }   
     }
 );
 

@@ -1,3 +1,4 @@
+
 const createUserValidationSchema = {
     email: {
         isEmail: {
@@ -47,12 +48,6 @@ const loginUserValidationSchema = {
 };
 
 const updateUserProfileSchema = {
-  birthDate: {
-    isDate: {
-      errorMessage: "No se ha ingresado una fecha valida"
-    },
-    optional: true
-  },
   favoriteSong: {
     isString: {
       errorMessage: "debe ingresar un string"
@@ -73,4 +68,44 @@ const updateUserProfileSchema = {
   }
 }
 
-export { createUserValidationSchema, loginUserValidationSchema, updateUserProfileSchema }
+const createPublicationSchema = {
+  songId: {
+    isString: true
+  },
+  artistId: {
+    isString: true
+  },
+  content: {
+    isString: true,
+    notEmpty: {
+      errorMessage: "la publicación no puede estar vacia",
+    },
+    isLength: {
+      options: {
+        min: 1,
+        max: 255
+      },
+      errorMonitor: "la publicacion puede ser de hasta 255 caracteres"
+    }
+  }
+}
+
+const createCommentSchema = {
+  comment: {
+    isString: true,
+    notEmpty: {
+      errorMessage: "El comentario no puede estar vacio",
+    },
+    isLength: {
+      options: {
+        min: 1,
+        max: 255
+      },
+      errorMonitor: "El Mensaje puede ser de hasta 255 caracteres"
+    }
+  }
+}
+
+export { createCommentSchema, createPublicationSchema,
+  createUserValidationSchema, loginUserValidationSchema, 
+  updateUserProfileSchema }

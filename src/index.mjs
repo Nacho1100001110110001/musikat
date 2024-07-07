@@ -1,6 +1,7 @@
 import express from "express";
 import authRouter from "./routers/authRouter.mjs"
 import userRouter from "./routers/userRouter.mjs"
+import publicationRouter from "./routers/publicationRouter.mjs"
 import mongoose from "mongoose";
 import MongoStore from "connect-mongo";
 import cookieParser from "cookie-parser";
@@ -9,21 +10,21 @@ import passport from "passport";
 import "./sessionStrategy/local-strategy.mjs"
 import { isAuthtenticated } from "./utils/middlewares.mjs";
 import cors from "cors";
-
+import fileUpload from "express-fileupload";
 
 const app= express();
-
+//mongodb://mongodb/musikat
 mongoose
-	.connect("mongodb://mongodb/musikat", {connectTimeoutMS: 10000})
+	.connect("mongodb://localhost/musikat", {connectTimeoutMS: 10000})
 	.then(() => console.log("Connected to data base"))
 	.catch((err) => console.log(`Error: ${err}`))
 
 app.use(cors({
-	origin:"http://localhost",
+	origin: process.env.CORS_URL || "http://localhost",
 	credentials: true
 }));
 
-
+app.use(fileUpload());
 app.use(express.json());
 app.use(cookieParser());
 app.use(session({
@@ -44,6 +45,7 @@ app.use(passport.session());
 //poner al final
 app.use(authRouter);
 app.use(userRouter);
+app.use(publicationRouter);
 
 
 const PORT = process.env.PORT || 3000;

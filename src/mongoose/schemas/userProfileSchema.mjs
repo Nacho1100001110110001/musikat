@@ -7,7 +7,7 @@ const userInfoSchema = new mongoose.Schema({
     required: true
   },
   username: {
-    type: String,
+    type: mongoose.Schema.Types.String,
     required: true
   }
 });
@@ -31,10 +31,6 @@ const userProfileSchema = new mongoose.Schema({
     trim: true,
   },
   favoriteArtist: {
-    type: mongoose.Schema.Types.String,
-    trim: true,
-  },
-  favoriteGenre: {
     type: mongoose.Schema.Types.String,
     trim: true,
   },

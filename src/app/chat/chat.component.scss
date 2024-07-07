@@ -4,7 +4,7 @@
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  background-color: #1c1c1c;
+  background-color: #122334;
   color: white;
   font-family: 'Rubik'
 }
@@ -22,14 +22,14 @@
 }
 
 .message-incoming {
-  background-color: #444;
+  background-color: #434553;
   align-self: flex-start;
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
 
 .message-outgoing {
-  background-color: #0066ff;
+  background-color: #084B8B;
   align-self: flex-end;
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -40,7 +40,7 @@
   border-top: 1px solid #C4C8C5;
   align-items: center;
   display: flex;
-  background-color: #1c1c1c;
+  background-color: #122334;
 }
 
 .chat-input input {
@@ -71,7 +71,7 @@
   border-bottom: 1px solid #C4C8C5;
   text-align: center;
   font-weight: bold;
-  background-color: #1c1c1c;
+  background-color: #122334;
   color: white;
 }
 

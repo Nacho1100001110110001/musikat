@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { RegistroComponent } from './registro/registro.component';
 import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
+import { ChatComponent } from './chat/chat.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { loginGuard } from './guard/login.guard';
 import { FeedComponent } from './pages/feed/feed.component';

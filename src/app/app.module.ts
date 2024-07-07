@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
+import { ChatComponent } from './chat/chat.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FriendsMenuComponent } from './components/friends-menu/friends-menu.component';
 import { ProfileComponent } from './pages/profile/profile.component';
@@ -19,6 +20,7 @@ import { FeedComponent } from './pages/feed/feed.component';
 @NgModule({
   declarations: [
     AppComponent,
+    ChatComponent
     LoginComponent,
     RegistroComponent,
     EditProfileComponent,

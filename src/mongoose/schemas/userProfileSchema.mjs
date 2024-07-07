@@ -38,11 +38,7 @@ const userProfileSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   }],
-  friends: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-  }],
-  blocked: [userInfoSchema],
+  friends: [userInfoSchema],
   requested: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

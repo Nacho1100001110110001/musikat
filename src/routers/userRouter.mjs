@@ -4,7 +4,14 @@ import { UserProfile } from "../mongoose/schemas/userProfileSchema.mjs";
 import { User } from "../mongoose/schemas/userSchema.mjs";
 import { check, checkSchema, matchedData, validationResult } from "express-validator";
 import { updateUserProfileSchema } from "../utils/validatorSchemas.mjs";
+import path from "path";
+import fs from 'fs';
 import mongoose from "mongoose";
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const profilePicPath = path.join(__dirname, '../..', 'uploads/profilepics');
 
 const router = Router();
 
@@ -32,7 +39,8 @@ router.put("/api/user/profile",
     }
 );
 
-router.put("/api/user/profilepic",
+
+router.post("/api/user/profilepic",
     isAuthtenticated,
     async (request, response) => {
         request.user.id;
@@ -42,11 +50,10 @@ router.put("/api/user/profilepic",
                 error: "Debe proporcionar imagen"
             });
         }
-        const file = request.files.imagen;
-        const parsedName = file.name.split('.');
-        const extention = parsedName[parsedName.length - 1];
+        const image = request.files.imagen;
+        const extention = path.extname(image.name);
 
-        const validExtentions = ["png", "jpg", "gif", "jpeg"];
+        const validExtentions = [".png", ".jpg", ".gif", ".jpeg"];
 
         if(validExtentions.indexOf(extention) > 0){
             return response.status(400).json({
@@ -54,20 +61,58 @@ router.put("/api/user/profilepic",
             })
         }
 
-        const fileName = `${request.user.id}.${extention}`;
-        const path = `upload/profilepic/${fileName}`;
+        const fileName = request.user.id;
+        const filePath = path.join(profilePicPath, fileName);
+        const ImagePath = filePath + extention;
 
-        file.mv("../../" + path , err => {
+        image.mv(ImagePath , err => {
             if(err){
                 return request.status(500).json({
                     error: "No se pudo subir el archivo"
                 });
             }
+            fs.writeFileSync(`${filePath}.meta`, extention);
         })
         
         return response.status(201).send({
             url: "poner url" + path
         });
+    }
+);
+
+router.get("/api/user/profilepic/:userId",
+    check('userId')
+      .isMongoId().withMessage('ID con formato invalido')
+      .notEmpty().withMessage('El ID de usuario es requerido'),
+    (request, response) => {
+        const restult = validationResult(request);
+        if (!restult.isEmpty()) {
+            return response.status(400).send({ error: restult.array() });
+        }
+        const data = matchedData(request);
+        const filePath = path.join(profilePicPath, data.userId);
+        const metaPaht = filePath + ".meta";
+
+        let extention;
+
+        if (fs.existsSync(metaPaht)) {
+            try {
+                extention = fs.readFileSync(`${filePath}.meta`, 'utf-8');
+            } catch (err) {
+                return res.status(404).send('Image not found');
+            }
+        } else {
+            response.status(404).send('Image not found');
+        }
+
+
+        const fullPath = `${filePath}${extention}`;
+
+        if (fs.existsSync(fullPath)) {
+            response.sendFile(fullPath);
+        } else {
+            response.status(404).send('Image not found');
+        }
     }
 );
 
@@ -83,7 +128,7 @@ router.get("/api/user/profile/:otherUserName",
         }
         const otherUserName = request.params.otherUserName;
         try {
-            const findUser = await User.findOne({username: otherUserName});
+            const findUser = await User.find({ username: { $regex: otherUserName, $options: 'i' } });
             if(!findUser){
                 return response.status(400).send({error: "No se puedo encontrar el usuario"});
             } 
@@ -97,7 +142,6 @@ router.get("/api/user/profile/:otherUserName",
 router.get("/api/user/profile",
     isAuthtenticated,
     async (request, response) =>{
-        console.log("pipipi")
         try {
             const findUserProfile = await UserProfile.findOne({userId: request.user.id});
             if(!findUserProfile){

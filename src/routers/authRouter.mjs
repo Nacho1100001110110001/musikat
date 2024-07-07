@@ -19,11 +19,14 @@ router.post(
         if(!result.isEmpty()){
             return response.status(400).send({error: result.array()});
         }
+        const sessionPromise =  mongoose.startSession();
+
         const data = matchedData(request);
         const newUser = new User(data);
         newUser.password = hashPassword(newUser.password);
 
-        const session = await mongoose.startSession();
+        const session = await sessionPromise;
+ 
         session.startTransaction();
 
         try {

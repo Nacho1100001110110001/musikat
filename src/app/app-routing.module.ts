@@ -11,6 +11,7 @@ import { FeedComponent } from './pages/feed/feed.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registro', component: RegistroComponent },
+  { path: 'chat', component: ChatComponent },
   { path: 'editar-perfil', component: EditProfileComponent, canActivate: [loginGuard] },
   { path: 'perfil', component: ProfileComponent, canActivate: [loginGuard] },
   {path: 'inicio', component: FeedComponent, canActivate: [loginGuard]}, //Ruta para el feed

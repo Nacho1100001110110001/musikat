@@ -43,8 +43,6 @@ router.put("/api/user/profile",
 router.post("/api/user/profilepic",
     isAuthtenticated,
     async (request, response) => {
-        request.user.id;
-
         if(!request.files){
             return response.status(400).json({
                 error: "Debe proporcionar imagen"
@@ -55,7 +53,7 @@ router.post("/api/user/profilepic",
 
         const validExtentions = [".png", ".jpg", ".gif", ".jpeg"];
 
-        if(validExtentions.indexOf(extention) > 0){
+        if(validExtentions.indexOf(extention) < 0){
             return response.status(400).json({
                 error: "Extension no valida"
             })
@@ -270,6 +268,7 @@ router.put("/api/user/block/:otherUserId",
 
 function userProfileDto(userProfile){
     const {
+        userId,
         username,
         birthDate,
         favoriteSong,
@@ -281,6 +280,7 @@ function userProfileDto(userProfile){
         requested
     } = userProfile;
     return {
+        userId,
         username,
         birthDate,
         favoriteSong,

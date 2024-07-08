@@ -127,7 +127,7 @@ router.get("/api/users/:otherUserName",
         const otherUserName = request.params.otherUserName;
         try {
             const findedUsers = await User.find({ username: { $regex: otherUserName, $options: 'i' } })
-                .select("id", "username");
+                .select("id username");
             if(!findUser){
                 return response.status(400).send({error: "No se puedo encontrar el usuario"});
             } 

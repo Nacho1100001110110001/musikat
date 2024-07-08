@@ -4,6 +4,8 @@ import { check, checkSchema, matchedData, validationResult } from "express-valid
 import mongoose from "mongoose";
 import { createCommentSchema, createPublicationSchema } from "../utils/validatorSchemas.mjs";
 import { Publication } from "../mongoose/schemas/publicationSchema.mjs";
+import { UserProfile } from "../mongoose/schemas/userProfileSchema.mjs";
+import { UserPreferences } from "../mongoose/schemas/userPreferencesSchema.mjs";
 
 const router = Router();
 
@@ -22,9 +24,11 @@ router.post("/api/pub",
             data.userId = request.user.id;
             data.publicationDate = Date.now();
 
-            console.log(data);
             const publication = new Publication(data);
-            const newPublication = await publication.save();
+            const newPublication = await publication.save().lean();
+
+            delete newPublication.likes;
+            newPublication.hasLiked = false;
 
             if(!newPublication) throw new Error("No se encontrar el perfil");
             response.status(200).send(newPublication);
@@ -174,26 +178,83 @@ router.get("/api/pub/:id",
     
 )
 
-router.get("/api/pub/",
+router.get("/api/user/pub/:userId",
     isAuthtenticated,
+    check("userId")
+      .isMongoId().withMessage("El id tiene formato incorrecto")
+      .notEmpty().withMessage("El id no debe estar vacio"),
     async(request, response) => {
-        const restult = validationResult(request);
-        if (!restult.isEmpty()) {
-            return response.status(400).send({ error: restult.array() });
-        }
         try{
-            const data = matchedData(request);
-            const publicacion = await Publication.findById(data.id).lean();
-            if(!publicacion){
+            const userId = request.user.id;
+            const publications = await Publication.find({ userId })
+            .lean();
+            if(!publications){
                 return response.status(400).send({error: "no se pudo encontrar la publicación"});
             }
-            console.log(request.user.id);
-            const hasLiked = publicacion.likes.some(like => {
-                return like.toString() == request.user.id;
-            });
-            delete publicacion.likes;
-            publicacion.hasLiked = hasLiked;
-            response.status(200).send(publicacion);
+
+            publications.map(publication => {
+                const hasLiked = publication.likes.some(like => {
+                    return like.toString() == request.user.id;
+                }); 
+                delete publication.likes;
+                publication.hasLiked = hasLiked;
+                return publication;
+            })
+            delete publications.likes;
+            publications.hasLiked = hasLiked;
+            response.status(200).send(publications);
+        }catch(err){
+            response.status(400).send({error: err.message});
+        }
+    }
+    
+)
+
+//mejoras:
+//paginacion y atomicidad
+router.get("/api/pub/feed",
+    isAuthtenticated,
+    async(request, response) => {
+        const userId = request.user.id;
+        try{
+            
+            const userFriends = await UserProfile.findById(userId)
+                .select("friends")
+                .lean();
+            if(!userFriends) throw Error();
+
+            const userPrefences = await UserPreferences.findById(userId)
+                .lean();
+            if(!userPrefences) throw Error();
+
+            const userFriendsId = userFriends.map(friends => friends.userId);
+            const LikedSongsId = userPrefences.likedSongs;
+            const LikedArtistsId = userPrefences.likedArtists;
+    
+            const publications = await Publication.find(
+                $or[
+                    { userId: { $in: userFriendsId } },
+                    { artistId: { $in: LikedArtistsId } },
+                    { songId: { $in: LikedSongsId } }
+                ]
+            )
+            .sort({ publicationDate: -1 })
+            .lean();
+
+            if(!publications){
+                return response.status(400).send({error: "no se pudo encontrar la publicación"});
+            }
+
+            const feed = publications.map(publication =>{
+                const mapPub = {
+                    ...publication,
+                    hasLiked: publication.likes.includes(userId)
+                }
+                delete mapPub.likes;
+                return mapPub;
+            })
+
+            response.status(200).send(feed);
         }catch(err){
             response.status(400).send({error: err.message});
         }

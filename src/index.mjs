@@ -19,7 +19,7 @@ mongoose
 	.catch((err) => console.log(`Error: ${err}`))
 
 app.use(cors({
-	origin: process.env.CORS_URL || "http://chanchometricas.duckdns.org",
+	origin: process.env.CORS_URL || "http://localhost:4200",
 	credentials: true
 }));
 

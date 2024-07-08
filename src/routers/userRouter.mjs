@@ -97,10 +97,10 @@ router.get("/api/user/profilepic/:userId",
             try {
                 extention = fs.readFileSync(`${filePath}.meta`, 'utf-8');
             } catch (err) {
-                return res.status(404).send('Image not found');
+                return res.status(404).send({error: 'Image not found'});
             }
         } else {
-            response.status(404).send('Image not found');
+            response.status(404).send({error: 'Image not found'});
         }
 
 
@@ -109,12 +109,12 @@ router.get("/api/user/profilepic/:userId",
         if (fs.existsSync(fullPath)) {
             response.sendFile(fullPath);
         } else {
-            response.status(404).send('Image not found');
+            response.status(404).send({error: 'Image not found'});
         }
     }
 );
 
-router.get("/api/user/profile/:otherUserName", 
+router.get("/api/users/:otherUserName", 
     isAuthtenticated,
     check("otherUserName")
       .isString().withMessage("El nombre de usuario tiene que ser un string")
@@ -126,11 +126,12 @@ router.get("/api/user/profile/:otherUserName",
         }
         const otherUserName = request.params.otherUserName;
         try {
-            const findUser = await User.find({ username: { $regex: otherUserName, $options: 'i' } });
-            if(!findUser){
+            const findedUsers = (await User.find({ username: { $regex: otherUserName, $options: 'i' } }))
+                .select("id", "username");
+            if(!findedUsers){
                 return response.status(400).send({error: "No se puedo encontrar el usuario"});
             } 
-            return response.status(200).send({userId: findUser.id, username: findUser.username});
+            return response.status(200).send(findedUsers);
         }catch (err) {
             return response.status(400).send({error: err.message});
         }

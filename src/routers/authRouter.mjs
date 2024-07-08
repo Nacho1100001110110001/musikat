@@ -7,6 +7,7 @@ import passport from "passport";
 import { authenticationErrorHandler } from "../utils/middlewares.mjs";
 import { UserProfile } from "../mongoose/schemas/userProfileSchema.mjs";
 import mongoose from "mongoose";
+import { UserPreferences } from "../mongoose/schemas/userPreferencesSchema.mjs";
 
 const router = Router();
 
@@ -31,9 +32,19 @@ router.post(
 
         try {
             const savedUser = await newUser.save();
+            if(!savedUser) throw Error();
+
             const newUserProfile = new UserProfile(defaultUserProfile(savedUser));
             const savedUserProfile = await newUserProfile.save();
             if(!savedUserProfile) throw Error();
+
+            const newUserPreferences = new UserPreferences({
+                userId: savedUser.id,
+                likedArtists: [],
+                likedSongs: []
+            });
+            const savedUserPreferences = newUserPreferences.save();
+            if(!savedUserPreferences) throw Error();
 
             await session.commitTransaction();
             response.status(201).send({msg: "created"});

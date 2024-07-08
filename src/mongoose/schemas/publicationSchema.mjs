@@ -56,4 +56,4 @@ const publicationSchema = new mongoose.Schema({
   collection: 'publication',  // Especifica el nombre de la colección
 });
 
-export const Publication = mongoose.model('publication', publicationSchema);
+export const Publication = mongoose.model('Publication', publicationSchema);

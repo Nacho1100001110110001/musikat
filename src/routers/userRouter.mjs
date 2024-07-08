@@ -126,9 +126,9 @@ router.get("/api/users/:otherUserName",
         }
         const otherUserName = request.params.otherUserName;
         try {
-            const findedUsers = (await User.find({ username: { $regex: otherUserName, $options: 'i' } }))
+            const findedUsers = await User.find({ username: { $regex: otherUserName, $options: 'i' } })
                 .select("id", "username");
-            if(!findedUsers){
+            if(!findUser){
                 return response.status(400).send({error: "No se puedo encontrar el usuario"});
             } 
             return response.status(200).send(findedUsers);
@@ -185,34 +185,86 @@ router.put("/api/user/friends/accept/:friendId",
       .notEmpty().withMessage('El ID de usuario es requerido'),
     async (request, response) => {
 
-        const restult = validationResult(request);
-        if (!restult.isEmpty()) {
-            return response.status(400).send({ error: restult.array() });
+        const result = validationResult(request);
+        if (!result.isEmpty()) {
+            return response.status(400).send({ error: result.array() });
         }
         const friendId = request.params.friendId;
 
         const session = await mongoose.startSession();
         session.startTransaction();
         try {
-            const updatedFriendList = await UserProfile.findByIdAndUpdate(
-              { userId: request.user.id },
-              { $push: { friends: friendId } },
-              { new: true }
-            );
-             
-            const updatedRequestList = await UserProfile.findByIdAndUpdate(
+            const newFriend = await User.findById(friendId);
+            const { username } = newFriend;
+            if(!newFriend){
+                await session.abortTransaction();
+                return response.status(400).send({error: "Falla al agregar amogus"});
+            }
+
+            const updatedFriendList = await UserProfile.findOneAndUpdate(
                 { userId: request.user.id },
-                { $pull: { requested: friendId } },
+                { $addToSet: { friends: {userId: friendId, username} } },
+                { new: true }
+                );
+             
+            const updatedRequestList = await UserProfile.findOneAndUpdate(
+                { userId: request.user.id },
+                { $addToSet: { requested: {userId: friendId} } },
                 { new: true }
             );
 
-            const newFriendProfile = await UserProfile.findByIdAndUpdate(
+            const newFriendProfile = await UserProfile.findOneAndUpdate(
                 { userId: friendId },
-                { $push: { friends: request.user.id } },
+                { $addToSet: { friends: {userId: request.user.id, username: request.user.username} } },
                 { new: true }
             );
 
             if(!updatedFriendList || !updatedRequestList || !newFriendProfile){
+                await session.abortTransaction();
+                return response.status(400).send({error: "Falla al agregar amogus"});
+                
+            }
+            await session.commitTransaction();
+            return response.status(200).send(userProfileDto(updatedRequestList));
+            
+        } catch (err) {
+            await session.abortTransaction();
+            return response.status(400).send({error: err.message});
+        }finally{
+            session.endSession();
+        }
+    }
+);
+
+router.put("/api/user/friends/solicitude/:friendId",
+    isAuthtenticated,
+    check('friendId')
+      .isMongoId().withMessage('ID con formato invalido')
+      .notEmpty().withMessage('El ID de usuario es requerido'),
+    async (request, response) => {
+
+        const result = validationResult(request);
+        if (!result.isEmpty()) {
+            return response.status(400).send({ error: result.array() });
+        }
+        const friendId = request.params.friendId;
+
+        const session = await mongoose.startSession();
+        session.startTransaction();
+        try {
+            const user = await User.findById(friendId);
+            const { username } = user;
+            if(!user){
+                await session.abortTransaction();
+                return response.status(400).send({error: "Falla al agregar amogus"});
+            }
+            const updatedRequestedList = await UserProfile.findOneAndUpdate(
+              { userId:  friendId},
+              { $addToSet: { requested: {userId: friendId, username} } },
+              { new: true }
+            );      
+
+            if(!updatedRequestedList){
                 await session.abortTransaction();
                 return response.status(400).send({error: "Falla al agregar amogus"});
                 
@@ -275,9 +327,7 @@ function userProfileDto(userProfile){
         favoriteSong,
         favoriteArtist,
         favoriteGenre,
-        followed,
         friends,
-        blocked,
         requested
     } = userProfile;
     return {
@@ -287,9 +337,7 @@ function userProfileDto(userProfile){
         favoriteSong,
         favoriteArtist,
         favoriteGenre,
-        followed,
         friends,
-        blocked,
         requested
     }
 }
@@ -302,7 +350,6 @@ function otherUserProfileDto(userProfile){
         favoriteSong,
         favoriteArtist,
         favoriteGenre,
-        followed
     } = userProfile;
     return {
         userId,
@@ -311,7 +358,6 @@ function otherUserProfileDto(userProfile){
         favoriteSong,
         favoriteArtist,
         favoriteGenre,
-        followed
     }
 }
 

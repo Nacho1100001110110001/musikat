@@ -34,15 +34,8 @@ const userProfileSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.String,
     trim: true,
   },
-  followed: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-  }],
   friends: [userInfoSchema],
-  requested: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-  }],
+  requested: [userInfoSchema],
 }, {
   timestamps: true,
   collection: 'user_profile',  // Especifica el nombre de la colección

@@ -18,20 +18,37 @@
     </div>
 
     <div class="profile">
+        <button class="boton me-4" (click)="toggleNotifications()">
+            <div class="d-flex align-items-center justify-content-end">
+                @if (user.requested.length) {
+                    <div class="notification-badge">{{user.requested.length}}</div>
+                }
+                <span class="material-symbols-outlined menuicon">
+                    notifications
+                </span>
+                <div class="dropdown-content-noti p-3" [ngClass]="showNotifications ? '':'hide'">
+                    @if (user.requested.length) {
+
+                    }@else {
+                        <span>No tienes notificaciones</span>
+                    }
+                </div>
+            </div>
+        </button>
         <button class="boton boton-perfil" [routerLink]="['perfil']">
             <div class="profile-pic">
-                <img src="../../../assets/images/profile-icon.png" alt="">
+                <img [src]="src" alt="" (error)="onImageError()">
             </div>
         </button>
         <h2>{{user.username}}</h2>
         <button class="boton" (click)="toggleMenu()">
             <span class="material-symbols-outlined menuicon">
                 keyboard_arrow_down
-                </span>
-                <div class="dropdown-content" [ngClass]="showMenu ? '':'hide'">
-                    <button class="boton" (click)="editarPerfil()">Editar perfil</button>
-                    <button class="boton" (click)="cerrarSesion()">Cerrar sesión</button>
-                </div>
+            </span>
+            <div class="dropdown-content" [ngClass]="showMenu ? '':'hide'">
+                <button class="boton" (click)="editarPerfil()">Editar perfil</button>
+                <button class="boton" (click)="cerrarSesion()">Cerrar sesión</button>
+            </div>
         </button>
     </div>
 </div>

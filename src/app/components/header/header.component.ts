@@ -3,6 +3,7 @@ import { LoginService } from '../../services/login/login.service';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { enviroments } from '../../../enviroments/enviroments';
 
 @Component({
   selector: 'app-header',
@@ -13,7 +14,14 @@ export class HeaderComponent {
   user!: any;
   buscadorGrupo: FormGroup;
   showMenu: boolean = false;
+  showNotifications: boolean = false;
   showHeader: boolean = false;
+  src!: string;
+  backupsrc: string = '../../../assets/images/profile-icon.png';
+
+  onImageError(){
+    this.src = this.backupsrc;
+  }
 
   constructor(public loginService: LoginService,
     private userService: UserService,
@@ -37,6 +45,7 @@ export class HeaderComponent {
     this.userService.getUserProfile().subscribe({
       next: (result) => {
         this.user = result;
+        this.src = enviroments.apiConnect.photo + "/" + this.user.userId;
       },
       error: (error) => {
         console.error(error);
@@ -58,6 +67,10 @@ export class HeaderComponent {
 
   toggleMenu(){
     this.showMenu = !this.showMenu;
+  }
+
+  toggleNotifications(){
+    this.showNotifications = !this.showNotifications;
   }
 
   editarPerfil(){

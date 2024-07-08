@@ -1,50 +1,68 @@
-.full-container {
+.body {
+    margin-top: 60px;
     width: 100%;
-    height: 100%;
-    align-items: center;
-    justify-content: center;
+    min-height: calc(100vh - 60px);
     background-color: #001121;
+    overflow: hidden;
+}
+
+h1,
+h3,
+h4,
+h5 {
+    margin: 0;
+    padding: 0;
+    color: #E1FCFF;
+    font-family: 'Rubik', sans-serif;
 }
 
 /* Personaliza la altura del carrusel */
 .carousel-item {
-    height: 300px;
+    height: 400px;
 }
 
 .carousel-item img {
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
+    object-fit: contain;
+    height: 400px;
 }
 
-/* Estilo para las leyendas del carrusel */
-.carousel-caption {
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 10px;
-    border-radius: 5px;
-}
-
-.carousel-caption h5 {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #ffffff;
-}
-
-.carousel-caption p {
-    font-size: 1rem;
-    color: #ffffff;
-}
 
 /* Estilos para el contenedor de la publicación */
 .post-container {
+    padding: 20px;
     max-width: 700px;
     margin: auto;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    background-color: #2f2f2f;
+    background-color: #122334;
 }
 
-.post-container .card-body {
-    padding: 20px;
+.form-control {
+    border-radius: 70px;
+    // font-size: small;
+    border: 3px solid #E1FCFF;
+    background-color: #00000000;
+    color: #E1FCFF;
+    fill: #E1FCFF;
+    &::placeholder{
+        color: #E1FCFF;
+    }
+    &::-webkit-calendar-picker-indicator {
+      filter: invert(1);
+    }
+}
+
+.form-control-area {
+    border-radius: 20px;
+    border: 3px solid #E1FCFF;
+    background-color: #00000000;
+    color: #E1FCFF;
+    fill: #E1FCFF;
+    &::placeholder{
+        color: #E1FCFF;
+    }
+    &::-webkit-calendar-picker-indicator {
+      filter: invert(1);
+    }
 }
 
 .post-container .card-title {
@@ -74,23 +92,30 @@
     object-fit: cover;
 }
 
+.item:hover {
+    background-color: #002344;
+}
+
+.item-selected {
+    background-color: #E1FCFF !important;
+    color: #001121 !important;
+    border: none !important;
+    h4 {
+      color: #001121;
+    }
+  }
+
 /* Estilos para el contenedor de creación de publicación */
 .post-create-container {
     max-width: 700px;
     margin: auto;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-    background-color: #2f2f2f; /* Fondo del contenedor de creación */
+    background-color: #122334;
 }
 
 .post-create-container .card-body {
     padding: 20px;
-}
-
-.post-create-container img {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
 }
 
 .post-create-container .post-textarea {
@@ -141,10 +166,31 @@
     background-color: #00aced; /* Fondo del botón al pasar el ratón */
 }
 
+.btn-song {
+    padding: 10px 20px;
+    border-radius: 70px;
+    border: 3px solid #E1FCFF;
+    background-color: #00000000;
+    color: #E1FCFF;
+    font-weight: 600;
+  }
+
+.btn-post {
+    padding: 10px 20px;
+    border-radius: 70px;
+    background-color: #E1FCFF;
+    color: #001121;
+    border: none;
+    font-weight: 600;
+}
+
+.search-container{
+    height: 250px;
+}
 
 /* Contenedor del corazón */
 .heart-container {
-    --heart-color: #30cfd0; /* Color del corazón */
+    --heart-color: #E1FCFF; /* Color del corazón */
     position: relative;
     width: 50px;
     height: 50px;
@@ -245,12 +291,12 @@
     cursor: pointer;
   }
   
-  button:hover {
+  .button-custom:hover {
     transform: translate(-0.05em, -0.05em);
     box-shadow: 0.15em 0.15em;
   }
   
-  button:active {
+  .button-custom:active {
     transform: translate(0.05em, 0.05em);
     box-shadow: 0.05em 0.05em;
   }

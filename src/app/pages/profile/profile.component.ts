@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { PostService } from '../../services/post.service';
 import { post } from '../../../models/post';
+import { enviroments } from '../../../enviroments/enviroments';
 
 
 @Component({
@@ -13,19 +14,27 @@ import { post } from '../../../models/post';
   styleUrl: './profile.component.scss'
 })
 export class ProfileComponent {
-   userProfile: boolean = true;
-   notFound: boolean = false;
-   friend: boolean = false;
-   followed: boolean = false;
-   blocked: boolean = false;
-   selectedTab: string = 'song';
-   user!: any;
+  userProfile: boolean = true;
+  notFound: boolean = false;
+  friend: boolean = false;
+  followed: boolean = false;
+  blocked: boolean = false;
+  selectedTab: string = 'song';
+  user!: any;
+  src!: string;
+  backupsrc: string = '../../../assets/images/profile-icon.png';
+  username!: string;
+  playing: boolean = false;
 
-   favoriteSong!: any;
-   favoriteArtist!: any;
-   topArtistSongs!: any;
-   SinglePost!: post;
-   Posts!: post[];
+  onImageError(){
+    this.src = this.backupsrc;
+  }
+
+  favoriteSong!: any;
+  favoriteArtist!: any;
+  topArtistSongs!: any;
+  SinglePost!: post;
+  Posts!: post[];
 
   selectTab(tab: string) {
     this.selectedTab = tab;
@@ -47,14 +56,8 @@ export class ProfileComponent {
       this.followed = false;
       this.blocked = false;
       this.getUser();
-      let username = params['nombre'];
-      if(!username || username == this.user.username) {
-        this.userProfile = true;
-        
-        return;
-      }
-      this.userProfile = false;
-      this.getUserByName(username);
+      this.username = params['nombre'];
+      
     });
     
   }
@@ -63,6 +66,13 @@ export class ProfileComponent {
     this.userService.getUserProfile().subscribe({
       next: (result) => {
         this.user = result;
+        if(this.username && this.username != this.user.username) {
+          this.userProfile = false;
+          this.getUserByName(this.username);
+          return;
+        }
+        this.userProfile = true;
+        
         if(this.user.favoriteSong){
           this.getSong();
         }
@@ -71,7 +81,7 @@ export class ProfileComponent {
         }
         this.getPosts();
         this.getPostById();
-        console.log(this.user)
+        this.src = enviroments.apiConnect.photo + "/" + this.user.userId;
       },
       error: (error) => {
         console.error(error);
@@ -85,8 +95,8 @@ export class ProfileComponent {
       next: (result) => {
         if(this.user){
           if(this.user.friends.find((user: { userId: any; }) => user.userId == result.userId)) this.friend = true;
-          if(this.user.followed.find((user: { userId: any; }) => user.userId == result.userId)) this.followed = true;
-          if(this.user.blocked.find((user: { userId: any; }) => user.userId == result.userId)) this.blocked = true;
+          // if(this.user.followed.find((user: { userId: any; }) => user.userId == result.userId)) this.followed = true;
+          // if(this.user.blocked.find((user: { userId: any; }) => user.userId == result.userId)) this.blocked = true;
         }
         this.user = result;
         if(this.user.favoriteSong){
@@ -97,6 +107,7 @@ export class ProfileComponent {
         }
         this.getPosts();
         this.getPostById();
+        this.src = enviroments.apiConnect.photo + "/" + this.user.userId;
       },
       error: (error) => {
         this.notFound = true;
@@ -144,7 +155,6 @@ export class ProfileComponent {
     this.artistService.getTopSongs(this.user.favoriteArtist).subscribe({
       next: (result) => {
         this.topArtistSongs = result;
-        console.log(this.topArtistSongs)
       },
       error: (error) => {
         console.error(error);
@@ -160,5 +170,16 @@ export class ProfileComponent {
   // Añade trackByPostId
   trackByPostId(index: number, post: post): number {
     return post.postId;
+  }
+
+  play(){
+    this.playing = !this.playing;
+    const audio: any = document.getElementById('audio');
+    audio.volume = 0.1
+    if(audio?.paused){
+      audio.play()
+    }else{
+      audio.pause()
+    }
   }
 }

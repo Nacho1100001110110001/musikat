@@ -44,6 +44,11 @@
     aspect-ratio: 1/1;
 }
 
+.profile-pic {
+    border-radius: 50%;
+    overflow: hidden;
+}
+
 h1,
 h3,
 h4 {
@@ -55,7 +60,7 @@ h4 {
 
 /* Contenedor del corazón */
 .heart-container {
-    --heart-color: #30cfd0;
+    --heart-color: #E1FCFF;
     /* Color del corazón */
     position: relative;
     width: 50px;

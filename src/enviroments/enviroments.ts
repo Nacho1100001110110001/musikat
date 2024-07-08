@@ -9,6 +9,8 @@ export const enviroments = {
         logged: pathBase + "/auth/status",
         userProfile: pathBase + "/user/profile",
         register: pathBase + "/auth/register",
+        photo: pathBase + "/user/profilepic",
+        searchUser: pathBase + "/users",
     },
 
     musicApiConnet: {

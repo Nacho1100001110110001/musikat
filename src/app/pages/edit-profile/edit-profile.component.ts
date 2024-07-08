@@ -20,6 +20,9 @@ export class EditProfileComponent {
   songList!: any;
   artistList!: any;
   buscador: FormGroup;
+  fotoGroup: FormGroup;
+  foto!: File;
+  src!: string;
 
   selectedTab: string = 'song';
   @ViewChild('fileInput') fileInput!: ElementRef;
@@ -37,6 +40,9 @@ export class EditProfileComponent {
       song:['', Validators.required],
       artist:['', Validators.required]
     })
+    this.fotoGroup = this.formBuilder.group({
+      archivo:['', Validators.required]
+    })
 
     this.getUser();
   }
@@ -52,6 +58,7 @@ export class EditProfileComponent {
         if(this.user.favoriteArtist){
           this.getArtist();
         }
+        this.getPhoto();
       },
       error: (error) => {
         console.error(error);
@@ -68,13 +75,64 @@ export class EditProfileComponent {
     this.userService.updateUser(user).subscribe({
       next: (result) => {
         console.log(result);
-        this.router.navigate(["perfil"])
+        if(this.foto)
+          this.updatePhoto();
+        else {
+          this.router.navigate(["perfil"]).then(() =>{  
+            window.location.reload()
+          })
+        }
       },
       error: (error) => {
         console.error(error);
       },
       complete: () => {},
     });
+  }
+
+  updatePhoto(){
+    this.userService.setPhoto(this.foto).subscribe({
+      next: (result) => {
+        console.log(result);
+        this.router.navigate(["perfil"]).then(() =>{  
+          window.location.reload()
+        })
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {},
+    })
+  }
+
+  onImagePicked(event: any) {
+    if(event.target){
+      const file = event.target.files[0];
+      this.fotoGroup.patchValue({ archivo: file});
+      this.changeFoto();
+    }
+  }
+
+  changeFoto(){
+    if(! this.fotoGroup.valid) return;
+    this.foto = this.fotoGroup.value.archivo;
+    console.log(this.foto)
+    this.src = URL.createObjectURL(this.foto);
+  }
+
+  getPhoto(){
+    this.userService.getPhoto(this.user.userId).subscribe({
+      next: (result) => {
+        const file = new File([result], 'archivo.' + (result.type.split("/")[1]), {type: result.type})
+        console.log(file)
+        this.fotoGroup.patchValue({ archivo: file});
+        this.changeFoto();
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {},
+    })
   }
 
   getSong(){

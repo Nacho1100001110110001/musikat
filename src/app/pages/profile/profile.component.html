@@ -6,7 +6,7 @@
     }@else {
         <div class="profile-data">
             <div class="profile-pic">
-                <img src="../../../assets/images/profile-icon.png" alt="">
+                <img [src]="src" alt="" (error)="onImageError()">
             </div>
     
             <div class="profile-texts">
@@ -25,7 +25,7 @@
                                 </span>
                             <h4>{{friend ? "Eliminar Amigo":"Añadir Amigo"}}</h4>
                         </button>
-                        <button class="boton ms-3">
+                        <!-- <button class="boton ms-3">
                             <span class="material-symbols-outlined icon">
                                 favorite
                                 </span>
@@ -36,7 +36,7 @@
                                 priority_high
                                 </span>
                             <h4>{{blocked ? "Desbloquear" : "Bloquear"}}</h4>
-                        </button>
+                        </button> -->
                     }
                 </div>
             </div>
@@ -60,7 +60,15 @@
                             <div class="col-6 d-flex justify-content-end">
                                 <div class="col-5 song-photo">
                                     <img [src]="favoriteSong.album.cover_xl" class="w-100" alt="">
+                                    <button class="btn-play" (click)="play()">
+                                        <span class="material-symbols-outlined">
+                                            {{playing ? 'pause' : 'play_arrow'}}
+                                        </span>
+                                    </button>
                                 </div>
+                                <audio [src]="favoriteSong.preview" id="audio">
+                                    Tu navegador no soporta el elemento de audio.
+                                </audio>
                             </div>
                             <div class="col-6 justify-content-center">
                                 <div class="col-8 d-flex align-items-start flex-column h-100 justify-content-center">
@@ -91,7 +99,7 @@
                             <div class="col-6 justify-content-center">
                                 <div class="col-8 d-flex align-items-start flex-column h-100 justify-content-center">
                                     <h1>Top canciones</h1>
-                                    @for (song of topArtistSongs.data; track $index) {
+                                    @for (song of topArtistSongs; track $index) {
                                         <div class="d-flex align-items-center">
                                             <h3 class="mt-2">{{($index + 1) + ".  "}}</h3>
                                             <img [src]="song.album.cover" class="ms-1 me-1" width="30" height="30" alt="">
@@ -121,7 +129,7 @@
                 <div class="card post-create-container">
                     <div class="card-body">
                         <div class="d-flex mb-3">
-                            <img src="../../../assets/images/profile-icon.png" class="rounded-circle me-3" alt="User Avatar">
+                            <img [src]="src" alt="" (error)="onImageError()" class="rounded-circle me-3">
                             <textarea class="form-control post-textarea" placeholder="¿Qué estás pensando?" rows="3"></textarea>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
@@ -146,7 +154,7 @@
                         <div class="card-body">
                             <div class="d-flex mb-3">
                                 <div class="img-profile">
-                                    <img src="../../../assets/images/profile-icon.png" class="img-fluid rounded mb-3" alt="User Avatar">
+                                    <img [src]="src" alt="" (error)="onImageError()" class="img-fluid rounded mb-3">
                                 </div>
                                 <div>
                                     <h5 class="card-title mb-0">{{user.username}}</h5>                       

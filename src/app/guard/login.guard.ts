@@ -9,7 +9,6 @@ export const loginGuard: CanActivateFn = (route, state) => {
 
   loginService.logged().subscribe({
     next: (result) => {
-      console.log(result);
       loginService.logeado = true;
       return true;
     },

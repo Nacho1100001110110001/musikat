@@ -27,9 +27,32 @@ export class UserService {
     }));
   }
 
+  public searchUser(name: string){
+    const url = enviroments.apiConnect.searchUser + "/" + name;
+    return this.http.get<any>(url, { withCredentials: true}).pipe(map((res: any)=>{
+      return res;
+    }));
+  }
+
   public updateUser(user: any){
     const url = enviroments.apiConnect.userProfile;
     return this.http.put<any>(url, user, { withCredentials: true}).pipe(map((res: any)=>{
+      return res;
+    }));
+  }
+
+  public getPhoto(id: number){
+    const url = enviroments.apiConnect.photo + "/" + id;
+    return this.http.get(url, { responseType: 'blob' }).pipe(map((res: any)=>{
+      return res;
+    }));
+  }
+
+  public setPhoto(photo: File){
+    const url = enviroments.apiConnect.photo;
+    const form: FormData = new FormData();
+    form.append('imagen', photo);
+    return this.http.post<any>(url, form, { withCredentials: true}).pipe(map((res: any)=>{
       return res;
     }));
   }

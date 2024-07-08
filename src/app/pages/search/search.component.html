@@ -17,13 +17,28 @@
 
 @switch (selectedTab) {
     @case ('person') {
-        <div class="row pb-4 pt-4">
-            @if (personList?.length > 0) {
-                <h1>Aqui van las personas</h1>
-            }@else {
-                <h1 class="w-100 text-center mt-4">No se encontraron personas :(</h1>
+        @if (personList?.length > 0) {
+            @for (person of personList; track $index) {
+                <div class="row pb-4 pt-4">
+                    <div class="col-6 d-flex justify-content-end mt-4 mb-4">
+                        <div class="col-5 profile-pic">
+                            <img [src]="person.src" class="w-100" role="button" alt="" (error)="onImageError($index)" (click)="openProfile(person.username)">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row h-100 align-items-center">
+                            <div class="col-8 d-flex align-items-start flex-column h-100 justify-content-center">
+                                <h1>{{person.username}}</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             }
-        </div>
+        }@else {
+            <div class="row pb-4 pt-4">
+                <h1 class="w-100 text-center mt-4">No se encontraron personas :(</h1>
+            </div>
+        }
     }
     @case ('playlist') {
         <div class="row pb-4 pt-4">

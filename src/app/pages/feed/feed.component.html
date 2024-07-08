@@ -1,21 +1,58 @@
-<div class="full-container mt-5">
-    <div id="carrusel" class="carousel slide" data-bs-ride="carousel">
+<div class="body">
+    <div id="carousel" class="carousel slide mt-3" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            <button type="button" data-bs-target="#carousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+            <button type="button" data-bs-target="#carousel" data-bs-slide-to="4" aria-label="Slide 5"></button>
+          </div>
         <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="../../../assets/images/cancion animal.png" class="d-block w-100" alt="">
-            </div>
-            <div class="carousel-item">
-                <img src="https://via.placeholder.com/800x400" class="d-block w-100" alt="">
-            </div>
-            <div class="carousel-item">
-                <img src="https://via.placeholder.com/800x400" class="d-block w-100" alt="">
-            </div>
+            @for (song of recommendedList; track $index) {
+                <div class="carousel-item" [ngClass]="$index == 0 ? 'active' : ''">
+                    <div class="row">
+                        <div class="col-6 d-flex justify-content-end">
+                            <img [src]="song.album.cover_xl" class="" alt="">
+                        </div>
+                        <div class="col-6 d-flex align-items-start flex-column justify-content-center">
+                            <h1 class="d-block">{{song.title}}</h1>
+                            <h3 class="d-block">{{song.artist.name}}</h3>
+                            <div title="Like" class="heart-container">
+                                <input id="Give-It-An-Id" class="checkbox" type="checkbox">
+                                <div class="svg-container">
+                                    <!-- Corazón vacío -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="svg-outline" viewBox="0 0 24 24">
+                                        <path
+                                            d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Zm-3.585,18.4a2.973,2.973,0,0,1-3.83,0C4.947,16.006,2,11.87,2,8.967a4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,11,8.967a1,1,0,0,0,2,0,4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,22,8.967C22,11.87,19.053,16.006,13.915,20.313Z">
+                                        </path>
+                                    </svg>
+                                    <!-- Corazón lleno -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="svg-filled" viewBox="0 0 24 24">
+                                        <path
+                                            d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Z">
+                                        </path>
+                                    </svg>
+                                    <!-- Celebración -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="100" width="100" class="svg-celebrate">
+                                        <polygon points="10,10 20,20"></polygon>
+                                        <polygon points="10,50 20,50"></polygon>
+                                        <polygon points="20,80 30,70"></polygon>
+                                        <polygon points="90,10 80,20"></polygon>
+                                        <polygon points="90,50 80,50"></polygon>
+                                        <polygon points="80,80 70,70"></polygon>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carrusel" data-bs-slide="prev">
+        <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Anterior</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carrusel" data-bs-slide="next">
+        <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Siguiente</span>
         </button>
@@ -26,18 +63,55 @@
         <div class="card post-create-container">
             <div class="card-body">
                 <div class="d-flex mb-3">
-                    <img src="../../../assets/images/profile-icon.png" class="rounded-circle me-3" alt="User Avatar">
-                    <textarea class="form-control post-textarea" placeholder="¿Qué estás pensando?" rows="3"></textarea>
+                    <img [src]="src" alt="" (error)="onImageError()" class="rounded-circle me-3 img-profile">
+                    <textarea class="form-control form-control-area" placeholder="Comenta alguna canción..." rows="3"></textarea>
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
-                    <div class="file-upload-wrapper">
-                        <input type="file" class="file-upload-input" id="file-upload" accept="image/*">
-                        <label for="file-upload" class="button-custom">
-                            Agregar Imagen
-                        </label>
-                    </div>
-                    <button class="button-custom">Publicar</button>
+                    <button class="btn-song" [ngClass]="songSelected ? 'item-selected':''" (click)="searchMenu()">{{songSelected ? songSelected.title : "Selecciona una canción"}}</button>
+                    <button class="btn-post">Publicar</button>
                 </div>
+                @if(searchingSong){
+                    <div class="row pb-4 pt-4 search-container">
+                        <div class="col-6 d-flex justify-content-center">
+                            <div class="col-8 search-bar d-flex align-items-center">
+                                <div class="w-100" [formGroup]="buscador">
+                                    <label for="exampleFormControlInput1" class="form-label">Buscar</label>
+                                    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="" formControlName="song" (keydown.enter)="search()">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 justify-content-center align-items-center d-flex overflow-y-scroll mh-100">
+                            @if(songList.length){
+                                <div class="col-8 d-flex align-items-start flex-column h-100 w-100">
+                                    @for (song of songList; track $index) {
+                                        <div class="d-flex align-items-center justify-content-start w-100 ps-3 pe-3" [ngClass]="songSelected?.id == song.id ? 'item-selected':'item'" (click)="select($index)">
+                                            <img [src]="song.album.cover" class="ms-1 me-2" width="30" height="30" alt="">
+                                            <h4 class="mt-2">{{song.title}}</h4>
+                                        </div>
+                                    }@empty {
+                                        <div class="col-12 d-flex justify-content-center align-items-center h-100">
+                                            <h3>No se encontraron canciones</h3>
+                                        </div>
+                                    }
+                                </div>
+                            }@else {
+                                @if (songSelected) {
+                                    <div class="col-4 justify-content-center">
+                                        <img [src]="songSelected.album.cover_xl" class="w-100" alt="">
+                                    </div>
+                                    <div class="col-8 d-flex align-items-start flex-column h-100 justify-content-center ms-3">
+                                        <h3>{{songSelected.title}}</h3>
+                                        <h5>{{songSelected.artist?.name}}</h5>
+                                    </div>
+                                }@else {
+                                    <div class="col-12 d-flex justify-content-center">
+                                        <h3>Selecciona una canción para mostrar</h3>
+                                    </div>
+                                }
+                            }    
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     </div>

@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SongService } from '../../services/song.service';
 import { ArtistService } from '../../services/artist.service';
 import { UserService } from '../../services/user.service';
+import { enviroments } from '../../../enviroments/enviroments';
 
 @Component({
   selector: 'app-search',
@@ -16,6 +17,11 @@ export class SearchComponent {
   artistList!: any;
   selectedTab: string = "person";
   index = 2;
+  backupsrc: string = '../../../assets/images/profile-icon.png';
+
+  onImageError(index: number){
+    this.personList[index].src = this.backupsrc;
+  }
 
   constructor(private songService: SongService,
     private artistService: ArtistService,
@@ -33,6 +39,23 @@ export class SearchComponent {
       let busqueda = params['busqueda'];
       this.searchSong(busqueda);
       this.searchArtist(busqueda);
+      this.searchPerson(busqueda);
+    });
+  }
+
+  searchPerson(busqueda: string){
+    busqueda.replace("%20", " ");
+    this.userService.searchUser(busqueda).subscribe({
+      next: (result) => {
+        this.personList = result;
+        for(let person of this.personList){
+          person.src = enviroments.apiConnect.photo + "/" + person._id;
+        }
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {},
     });
   }
 
@@ -60,5 +83,9 @@ export class SearchComponent {
       },
       complete: () => {},
     });
+  }
+
+  openProfile(name: string){
+    this.router.navigate(["perfil/"+name]);
   }
 }

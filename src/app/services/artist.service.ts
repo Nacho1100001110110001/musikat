@@ -27,7 +27,15 @@ export class ArtistService {
   getTopSongs(id: number){
     const url = enviroments.musicApiConnet.getArtistById + '/' + id + "/top?limit=5";
     return this.http.get<any>(url).pipe(map((res: any)=>{
-      return res;
+      return res.data;
+    }));
+    
+  }
+
+  get50Songs(id: number){
+    const url = enviroments.musicApiConnet.getArtistById + '/' + id + "/top?limit=50";
+    return this.http.get<any>(url).pipe(map((res: any)=>{
+      return res.data;
     }));
     
   }

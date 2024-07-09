@@ -67,25 +67,16 @@ router.post("/api/user/profilepic",
 
         image.mv(ImagePath , err => {
             if(err){
-                success = false;
-                console.log(`estoy dentro del error ${success}`);
+                return response.status(500).json({
+                    error: "No se pudo subir el archivo"
+                });  
             }else{
                 fs.writeFileSync(`${filePath}.meta`, extention);
-                success = true;
-                console.log(`estoy dentro del else ${success}`);
+                return response.status(201).send({
+                    url: "poner url" + path
+                });
             }
-        });
-
-        console.log(`estoy afuera ${success}`);
-
-        if(success){
-            return response.status(201).send({
-                url: "poner url" + path
-            });
-        }
-
-        return response.status(500).json({
-            error: "No se pudo subir el archivo"
+            
         });  
     }
 );

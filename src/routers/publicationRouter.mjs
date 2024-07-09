@@ -229,6 +229,7 @@ router.get("/api/feed",
             if(!userPrefences) throw Error("No se encontraron preferencias");
 
             const userFriendsId = userFriends.friends.map(friends => friends.userId);
+            console.log(userFriendsId);
             userFriendsId.append(new mongoose.Types.ObjectId(userId))
             const LikedSongsId = userPrefences.likedSongs;
             const LikedArtistsId = userPrefences.likedArtists;

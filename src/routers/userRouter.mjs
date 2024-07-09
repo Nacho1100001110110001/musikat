@@ -63,8 +63,6 @@ router.post("/api/user/profilepic",
         const filePath = path.join(profilePicPath, fileName);
         const ImagePath = filePath + extention;
 
-        let success;
-
         image.mv(ImagePath , err => {
             if(err){
                 return response.status(500).json({

@@ -196,15 +196,12 @@ router.get("/api/user/pub/:userId",
             }
 
             publications.map(publication => {
-                const hasLiked = publication.likes.some(like => {
-                    return like.toString() == request.user.id;
-                }); 
+                const liked = publication.likes
+                    .some(like => like.toString() == request.user.id); 
                 delete publication.likes;
-                publication.hasLiked = hasLiked;
+                publication.liked = liked;
                 return publication;
-            })
-            delete publications.likes;
-            publications.hasLiked = hasLiked;
+            });
             response.status(200).send(publications);
         }catch(err){
             response.status(400).send({error: err.message});

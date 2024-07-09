@@ -232,13 +232,13 @@ router.get("/api/feed",
             const LikedSongsId = userPrefences.likedSongs;
             const LikedArtistsId = userPrefences.likedArtists;
     
-            const publications = await Publication.find(
-                $or[
+            const publications = await Publication.find({
+                $or: [
                     { userId: { $in: userFriendsId } },
                     { artistId: { $in: LikedArtistsId } },
                     { songId: { $in: LikedSongsId } }
                 ]
-            )
+            })
             .sort({ publicationDate: -1 })
             .lean();
 

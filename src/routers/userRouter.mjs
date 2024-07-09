@@ -63,18 +63,26 @@ router.post("/api/user/profilepic",
         const filePath = path.join(profilePicPath, fileName);
         const ImagePath = filePath + extention;
 
+        let success;
+
         image.mv(ImagePath , err => {
             if(err){
-                return response.status(500).json({
-                    error: "No se pudo subir el archivo"
-                });
+                success = false;
+            }else{
+                fs.writeFileSync(`${filePath}.meta`, extention);
+                success = true;
             }
-            fs.writeFileSync(`${filePath}.meta`, extention);
-        })
-        
-        return response.status(201).send({
-            url: "poner url" + path
         });
+
+        if(success){
+            return response.status(201).send({
+                url: "poner url" + path
+            });
+        }
+
+        return response.status(500).json({
+            error: "No se pudo subir el archivo"
+        });  
     }
 );
 

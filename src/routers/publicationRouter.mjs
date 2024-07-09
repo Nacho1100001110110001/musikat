@@ -247,10 +247,12 @@ router.get("/api/feed",
             }
 
             const feed = publications.map(publication =>{
+
                 const mapPub = {
                     ...publication,
-                    hasLiked: publication.likes.includes(userId)
+                    liked: publication.likes.includes(mongoose.Types.ObjectId(userId))
                 }
+
                 delete mapPub.likes;
                 return mapPub;
             })

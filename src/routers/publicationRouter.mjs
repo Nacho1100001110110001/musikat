@@ -215,7 +215,7 @@ router.get("/api/user/pub/:userId",
 router.get("/api/feed",
     isAuthtenticated,
     async(request, response) => {
-        const userId = request.user.id;
+        const userId = request.user.id + "";
         try{
             const userFriends = await UserProfile.findOne({userId})
                 .select("friends")
@@ -229,6 +229,7 @@ router.get("/api/feed",
             if(!userPrefences) throw Error("No se encontraron preferencias");
 
             const userFriendsId = userFriends.friends.map(friends => friends.userId);
+            userFriends.append(new mongoose.Types.ObjectId(userId))
             const LikedSongsId = userPrefences.likedSongs;
             const LikedArtistsId = userPrefences.likedArtists;
     

@@ -11,6 +11,14 @@ export const enviroments = {
         register: pathBase + "/auth/register",
         photo: pathBase + "/user/profilepic",
         searchUser: pathBase + "/users",
+        publication: pathBase + "/pub",
+        feed: pathBase + "/feed",
+        likeSong: pathBase + "/song/like",
+        likeArtist: pathBase + "/artist/like",
+        preferences: pathBase + "/preferences",
+        likePub: pathBase + "/pub/like",
+        commentPub: pathBase + "/pub/comment",
+        userPublications: pathBase + "/user/pub"
     },
 
     musicApiConnet: {

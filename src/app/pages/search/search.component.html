@@ -66,7 +66,7 @@
                             </div>
                             <div class="col-4">
                                 <div title="Like" class="heart-container">
-                                    <input id="Give-It-An-Id" class="checkbox" type="checkbox" [checked]="$index == index">
+                                    <input id="Give-It-An-Id" class="checkbox" type="checkbox" [checked]="song.liked" (click)="likeSong($index, song.id)">
                                     <div class="svg-container">
                                         <!-- Corazón vacío -->
                                         <svg xmlns="http://www.w3.org/2000/svg" class="svg-outline" viewBox="0 0 24 24">
@@ -116,7 +116,7 @@
                             </div>
                             <div class="col-4">
                                 <div title="Like" class="heart-container">
-                                    <input id="Give-It-An-Id" class="checkbox" type="checkbox" [checked]="$index == index">
+                                    <input id="Give-It-An-Id" class="checkbox" type="checkbox" [checked]="artist.liked" (click)="likeArtist($index, artist.id)">
                                     <div class="svg-container">
                                         <!-- Corazón vacío -->
                                         <svg xmlns="http://www.w3.org/2000/svg" class="svg-outline" viewBox="0 0 24 24">

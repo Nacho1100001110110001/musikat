@@ -10,7 +10,7 @@
         <div class="carousel-inner">
             @for (song of recommendedList; track $index) {
                 <div class="carousel-item" [ngClass]="$index == 0 ? 'active' : ''">
-                    <div class="row">
+                    <div class="row container-carousel">
                         <div class="col-6 d-flex justify-content-end">
                             <img [src]="song.album.cover_xl" class="" alt="">
                         </div>
@@ -18,7 +18,7 @@
                             <h1 class="d-block">{{song.title}}</h1>
                             <h3 class="d-block">{{song.artist.name}}</h3>
                             <div title="Like" class="heart-container">
-                                <input id="Give-It-An-Id" class="checkbox" type="checkbox">
+                                <input id="Give-It-An-Id" class="checkbox" type="checkbox" [checked]="isSongLiked(song.id)" (click)="likeSong(song.id)">
                                 <div class="svg-container">
                                     <!-- Corazón vacío -->
                                     <svg xmlns="http://www.w3.org/2000/svg" class="svg-outline" viewBox="0 0 24 24">
@@ -62,13 +62,13 @@
     <div class="container mt-5">
         <div class="card post-create-container">
             <div class="card-body">
-                <div class="d-flex mb-3">
-                    <img [src]="src" alt="" (error)="onImageError()" class="rounded-circle me-3 img-profile">
-                    <textarea class="form-control form-control-area" placeholder="Comenta alguna canción..." rows="3"></textarea>
+                <div class="d-flex mb-3" [formGroup]="publicacion">
+                    <img [src]="src" alt="" (error)="onImageError($event)" class="rounded-circle me-3 img-profile">
+                    <textarea class="form-control form-control-area" placeholder="Comenta alguna canción..." rows="3" formControlName="publicacioncuerpo"></textarea>
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
                     <button class="btn-song" [ngClass]="songSelected ? 'item-selected':''" (click)="searchMenu()">{{songSelected ? songSelected.title : "Selecciona una canción"}}</button>
-                    <button class="btn-post">Publicar</button>
+                    <button class="btn-post" (click)="publicar()">Publicar</button>
                 </div>
                 @if(searchingSong){
                     <div class="row pb-4 pt-4 search-container">
@@ -116,59 +116,99 @@
         </div>
     </div>
 
-    <div class="container mt-5">
-        <div class="card post-container">
-            <div class="card-body">
-                <div class="d-flex mb-3">
-                    <div class="img-profile">
-                        <img src="../../../assets/images/chama.png" class="img-fluid rounded mb-3" alt="User Avatar">
-                    </div>
-                    <div>
-                        <h5 class="card-title mb-0">Alex Pereira</h5>                       
-                    </div>
-                </div>
-                <p class="card-text">
-                    Que buen temaaa...
-                </p>
-                <img src="../../../assets/images/en la ciudad de la furia.jpg" class="img-fluid rounded mb-3"
-                    alt="Post Image">
-                <div class="d-flex justify-content-end align-items-center">
-                    <div title="Like" class="heart-container">
-                        <input id="Give-It-An-Id" class="checkbox" type="checkbox">
-                        <div class="svg-container">
-                            <!-- Corazón vacío -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="svg-outline" viewBox="0 0 24 24">
-                                <path
-                                    d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Zm-3.585,18.4a2.973,2.973,0,0,1-3.83,0C4.947,16.006,2,11.87,2,8.967a4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,11,8.967a1,1,0,0,0,2,0,4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,22,8.967C22,11.87,19.053,16.006,13.915,20.313Z">
-                                </path>
-                            </svg>
-                            <!-- Corazón lleno -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="svg-filled" viewBox="0 0 24 24">
-                                <path
-                                    d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Z">
-                                </path>
-                            </svg>
-                            <!-- Celebración -->
-                            <svg xmlns="http://www.w3.org/2000/svg" height="100" width="100" class="svg-celebrate">
-                                <polygon points="10,10 20,20"></polygon>
-                                <polygon points="10,50 20,50"></polygon>
-                                <polygon points="20,80 30,70"></polygon>
-                                <polygon points="90,10 80,20"></polygon>
-                                <polygon points="90,50 80,50"></polygon>
-                                <polygon points="80,80 70,70"></polygon>
-                            </svg>
+    <div class="container pb-4">
+        @for (publicacion of publicacionesList; track $index) {
+            <div class="card post-container mt-3">
+                <div class="card-body">
+                    <div class="d-flex mb-3">
+                        <div class="img-profile">
+                            <img [src]="getSrc(publicacion.userId)" alt="" (error)="onImageError($event)" class="rounded-circle me-3 img-profile">
+                        </div>
+                        <div>
+                            <h5 class="card-title mb-0">{{publicacion.username}}</h5>                       
                         </div>
                     </div>
-                    <button class="button-custom" style="margin-left: 10px;">Comentarios</button>
+                    <div class="row">
+                        <div class="col-4 d-flex align-items-end">
+                            <img [src]="publicacion.song.album.cover_xl" alt="" (error)="onImageError($event)" class="rounded">
+                        </div>
+                        <div class="col-6 d-flex justify-content-center flex-column align-items-start">
+                            <h3>{{publicacion.song.title}}</h3>
+                            <h5>{{publicacion.song.artist?.name}}</h5>
+                            <button class="btn-play mt-3" (click)="play($index)">
+                                <span class="material-symbols-outlined">
+                                    {{publicacion.playing ? 'pause' : 'play_arrow'}}
+                                </span>
+                            </button>
+                            <audio [src]="publicacion.song.preview" [id]="$index">
+                                Tu navegador no soporta el elemento de audio.
+                            </audio>
+                        </div>
+                    </div>
+                    <p class="card-text mt-3">
+                        {{publicacion.content}}
+                    </p>
+                    <div class="row">
+                        <div class="col-3 d-flex flex-row align-items-end">
+                            <div title="Like" class="heart-container">
+                                <input id="Give-It-An-Id" class="checkbox" type="checkbox" [checked]="publicacion.liked" (click)="likePublication($index)">
+                                <div class="svg-container">
+                                    <!-- Corazón vacío -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="svg-outline" viewBox="0 0 24 24">
+                                        <path
+                                            d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Zm-3.585,18.4a2.973,2.973,0,0,1-3.83,0C4.947,16.006,2,11.87,2,8.967a4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,11,8.967a1,1,0,0,0,2,0,4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,22,8.967C22,11.87,19.053,16.006,13.915,20.313Z">
+                                        </path>
+                                    </svg>
+                                    <!-- Corazón lleno -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="svg-filled" viewBox="0 0 24 24">
+                                        <path
+                                            d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Z">
+                                        </path>
+                                    </svg>
+                                    <!-- Celebración -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="100" width="100" class="svg-celebrate">
+                                        <polygon points="10,10 20,20"></polygon>
+                                        <polygon points="10,50 20,50"></polygon>
+                                        <polygon points="20,80 30,70"></polygon>
+                                        <polygon points="90,10 80,20"></polygon>
+                                        <polygon points="90,50 80,50"></polygon>
+                                        <polygon points="80,80 70,70"></polygon>
+                                    </svg>
+                                </div>
+                            </div>
+                            <h3 class="ms-3">{{publicacion.likeCount}}</h3>
+                        </div>
+                        <div class="col-8 d-flex align-items-end justify-content-center">
+                            <h5 class="cursor-pointer" (click)="showComment($index)">{{"Ver todos los comentarios ("+publicacion.comments.length+")"}}</h5>
+                        </div>
+                    </div>
+                    <div class="d-flex mt-4 flex-column" style="max-height: 300px; overflow-y: scroll;" [id]="'comment-'+$index">
+                        @if(publicacion.showComment){
+                            @for (comment of publicacion.comments; track $index) {
+                                <div class="d-flex mb-3">
+                                    <div class="img-profile" style="min-width: 50px;">
+                                        <img [src]="getSrc(comment.userId)" alt="" (error)="onImageError($event)" class="rounded-circle me-3 img-profile">
+                                    </div>
+                                    <div class="ms-3 d-flex justify-content-center flex-column">
+                                        <h5 class="">{{comment.username}}</h5>
+                                        <h6>{{comment.comment}}</h6>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                    <div class="d-flex mt-4">
+                        <input type="text" class="form-control" placeholder="Escribe un comentario..." (keydown.enter)="postComment($index, $event)">
+                    </div>
                 </div>
             </div>
-        </div>
+        }@empty {
+            <div class="card post-container mt-3">
+                <h2>No hay publicaciones que mostrar :(</h2>
+            </div>
+        }
     </div>
 
 
 
 </div>
-
-<!-- Bootstrap JS and Popper.js -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

@@ -4,8 +4,8 @@ import { ArtistService } from '../../services/artist.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { PostService } from '../../services/post.service';
-import { post } from '../../../models/post';
 import { enviroments } from '../../../enviroments/enviroments';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -26,15 +26,15 @@ export class ProfileComponent {
   username!: string;
   playing: boolean = false;
 
-  onImageError(){
-    this.src = this.backupsrc;
+  onImageError(event: any){
+    event.target.src = this.backupsrc;
   }
 
   favoriteSong!: any;
   favoriteArtist!: any;
   topArtistSongs!: any;
-  SinglePost!: post;
-  Posts!: post[];
+  publicacionesList: any[] = [];
+  commentgroup: FormGroup;
 
   selectTab(tab: string) {
     this.selectedTab = tab;
@@ -45,8 +45,13 @@ export class ProfileComponent {
     private postService: PostService,
     private userService: UserService,
     private router: Router,
-    private route: ActivatedRoute
-  ){ }
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder
+  ){
+    this.commentgroup = this.formBuilder.group({
+      comment: ['', [Validators.required, Validators.maxLength(255)]]
+    })
+   }
 
   ngOnInit(){
     this.route.params.subscribe((params) =>{
@@ -79,9 +84,8 @@ export class ProfileComponent {
         if(this.user.favoriteArtist){
           this.getArtist();
         }
-        this.getPosts();
-        this.getPostById();
         this.src = enviroments.apiConnect.photo + "/" + this.user.userId;
+        this.getPosts();
       },
       error: (error) => {
         console.error(error);
@@ -105,9 +109,8 @@ export class ProfileComponent {
         if(this.user.favoriteArtist){
           this.getArtist();
         }
-        this.getPosts();
-        this.getPostById();
         this.src = enviroments.apiConnect.photo + "/" + this.user.userId;
+        this.getPosts();
       },
       error: (error) => {
         this.notFound = true;
@@ -126,16 +129,6 @@ export class ProfileComponent {
       },
       complete: () => {},
     });
-  }
-
-  getPostById(){
-    let post= this.postService.getPostById(3);
-    if(post) this.SinglePost= post;
-  }
-
-  getPosts(){
-    let posts= this.postService.getPosts();
-    if(posts) this.Posts= posts;
   }
 
   getArtist(){
@@ -167,11 +160,6 @@ export class ProfileComponent {
     this.router.navigate(['editar-perfil']);
   }
 
-  // Añade trackByPostId
-  trackByPostId(index: number, post: post): number {
-    return post.postId;
-  }
-
   play(){
     this.playing = !this.playing;
     const audio: any = document.getElementById('audio');
@@ -181,5 +169,94 @@ export class ProfileComponent {
     }else{
       audio.pause()
     }
+  }
+
+  playWI(index: number){
+    this.publicacionesList[index].playing = !this.publicacionesList[index].playing;
+    const audio: any = document.getElementById(index + "");
+    audio.volume = 0.1
+    if(audio?.paused){
+      audio.play()
+    }else{
+      audio.pause()
+    }
+
+    audio.addEventListener('ended', () => {
+      this.publicacionesList[index].playing = false;
+    });
+  }
+
+  getSrc(id: number){
+    return enviroments.apiConnect.photo + "/" + id;
+  }
+
+  likePublication(index: number){
+    this.postService.likePublication(this.publicacionesList[index]._id).subscribe({
+      next: (result) => {
+        this.publicacionesList[index].liked = result.like;
+        this.publicacionesList[index].likeCount = result.likeCount;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {},
+    });
+  }
+
+  showComment(index: number){
+    const commentDiv: any = document.getElementById('comment-' + index);
+    commentDiv.addEventListener('change', function(){
+      commentDiv.scrollTop = commentDiv.scrollHeight;
+    })
+    this.publicacionesList[index].showComment = !this.publicacionesList[index].showComment;
+  }
+
+  postComment(index: number, event: any){
+    this.commentgroup.get('comment')?.setValue(event.target.value)
+    if(!this.commentgroup.valid){
+      alert('El comentario debe ser menor a 255 carácteres y no puede ser vacio');
+      return;
+    }
+
+    this.postService.commentPublication(this.publicacionesList[index]._id, this.commentgroup.value.comment).subscribe({
+      next: (result) => {
+        this.publicacionesList[index].comments = result.comments;
+        this.publicacionesList[index].showComment = true;
+        event.target.value = ""
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {},
+    });
+  }
+
+  getPosts(){
+    this.postService.getPublicationsById(this.user.userId).subscribe({
+      next: (result) => {
+        this.publicacionesList = result;
+        for(let i = 0; i< this.publicacionesList.length; i ++){
+          this.publicacionesList[i].playing = false;
+          this.publicacionesList[i].showComment = false;
+          this.getSongById(this.publicacionesList[i].songId, i);
+        }
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {},
+    });
+  }
+
+  getSongById(id: number, index: number){
+    this.songService.getSongById(id).subscribe({
+      next: (result) => {
+        this.publicacionesList[index].song = result;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {},
+    });
   }
 }

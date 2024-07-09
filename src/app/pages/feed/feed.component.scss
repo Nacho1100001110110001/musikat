@@ -7,18 +7,28 @@
 }
 
 h1,
+h2,
 h3,
 h4,
-h5 {
+h5,
+h6 {
     margin: 0;
     padding: 0;
     color: #E1FCFF;
     font-family: 'Rubik', sans-serif;
 }
 
+.cursor-pointer {
+    cursor: pointer;
+}
+
 /* Personaliza la altura del carrusel */
 .carousel-item {
     height: 400px;
+}
+
+.container-carousel {
+    background-color: #122334;
 }
 
 .carousel-item img {
@@ -38,7 +48,6 @@ h5 {
 
 .form-control {
     border-radius: 70px;
-    // font-size: small;
     border: 3px solid #E1FCFF;
     background-color: #00000000;
     color: #E1FCFF;
@@ -52,6 +61,7 @@ h5 {
 }
 
 .form-control-area {
+    resize: none;
     border-radius: 20px;
     border: 3px solid #E1FCFF;
     background-color: #00000000;
@@ -82,6 +92,20 @@ h5 {
     width: 100%;
     height: auto;
     object-fit: cover;
+}
+
+.btn-play{
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #E1FCFF;
+    border: none;
+    & span{
+        font-size: 35px;
+    }
 }
 
 /* icono de persona en la publicacion (tamaño) */

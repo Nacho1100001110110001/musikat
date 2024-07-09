@@ -23,8 +23,8 @@
 }
 
 .profile-pic img {
-    max-width: 100%;
-    max-height: 100%;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
 }
 
@@ -47,8 +47,11 @@
 }
 
 h1,
+h2,
 h3,
-h4 {
+h4,
+h5,
+h6 {
     margin: 0;
     padding: 0;
     color: #E1FCFF;
@@ -165,7 +168,7 @@ h4 {
 
 /* Contenedor del corazón */
 .heart-container {
-    --heart-color: #30cfd0;
+    --heart-color: #E1FCFF;
     /* Color del corazón */
     position: relative;
     width: 50px;
@@ -369,4 +372,81 @@ h4 {
     & span{
         font-size: 35px;
     }
+}
+.btn-play-small{
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #E1FCFF;
+    border: none;
+    & span{
+        font-size: 35px;
+    }
+}
+
+.post-container {
+    padding: 20px;
+    max-width: 700px;
+    margin: auto;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    background-color: #122334;
+}
+
+.form-control {
+    border-radius: 70px;
+    border: 3px solid #E1FCFF;
+    background-color: #00000000;
+    color: #E1FCFF;
+    fill: #E1FCFF;
+    &::placeholder{
+        color: #E1FCFF;
+    }
+    &::-webkit-calendar-picker-indicator {
+      filter: invert(1);
+    }
+}
+
+.form-control-area {
+    resize: none;
+    border-radius: 20px;
+    border: 3px solid #E1FCFF;
+    background-color: #00000000;
+    color: #E1FCFF;
+    fill: #E1FCFF;
+    &::placeholder{
+        color: #E1FCFF;
+    }
+    &::-webkit-calendar-picker-indicator {
+      filter: invert(1);
+    }
+}
+
+.post-container .card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    padding: 10px;
+    color: #E1FCFF; /* Título de la publicación */
+}
+
+.post-container .card-text {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    color:#ffffff ;
+}
+
+.post-container img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* icono de persona en la publicacion (tamaño) */
+.img-profile {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
 }

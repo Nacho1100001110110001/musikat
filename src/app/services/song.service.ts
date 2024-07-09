@@ -25,4 +25,11 @@ export class SongService {
     }));
   }
 
+  likeSong(id: number){
+    const url = enviroments.apiConnect.likeSong + '/' + id;
+    return this.http.put<any>(url, {id: id}, {withCredentials: true}).pipe(map((res: any)=>{
+      return res;
+    }));
+  }
+
 }

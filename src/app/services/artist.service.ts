@@ -37,6 +37,12 @@ export class ArtistService {
     return this.http.get<any>(url).pipe(map((res: any)=>{
       return res.data;
     }));
-    
+  }
+
+  likeArtist(id: number){
+    const url = enviroments.apiConnect.likeArtist + '/' + id;
+    return this.http.put<any>(url, {id: id}, {withCredentials: true}).pipe(map((res: any)=>{
+      return res;
+    }));
   }
 }

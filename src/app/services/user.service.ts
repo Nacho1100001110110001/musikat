@@ -56,4 +56,11 @@ export class UserService {
       return res;
     }));
   }
+
+  public getPreferences(){
+    const url = enviroments.apiConnect.preferences;
+    return this.http.get(url, { withCredentials: true }).pipe(map((res: any)=>{
+      return res;
+    }));
+  }
 }

@@ -190,6 +190,7 @@ router.get("/api/user/pub/:userId",
         try{
             const userId = request.user.id;
             const publications = await Publication.find({ userId })
+            .sort({ publicationDate: -1 })
             .lean();
             if(!publications){
                 return response.status(400).send({error: "no se pudo encontrar la publicación"});

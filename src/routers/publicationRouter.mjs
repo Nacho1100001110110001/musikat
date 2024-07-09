@@ -212,7 +212,7 @@ router.get("/api/user/pub/:userId",
 
 //mejoras:
 //paginacion y atomicidad
-router.get("/api/pub/feed",
+router.get("/api/feed",
     isAuthtenticated,
     async(request, response) => {
         const userId = request.user.id;

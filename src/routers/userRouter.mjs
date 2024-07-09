@@ -68,11 +68,15 @@ router.post("/api/user/profilepic",
         image.mv(ImagePath , err => {
             if(err){
                 success = false;
+                console.log(success);
             }else{
                 fs.writeFileSync(`${filePath}.meta`, extention);
                 success = true;
+                console.log(success);
             }
         });
+
+        console.log(success);
 
         if(success){
             return response.status(201).send({

@@ -220,11 +220,13 @@ router.get("/api/feed",
             const userFriends = await UserProfile.findById(userId)
                 .select("friends")
                 .lean();
-            if(!userFriends) throw Error();
+            console.log(userFriends);
+            if(!userFriends) throw Error("no se encontraron amigos");
 
             const userPrefences = await UserPreferences.findById(userId)
                 .lean();
-            if(!userPrefences) throw Error();
+            console.log(userPrefences)
+            if(!userPrefences) throw Error("No se encontraron preferencias");
 
             const userFriendsId = userFriends.map(friends => friends.userId);
             const LikedSongsId = userPrefences.likedSongs;

@@ -217,13 +217,13 @@ router.get("/api/feed",
     async(request, response) => {
         const userId = request.user.id;
         try{
-            const userFriends = await UserProfile.findById(userId)
+            const userFriends = await UserProfile.findOne({userId})
                 .select("friends")
                 .lean();
             console.log(userFriends);
             if(!userFriends) throw Error("no se encontraron amigos");
 
-            const userPrefences = await UserPreferences.findById(userId)
+            const userPrefences = await UserPreferences.findOne({userId})
                 .lean();
             console.log(userPrefences)
             if(!userPrefences) throw Error("No se encontraron preferencias");

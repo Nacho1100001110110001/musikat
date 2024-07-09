@@ -25,10 +25,13 @@ router.post("/api/pub",
             data.publicationDate = Date.now();
 
             const publication = new Publication(data);
-            const newPublication = await publication.save();
+            const savedPublication = await publication.save();
+            if(!savedPublication) throw new Error("No se pudo crear la publicación");
+
+            const newPublication = savedPublication.toObject();
 
             delete newPublication.likes;
-            newPublication.hasLiked = false;
+            newPublication.liked = false;
 
             if(!newPublication) throw new Error("No se encontrar el perfil");
             response.status(200).send(newPublication);

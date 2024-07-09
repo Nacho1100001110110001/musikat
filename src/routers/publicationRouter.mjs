@@ -220,17 +220,16 @@ router.get("/api/feed",
             const userFriends = await UserProfile.findOne({userId})
                 .select("friends")
                 .lean();
-            console.log(userFriends);
             if(!userFriends) throw Error("no se encontraron amigos");
 
             const userPrefences = await UserPreferences.findOne({userId})
                 .lean();
-            console.log(userPrefences)
             if(!userPrefences) throw Error("No se encontraron preferencias");
 
             const userFriendsId = userFriends.friends.map(friends => friends.userId);
             console.log(userFriendsId);
-            userFriendsId.append(new mongoose.Types.ObjectId(userId))
+            userFriendsId.push(new mongoose.Types.ObjectId(userId));
+            console.log(userFriendsId);
             const LikedSongsId = userPrefences.likedSongs;
             const LikedArtistsId = userPrefences.likedArtists;
     

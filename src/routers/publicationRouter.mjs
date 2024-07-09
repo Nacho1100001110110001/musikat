@@ -187,11 +187,15 @@ router.get("/api/user/pub/:userId",
       .isMongoId().withMessage("El id tiene formato incorrecto")
       .notEmpty().withMessage("El id no debe estar vacio"),
     async(request, response) => {
-        try{
-            const userId = request.user.id;
-            const publications = await Publication.find({ userId })
-            .sort({ publicationDate: -1 })
-            .lean();
+        const restult = validationResult(request);
+        if (!restult.isEmpty()) {
+            return response.status(400).send({ error: restult.array() });
+        }
+        const data = matchedData(request);
+        try{    
+            const publications = await Publication.find({ data.userId })
+                .sort({ publicationDate: -1 })
+                .lean();
             if(!publications){
                 return response.status(400).send({error: "no se pudo encontrar la publicación"});
             }

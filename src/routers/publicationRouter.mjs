@@ -217,7 +217,6 @@ router.get("/api/feed",
     async(request, response) => {
         const userId = request.user.id;
         try{
-            
             const userFriends = await UserProfile.findById(userId)
                 .select("friends")
                 .lean();
@@ -254,7 +253,7 @@ router.get("/api/feed",
                 return mapPub;
             })
 
-            response.status(200).send(feed);
+            response.status(200).send({feed});
         }catch(err){
             response.status(400).send({error: err.message});
         }

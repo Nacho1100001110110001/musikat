@@ -2,6 +2,7 @@ import express from "express";
 import authRouter from "./routers/authRouter.mjs"
 import userRouter from "./routers/userRouter.mjs"
 import publicationRouter from "./routers/publicationRouter.mjs"
+import userPreferences  from "./routers/userPreferencesRouter.mjs";
 import mongoose from "mongoose";
 import MongoStore from "connect-mongo";
 import cookieParser from "cookie-parser";
@@ -45,6 +46,7 @@ app.use(passport.session());
 app.use(authRouter);
 app.use(userRouter);
 app.use(publicationRouter);
+app.use(userPreferences);
 
 
 const PORT = process.env.PORT || 3000;

@@ -97,19 +97,19 @@ router.get("/api/user/profilepic/:userId",
             try {
                 extention = fs.readFileSync(`${filePath}.meta`, 'utf-8');
             } catch (err) {
-                return res.status(404).send({error: 'Image not found'});
+                return response.status(404).send({error: 'Image not found'});
             }
         } else {
-            response.status(404).send({error: 'Image not found'});
+            return response.status(404).send({error: 'Image not found'});
         }
 
 
         const fullPath = `${filePath}${extention}`;
 
         if (fs.existsSync(fullPath)) {
-            response.sendFile(fullPath);
+            return response.sendFile(fullPath);
         } else {
-            response.status(404).send({error: 'Image not found'});
+            return response.status(404).send({error: 'Image not found'});
         }
     }
 );

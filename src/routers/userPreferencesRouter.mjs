@@ -118,7 +118,7 @@ router.put("/api/artist/like/:artistId",
 
 
 
-router.get("/api/preferences/",
+router.get("/api/preferences",
     isAuthtenticated,
     async(request, response) => {
         const userId = request.user.id;

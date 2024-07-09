@@ -68,15 +68,15 @@ router.post("/api/user/profilepic",
         image.mv(ImagePath , err => {
             if(err){
                 success = false;
-                console.log(success);
+                console.log(`estoy dentro del error ${success}`);
             }else{
                 fs.writeFileSync(`${filePath}.meta`, extention);
                 success = true;
-                console.log(success);
+                console.log(`estoy dentro del else ${success}`);
             }
         });
 
-        console.log(success);
+        console.log(`estoy afuera ${success}`);
 
         if(success){
             return response.status(201).send({

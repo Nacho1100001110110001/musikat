@@ -228,7 +228,7 @@ router.get("/api/feed",
             console.log(userPrefences)
             if(!userPrefences) throw Error("No se encontraron preferencias");
 
-            const userFriendsId = userFriends.map(friends => friends.userId);
+            const userFriendsId = userFriends.friends.map(friends => friends.userId);
             const LikedSongsId = userPrefences.likedSongs;
             const LikedArtistsId = userPrefences.likedArtists;
     

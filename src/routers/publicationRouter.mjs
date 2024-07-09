@@ -192,8 +192,9 @@ router.get("/api/user/pub/:userId",
             return response.status(400).send({ error: restult.array() });
         }
         const data = matchedData(request);
+        const userId = data.userId;
         try{    
-            const publications = await Publication.find({ data.userId })
+            const publications = await Publication.find({ userId })
                 .sort({ publicationDate: -1 })
                 .lean();
             if(!publications){

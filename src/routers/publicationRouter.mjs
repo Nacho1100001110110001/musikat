@@ -25,7 +25,7 @@ router.post("/api/pub",
             data.publicationDate = Date.now();
 
             const publication = new Publication(data);
-            const newPublication = await publication.save().lean();
+            const newPublication = await publication.save();
 
             delete newPublication.likes;
             newPublication.hasLiked = false;
@@ -227,9 +227,7 @@ router.get("/api/feed",
             if(!userPrefences) throw Error("No se encontraron preferencias");
 
             const userFriendsId = userFriends.friends.map(friends => friends.userId);
-            console.log(userFriendsId);
             userFriendsId.push(new mongoose.Types.ObjectId(userId));
-            console.log(userFriendsId);
             const LikedSongsId = userPrefences.likedSongs;
             const LikedArtistsId = userPrefences.likedArtists;
     

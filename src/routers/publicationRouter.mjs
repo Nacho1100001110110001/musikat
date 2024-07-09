@@ -250,7 +250,7 @@ router.get("/api/feed",
 
                 const mapPub = {
                     ...publication,
-                    liked: publication.likes.includes(mongoose.Types.ObjectId(userId))
+                    liked: publication.likes.includes(new mongoose.Types.ObjectId(userId + ""))
                 }
 
                 delete mapPub.likes;

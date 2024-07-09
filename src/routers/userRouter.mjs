@@ -65,7 +65,7 @@ router.post("/api/user/profilepic",
 
         image.mv(ImagePath , err => {
             if(err){
-                return request.status(500).json({
+                return response.status(500).json({
                     error: "No se pudo subir el archivo"
                 });
             }

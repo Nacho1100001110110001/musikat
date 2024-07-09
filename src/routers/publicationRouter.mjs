@@ -141,7 +141,7 @@ router.post("/api/pub/comment/:id",
             if(!newComment) {
                 return response.status(400).send({error: "no se pudo enviar el comentario"});
             }
-            response.status(200).send(newComment.comments);
+            response.status(200).send({comments: newComment.comments});
         } catch (err) {
             response.status(400).send({error: err.message});
         }

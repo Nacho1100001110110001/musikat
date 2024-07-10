@@ -322,7 +322,7 @@ router.delete("/api/user/friends/solicitude/:friendId",
                 return response.status(400).send({error: "Falla al agregar amogus"});
                 
             }
-            return response.status(200).send( {status: "sended"} );
+            return response.status(200).send( {status: "nothing"} );
             
         } catch (err) {
             return response.status(400).send({error: err.message});

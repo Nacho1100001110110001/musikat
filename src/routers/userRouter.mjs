@@ -258,7 +258,7 @@ router.put("/api/user/friends/accept/:friendId",
     }
 );
 
-router.delete("/api/friend/:friendId",+
+router.delete("/api/user/friend/:friendId",+
     isAuthtenticated,
     check('friendId')
       .isMongoId().withMessage('ID con formato invalido')

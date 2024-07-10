@@ -53,7 +53,7 @@ router.delete("/api/pub/:id",
         }
         const publicationId = request.params.id;
         try {
-            const result = Publication.findByIdAndDelete({_id: publicationId, userId: request.user.id});
+            const result = Publication.deleteOne({_id: publicationId, userId: request.user.id});
             if(!result){
                 return response.status(400).send({error: "No se puedo encontrar la publicación"});
             }

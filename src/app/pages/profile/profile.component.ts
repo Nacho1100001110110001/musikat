@@ -99,8 +99,6 @@ export class ProfileComponent {
       next: (result) => {
         if(this.user){
           if(this.user.friends.find((user: { userId: any; }) => user.userId == result.userId)) this.friend = true;
-          // if(this.user.followed.find((user: { userId: any; }) => user.userId == result.userId)) this.followed = true;
-          // if(this.user.blocked.find((user: { userId: any; }) => user.userId == result.userId)) this.blocked = true;
         }
         this.user = result;
         if(this.user.favoriteSong){
@@ -114,6 +112,7 @@ export class ProfileComponent {
       },
       error: (error) => {
         this.notFound = true;
+        console.error(error)
       },
       complete: () => {},
     });
@@ -169,6 +168,14 @@ export class ProfileComponent {
     }else{
       audio.pause()
     }
+
+    audio.addEventListener('ended', () => {
+      this.playing = false;
+    });
+
+    audio.addEventListener('pause', () => {
+      this.playing = false;
+    });
   }
 
   playWI(index: number){
@@ -188,6 +195,21 @@ export class ProfileComponent {
 
   getSrc(id: number){
     return enviroments.apiConnect.photo + "/" + id;
+  }
+
+  deletePublication(index: number){
+    const borrar = confirm("¿Deseas eliminar esta publicación?");
+    if(!borrar) return;
+    this.postService.deletePublication(this.publicacionesList[index]._id).subscribe({
+      next: (result) => {
+        console.log(result)
+        this.publicacionesList.splice(index, 1);
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {},
+    });
   }
 
   likePublication(index: number){
@@ -252,6 +274,70 @@ export class ProfileComponent {
     this.songService.getSongById(id).subscribe({
       next: (result) => {
         this.publicacionesList[index].song = result;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {},
+    });
+  }
+
+  // Friends section
+  addFriend(){
+    this.userService.addFriend(this.user.userId).subscribe({
+      next: (result) => {
+        this.user.status = result.status;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {},
+    });
+  }
+
+  cancelSolicitude(){
+    this.userService.cancelSolicitude(this.user.userId).subscribe({
+      next: (result) => {
+        this.user.status = result.status;
+        console.log(result)
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {},
+    });
+  }
+
+  acceptSoli(){
+    this.userService.acceptSolicitude(this.user.userId).subscribe({
+      next: (result) => {
+        this.user.status = 'friend';
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {},
+    });
+  }
+
+  rejectSoli(){
+    this.userService.rejectSolicitude(this.user.userId).subscribe({
+      next: (result) => {
+        this.user.status = 'nothing';
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {},
+    });
+  }
+
+  removeFriend(){
+    const borrar = confirm("¿Deseas eliminar amigo?");
+    if(!borrar) return;
+    this.userService.deleteFriend(this.user.userId).subscribe({
+      next: (result) => {
+        this.user.status = 'nothing';
       },
       error: (error) => {
         console.error(error);

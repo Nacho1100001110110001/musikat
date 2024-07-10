@@ -19,6 +19,11 @@
                     <input type="text" id="username" placeholder=" " formControlName="username" />
                     <label for="username">Nombre de usuario</label>
                 </div>
+                @if (!registerForm.get('username')?.valid && registerForm.controls['username'].touched){
+                  <div class="text-danger mt-2">
+                    El nombre de usuario debe ser entre 5 y 32 carácteres.
+                  </div>
+                }
                 <div class="input-container password-container mt-4 w-100">
                     <input type="password" id="password" placeholder=" " formControlName="password" />
                     <label for="password">Contraseña</label>

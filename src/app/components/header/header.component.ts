@@ -12,15 +12,15 @@ import { enviroments } from '../../../enviroments/enviroments';
 })
 export class HeaderComponent {
   user!: any;
+  notifications: any[] = [];
   buscadorGrupo: FormGroup;
   showMenu: boolean = false;
   showNotifications: boolean = false;
   showHeader: boolean = false;
-  src!: string;
   backupsrc: string = '../../../assets/images/profile-icon.png';
 
-  onImageError(){
-    this.src = this.backupsrc;
+  onImageError(event: any){
+    event.target.src = this.backupsrc;
   }
 
   constructor(public loginService: LoginService,
@@ -37,15 +37,32 @@ export class HeaderComponent {
       this.showHeader = value;
       if(value){
         this.getUser();
+        this.getNotifications();
+        setInterval(() => this.getNotifications(), 5000);
       }
     });
+  }
+
+  getSrc(id: number){
+    return enviroments.apiConnect.photo + "/" + id;
   }
 
   getUser(){
     this.userService.getUserProfile().subscribe({
       next: (result) => {
         this.user = result;
-        this.src = enviroments.apiConnect.photo + "/" + this.user.userId;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {},
+    });
+  }
+
+  getNotifications(){
+    this.userService.getNotifications().subscribe({
+      next: (result) => {
+        this.notifications = result.notifications;
       },
       error: (error) => {
         console.error(error);
@@ -81,6 +98,30 @@ export class HeaderComponent {
     this.loginService.logout().subscribe({
       next: (result) => {
         this.router.navigate(["login"]);
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {},
+    });
+  }
+
+  acceptSoli(id: number){
+    this.userService.acceptSolicitude(id).subscribe({
+      next: (result) => {
+        this.notifications = result.notifications;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {},
+    });
+  }
+
+  rejectSoli(id: number){
+    this.userService.rejectSolicitude(id).subscribe({
+      next: (result) => {
+        this.notifications = result.notifications;
       },
       error: (error) => {
         console.error(error);

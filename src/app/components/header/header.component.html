@@ -20,24 +20,47 @@
     <div class="profile">
         <button class="boton me-4" (click)="toggleNotifications()">
             <div class="d-flex align-items-center justify-content-end">
-                @if (user.requested.length) {
-                    <div class="notification-badge">{{user.requested.length}}</div>
+                @if (notifications.length) {
+                    <div class="notification-badge">{{notifications.length}}</div>
                 }
                 <span class="material-symbols-outlined menuicon">
                     notifications
                 </span>
-                <div class="dropdown-content-noti p-3" [ngClass]="showNotifications ? '':'hide'">
-                    @if (user.requested.length) {
-
-                    }@else {
-                        <span>No tienes notificaciones</span>
-                    }
-                </div>
             </div>
         </button>
+        <div class="dropdown-content-noti p-3" [ngClass]="showNotifications ? '':'hide'">
+            @if (notifications.length) {
+                @for (person of notifications; track $index) {
+                    <div class="d-flex flex-row mt-2 mb-2" style="width: 350px;">
+                        <div class="profile-pic">
+                            <img [src]="getSrc(person.userId)" alt="" (error)="onImageError($event)">
+                        </div>
+                        <div class="d-flex flex-column">
+                            <h5>{{person.username}}</h5>
+                            <div class="d-flex flex-row">
+                                <button class="boton me-3 d-flex flex-row align-items-center" (click)="acceptSoli(person.userId)">
+                                    <span class="material-symbols-outlined icon">
+                                        add
+                                        </span>
+                                    <h6>Aceptar</h6>
+                                </button>
+                                <button class="boton ms-3 d-flex flex-row align-items-center" (click)="rejectSoli(person.userId)">
+                                    <span class="material-symbols-outlined icon">
+                                        remove
+                                        </span>
+                                    <h6>Rechazar</h6>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }@else {
+                <span>No tienes notificaciones</span>
+            }
+        </div>
         <button class="boton boton-perfil" [routerLink]="['perfil']">
             <div class="profile-pic">
-                <img [src]="src" alt="" (error)="onImageError()">
+                <img [src]="getSrc(user.userId)" alt="" (error)="onImageError($event)">
             </div>
         </button>
         <h2>{{user.username}}</h2>

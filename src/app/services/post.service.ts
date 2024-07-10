@@ -43,4 +43,11 @@ export class PostService {
       return res;
     }));
   }
+
+  deletePublication(id: number){
+    const url = enviroments.apiConnect.publication + '/' + id;
+    return this.http.delete<any>(url, {withCredentials: true}).pipe(map((res: any)=>{
+      return res;
+    }));
+  }
 }

@@ -18,7 +18,12 @@ export const enviroments = {
         preferences: pathBase + "/preferences",
         likePub: pathBase + "/pub/like",
         commentPub: pathBase + "/pub/comment",
-        userPublications: pathBase + "/user/pub"
+        userPublications: pathBase + "/user/pub",
+        addFriend: pathBase + "/user/friends/solicitude",
+        removeFriend: pathBase + "/user/friend",
+        acceptRequest: pathBase + "/user/friends/accept",
+        rejectRequest: pathBase + "/user/friends/decline",
+        notifications: pathBase + "/notifications"
     },
 
     musicApiConnet: {

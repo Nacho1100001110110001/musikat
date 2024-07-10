@@ -1,17 +1,20 @@
 <div class="nav" [ngClass]="{'show' : isVisible}">
     <h2>Amigos</h2>
 
-    @for (friend of user.friends; track $index) {
+    @for (friend of friendList; track $index) {
         <div class="amigos">
             <div class="img-cont">
-                <img src="../../../assets/images/profile-icon.png" alt="">
+                <img [src]="getSrc(friend.userId)" alt="">
             </div>
-            <h4>{{friend.userId}}</h4>
-            <div class="button">
+            <h4>{{friend.username}}</h4>
+            <div class="button" (click)="toggleMenu($index)">
                 <button class="boton">
                     <span class="material-symbols-outlined icon-more">
                         more_vert
-                        </span>
+                    </span>
+                    <div class="dropdown-content" [ngClass]="friend.showMenu ? '':'hide'">
+                        <button class="boton" (click)="verPerfil($index)">Ver perfil</button>
+                    </div>
                 </button>
             </div>
         </div>

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { UserService } from '../../services/user.service';
+import { enviroments } from '../../../enviroments/enviroments';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-friends-menu',
@@ -10,33 +12,34 @@ export class FriendsMenuComponent {
   isVisible = false;
   user!: any;
   friendList: any[];
+  backupsrc: string = '../../../assets/images/profile-icon.png';
 
-  constructor(private userService: UserService) { this.friendList = [] }
+  constructor(private userService: UserService, private router: Router) { this.friendList = [] }
 
   ngOnInit(){
-    this.getUser();
-    // this.user.friends.array.forEach(friend => {
-      
-    // });
+    this.userService.friendList$.subscribe(newFriendList => {
+      this.friendList = newFriendList;
+    });
   }
 
   toggleVisibility() {
     this.isVisible = !this.isVisible;
   }
 
-  getUser(){
-    this.userService.getUserProfile().subscribe({
-      next: (result) => {
-        this.user = result;
-      },
-      error: (error) => {
-        console.error(error);
-      },
-      complete: () => {},
-    });
+  onImageError(event: any){
+    event.target.src = this.backupsrc;
   }
 
-  getNameById(id: string){
+  getSrc(id: number){
+    return enviroments.apiConnect.photo + "/" + id;
+  }
 
+  verPerfil(index: number){
+    this.isVisible = false;
+    this.router.navigate(['perfil/'+ this.friendList[index].username]);
+  }
+
+  toggleMenu(index: number){
+    this.friendList[index].showMenu = !this.friendList[index].showMenu;
   }
 }

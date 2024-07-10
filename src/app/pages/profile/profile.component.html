@@ -19,24 +19,46 @@
                             <h4>Editar perfil</h4>
                         </button>
                     }@else {
-                        <button class="boton">
-                            <span class="material-symbols-outlined icon">
-                                {{friend ? "person_cancel":"person_add"}}
-                                </span>
-                            <h4>{{friend ? "Eliminar Amigo":"Añadir Amigo"}}</h4>
-                        </button>
-                        <!-- <button class="boton ms-3">
-                            <span class="material-symbols-outlined icon">
-                                favorite
-                                </span>
-                            <h4>{{followed ?  "Dejar de seguir":"Seguir"}}</h4>
-                        </button>
-                        <button class="boton ms-3">
-                            <span class="material-symbols-outlined icon">
-                                priority_high
-                                </span>
-                            <h4>{{blocked ? "Desbloquear" : "Bloquear"}}</h4>
-                        </button> -->
+                        @switch (user.status) {
+                            @case ('friend') {
+                                <button class="boton" (click)="removeFriend()">
+                                    <span class="material-symbols-outlined icon">
+                                        person_cancel
+                                        </span>
+                                    <h4>Eliminar Amigo</h4>
+                                </button>
+                            }
+                            @case ('sended') {
+                                <button class="boton" (click)="cancelSolicitude()">
+                                    <span class="material-symbols-outlined icon">
+                                        cancel
+                                        </span>
+                                    <h4>Cancelar Solicitud</h4>
+                                </button>
+                            }
+                            @case ('pending') {
+                                <button class="boton me-3" (click)="acceptSoli()">
+                                    <span class="material-symbols-outlined icon">
+                                        add
+                                        </span>
+                                    <h4>Aceptar Solicitud</h4>
+                                </button>
+                                <button class="boton ms-3" (click)="rejectSoli()">
+                                    <span class="material-symbols-outlined icon">
+                                        remove
+                                        </span>
+                                    <h4>Rechazar Solicitud</h4>
+                                </button>
+                            }
+                            @case ('nothing') {
+                                <button class="boton" (click)="addFriend()">
+                                    <span class="material-symbols-outlined icon">
+                                        person_add
+                                        </span>
+                                    <h4>Enviar Solicitud</h4>
+                                </button>
+                            }
+                        }
                     }
                 </div>
             </div>
@@ -137,9 +159,12 @@
                                 <div class="img-profile">
                                     <img [src]="getSrc(publicacion.userId)" alt="" (error)="onImageError($event)" class="rounded-circle me-3 img-profile">
                                 </div>
-                                <div>
+                                <div class="w-100">
                                     <h5 class="card-title mb-0">{{publicacion.username}}</h5>                       
                                 </div>
+                                @if(userProfile){
+                                    <button class="btn-delete" (click)="deletePublication($index)">X</button>
+                                }
                             </div>
                             <div class="row">
                                 <div class="col-4 d-flex align-items-end">
@@ -158,9 +183,9 @@
                                     </audio>
                                 </div>
                             </div>
-                            <p class="card-text mt-3">
+                            <h6 class="card-text mt-3 mb-3">
                                 {{publicacion.content}}
-                            </p>
+                            </h6>
                             <div class="row">
                                 <div class="col-3 d-flex flex-row align-items-end">
                                     <div title="Like" class="heart-container">

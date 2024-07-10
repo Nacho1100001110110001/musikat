@@ -258,12 +258,12 @@ router.put("/api/user/friends/accept/:friendId",
     }
 );
 
-router.delete("/api/user/friend/:friendId",+
+router.delete("/api/user/friend/:friendId",
     isAuthtenticated,
     check('friendId')
       .isMongoId().withMessage('ID con formato invalido')
       .notEmpty().withMessage('El ID de usuario es requerido'),
-      async (request, response) => {
+    async (request, response) => {
 
         const result = validationResult(request);
         if (!result.isEmpty()) {
@@ -281,7 +281,7 @@ router.delete("/api/user/friend/:friendId",+
                 return response.status(400).send({error: "El usuario no existe"});
             }
 
-             
+                
             const userFriendList = await UserProfile.findOneAndUpdate(
                 { userId },
                 { $pull: { friends: {userId: friendId} } },

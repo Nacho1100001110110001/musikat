@@ -20,7 +20,7 @@ mongoose
 	.catch((err) => console.log(`Error: ${err}`))
 
 app.use(cors({
-	origin: process.env.CORS_URL || "https://pacheco.chillan.ubiobio.cl:120",
+	origin: process.env.CORS_URL || "http://redesserver.duckdns.org",
 	credentials: true
 }));
 

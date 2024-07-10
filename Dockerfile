@@ -4,7 +4,9 @@ WORKDIR app
 
 COPY . /app
 
-RUN  npm install
+RUN mkdir uploads/profilepics
+
+RUN npm install
 
 EXPOSE 3000
 

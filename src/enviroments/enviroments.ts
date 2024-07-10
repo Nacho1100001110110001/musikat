@@ -1,4 +1,4 @@
-const pathBase = "https://redesserver.duckdns.org:3000/api";
+const pathBase = "http://redesserver.duckdns.org:3000/api";
 const pathBaseApi = "/api";
 
 export const enviroments = {

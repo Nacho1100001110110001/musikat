@@ -368,6 +368,25 @@ router.put("/api/user/block/:otherUserId",
     }
 );
 
+router.get("/api/notifications",
+    isAuthtenticated,
+    async (request, response) => {
+        const userId = request.user.id;
+        try {
+            const userProfile = await UserProfile.findOne({ userId })
+                .select("requested")
+                .lean();
+            if(!userProfile) {
+                return response.status(400).send({error: "no se pudieron encontrar las notificaciones"})
+            }
+            const notifications = userProfile.requested;
+            return response.status(200).send({notifications});
+        } catch (err) {
+            return response.status(400).send({error: err.message});
+        }
+    }
+);
+
 function userProfileDto(userProfile){
     const {
         userId,

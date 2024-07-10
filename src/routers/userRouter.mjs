@@ -297,6 +297,39 @@ router.put("/api/user/friends/solicitude/:friendId",
     }
 );
 
+router.delete("/api/user/friends/solicitude/:friendId",
+    isAuthtenticated,
+    check('friendId')
+      .isMongoId().withMessage('ID con formato invalido')
+      .notEmpty().withMessage('El ID de usuario es requerido'),
+    async (request, response) => {
+
+        const result = validationResult(request);
+        if (!result.isEmpty()) {
+            return response.status(400).send({ error: result.array() });
+        }
+        const friendId = request.params.friendId;
+        const userId = request.user.id;
+
+        try {    
+            const updatedRequestedList = await UserProfile.findOneAndUpdate(
+              { userId: friendId},
+              { $pull: { requested: {userId} } },
+              { new: true }
+            );      
+
+            if(!updatedRequestedList){
+                return response.status(400).send({error: "Falla al agregar amogus"});
+                
+            }
+            return response.status(200).send( {status: "sended"} );
+            
+        } catch (err) {
+            return response.status(400).send({error: err.message});
+        }
+    }
+);
+
 router.put("/api/user/block/:otherUserId",
     isAuthtenticated,
     check("otherUserId")

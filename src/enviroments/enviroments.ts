@@ -1,6 +1,5 @@
-const pathBase = "http://localhost:3000/api";
+const pathBase = "https://pacheco.chillan.ubiobio.cl:3031/api";
 const pathBaseApi = "/api";
-const pathStubs = "http://localhost:8882";
 
 export const enviroments = {
     apiConnect: {

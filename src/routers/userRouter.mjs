@@ -8,6 +8,7 @@ import path from "path";
 import fs from 'fs';
 import mongoose from "mongoose";
 import { fileURLToPath } from 'url';
+import { UserPreferences } from "../mongoose/schemas/userPreferencesSchema.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -167,11 +168,30 @@ router.get("/api/user/profile/:otherUserName",
         }
         const otherUserName = request.params.otherUserName;
         try {
-            const findUserProfile = await UserProfile.findOne({username: otherUserName});
-            if(!findUserProfile){
+            const findedUserProfile = await UserProfile.findOne({username: otherUserName})
+                .lean();
+            const requestUserProfile = await UserProfile.findById(request.user.id)
+                .lean();
+            if(!findedUserProfile || !requestUserProfile){
                 return response.status(400).send({error: "No se puedo encontrar el perfil"});
-            } 
-            return response.status(200).send(otherUserProfileDto(findUserProfile));
+            }
+
+            const findedUserId = findedUserProfile.userId;
+
+
+            const friends = findedUserProfile.friends.some(friends => friends.toString() == request.user.id);
+            const sended = findedUserProfile.pending.some(pending => pending.toString() == request.user.id);
+            const pending = requestUserProfile.pending.some(pending => pending.toString() == findedUserId.toString());
+            if(friends){
+                findedUserProfile.status = "friend";
+            }else if(sended){
+                findedUserProfile.status = "sended";
+            }else if(pending){
+                findedUserProfile.status = "pending";
+            }else{
+                findedUserProfile.status = "nothing";
+            }
+            return response.status(200).send(otherUserProfileDto(findedUserProfile));
         }catch (err) {
             return response.status(400).send({error: err.message});
         }

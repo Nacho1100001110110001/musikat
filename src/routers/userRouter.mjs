@@ -194,8 +194,7 @@ router.get("/api/user/profile/:otherUserName",
             return response.status(200).send(otherUserProfileDto(findedUserProfile));
         }catch (err) {
             return response.status(400).send({error: err.message});
-        }
-        
+        }    
     }
 );
 

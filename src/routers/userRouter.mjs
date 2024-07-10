@@ -268,19 +268,15 @@ router.put("/api/user/friends/solicitude/:friendId",
             return response.status(400).send({ error: result.array() });
         }
         const friendId = request.params.friendId;
+        const userId = request.user.id;
+        const username = request.user.username;
 
         const session = await mongoose.startSession();
         session.startTransaction();
-        try {
-            const user = await User.findById(friendId);
-            const { username } = user;
-            if(!user){
-                await session.abortTransaction();
-                return response.status(400).send({error: "Falla al agregar amogus"});
-            }
+        try {    
             const updatedRequestedList = await UserProfile.findOneAndUpdate(
               { userId:  friendId},
-              { $addToSet: { requested: {userId: friendId, username} } },
+              { $addToSet: { requested: {userId , username} } },
               { new: true }
             );      
 
@@ -290,7 +286,7 @@ router.put("/api/user/friends/solicitude/:friendId",
                 
             }
             await session.commitTransaction();
-            return response.status(200).send(userProfileDto(updatedRequestList));
+            return response.status(200).send( {status: "pending"} );
             
         } catch (err) {
             await session.abortTransaction();

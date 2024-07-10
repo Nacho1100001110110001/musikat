@@ -179,9 +179,9 @@ router.get("/api/user/profile/:otherUserName",
             const findedUserId = findedUserProfile.userId;
 
 
-            const friends = findedUserProfile.friends.some(friends => friends.toString() == request.user.id);
-            const sended = findedUserProfile.pending.some(pending => pending.toString() == request.user.id);
-            const pending = requestUserProfile.pending.some(pending => pending.toString() == findedUserId.toString());
+            const friends = findedUserProfile.friends.some(friends => friends.userId.toString() == request.user.id);
+            const sended = findedUserProfile.requested.some(requested => requested.userId.toString() == request.user.id);
+            const pending = requestUserProfile.requested.some(requested => requested.userId.toString() == findedUserId.toString());
             if(friends){
                 findedUserProfile.status = "friend";
             }else if(sended){

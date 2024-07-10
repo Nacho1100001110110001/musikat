@@ -2,7 +2,6 @@ import { response, Router } from "express";
 import { isAuthtenticated } from "../utils/middlewares.mjs";
 import { check, checkSchema, matchedData, validationResult } from "express-validator";
 import mongoose from "mongoose";
-import { createCommentSchema, createPublicationSchema } from "../utils/validatorSchemas.mjs";
 import { UserPreferences } from "../mongoose/schemas/userPreferencesSchema.mjs";
 
 const router = Router();

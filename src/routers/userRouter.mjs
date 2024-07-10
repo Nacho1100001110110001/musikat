@@ -365,6 +365,7 @@ function userProfileDto(userProfile){
 function otherUserProfileDto(userProfile){
     const {
         userId,
+        status,
         username,
         birthDate,
         favoriteSong,
@@ -373,6 +374,7 @@ function otherUserProfileDto(userProfile){
     } = userProfile;
     return {
         userId,
+        status,
         username,
         birthDate,
         favoriteSong,

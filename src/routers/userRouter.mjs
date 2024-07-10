@@ -224,8 +224,8 @@ router.put("/api/user/friends/accept/:friendId",
             const updatedFriendList = await UserProfile.findOneAndUpdate(
                 { userId: request.user.id },
                 { $addToSet: { friends: {userId: friendId, username} } },
-                { new: true }
-                );
+                { new: true })
+                .lean();
              
             const updatedRequestList = await UserProfile.findOneAndUpdate(
                 { userId: request.user.id },
@@ -244,7 +244,62 @@ router.put("/api/user/friends/accept/:friendId",
                 
             }
             await session.commitTransaction();
-            return response.status(200).send({ notifications: updatedRequestList.requested });
+            return response.status(200).send({ 
+                notifications: updatedRequestList.requested,
+                friends: updatedFriendList.friends
+             });
+            
+        } catch (err) {
+            await session.abortTransaction();
+            return response.status(400).send({error: err.message});
+        }finally{
+            session.endSession();
+        }
+    }
+);
+
+router.delete("/api/friend/:friendId",+
+    isAuthtenticated,
+    check('friendId')
+      .isMongoId().withMessage('ID con formato invalido')
+      .notEmpty().withMessage('El ID de usuario es requerido'),
+      async (request, response) => {
+
+        const result = validationResult(request);
+        if (!result.isEmpty()) {
+            return response.status(400).send({ error: result.array() });
+        }
+        const friendId = request.params.friendId;
+        const userId = request.user.id;
+
+        const session = await mongoose.startSession();
+        session.startTransaction();
+        try {
+            const oldFriend = await User.findById(friendId);
+            if(!oldFriend){
+                await session.abortTransaction();
+                return response.status(400).send({error: "El usuario no existe"});
+            }
+
+             
+            const userFriendList = await UserProfile.findOneAndUpdate(
+                { userId },
+                { $pull: { friends: {userId: friendId} } },
+                { new: true })
+                .select("friends")
+                .lean();
+            const otherUserFriendList = await UserProfile.findOneAndUpdate(
+                { userId: friendId },
+                { $pull: { friends: {userId} } })
+                .lean();
+
+
+            if(!userFriendList || !otherUserFriendList){
+                await session.abortTransaction();
+                return response.status(400).send({ error: "Falla al agregar amogus" });    
+            }
+            await session.commitTransaction();
+            return response.status(200).send({ friends: userFriendList.friends });
             
         } catch (err) {
             await session.abortTransaction();

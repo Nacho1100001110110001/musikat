@@ -286,7 +286,7 @@ router.put("/api/user/friends/solicitude/:friendId",
                 
             }
             await session.commitTransaction();
-            return response.status(200).send( {status: "pending"} );
+            return response.status(200).send( {status: "sended"} );
             
         } catch (err) {
             await session.abortTransaction();

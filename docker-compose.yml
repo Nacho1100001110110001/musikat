@@ -1,14 +1,14 @@
 version: '3.8'
 services:
-  # musikat-server:
-  #   container_name: musikat-server
-  #   image: server-musikat
-  #   ports:
-  #     - 3000:3000
-  #   depends_on:
-  #     - mongodb
-  #   networks:
-  #     - musicat-network
+  musikat-server:
+    container_name: musikat-server
+    image: server-musikat
+    ports:
+      - 3031:3000
+    depends_on:
+      - mongodb
+    networks:
+      - musicat-network
       
   mongodb:
     container_name: mongodb
@@ -18,13 +18,13 @@ services:
     networks:
       - musicat-network
 
-  # musikat-client:
-  #   container_name: musikat-client
-  #   image: angular-musikat
-  #   ports:
-  #     - 80:80
-  #   networks:
-  #     - musicat-network
+  musikat-client:
+    container_name: musikat-client
+    image: angular-musikat
+    ports:
+      - 120:80
+    networks:
+      - musicat-network
 
 networks:
   musicat-network:

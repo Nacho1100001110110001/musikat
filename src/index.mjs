@@ -15,12 +15,12 @@ import fileUpload from "express-fileupload";
 const app= express();
 //mongodb://mongodb/musikat
 mongoose
-	.connect("mongodb://localhost/musikat", {connectTimeoutMS: 10000})
+	.connect("mongodb://mongodb/musikat", {connectTimeoutMS: 10000})
 	.then(() => console.log("Connected to data base"))
 	.catch((err) => console.log(`Error: ${err}`))
 
 app.use(cors({
-	origin: process.env.CORS_URL || "http://localhost:4200",
+	origin: process.env.CORS_URL || "https://pacheco.chillan.ubiobio.cl:120",
 	credentials: true
 }));
 

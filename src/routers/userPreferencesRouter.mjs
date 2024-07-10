@@ -124,8 +124,8 @@ router.get("/api/preferences",
         const userId = request.user.id;
         try{
             const preferences = await UserPreferences.findOne({userId})
-            .select("likedSongs likedArtists")
-            .lean();
+                .select("likedSongs likedArtists")
+                .lean();
             if(!preferences){
                 return response.status(400).send({error: "no se pudo encontrar la publicación"});
             }

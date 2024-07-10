@@ -273,7 +273,7 @@ router.put("/api/user/friends/solicitude/:friendId",
 
         const session = await mongoose.startSession();
         session.startTransaction();
-        try {    
+        try {
             const updatedRequestedList = await UserProfile.findOneAndUpdate(
               { userId:  friendId},
               { $addToSet: { requested: {userId , username} } },
@@ -380,6 +380,7 @@ router.get("/api/notifications",
                 return response.status(400).send({error: "no se pudieron encontrar las notificaciones"})
             }
             const notifications = userProfile.requested;
+            console.log(notifications);
             return response.status(200).send({notifications});
         } catch (err) {
             return response.status(400).send({error: err.message});

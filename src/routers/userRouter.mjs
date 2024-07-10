@@ -170,7 +170,7 @@ router.get("/api/user/profile/:otherUserName",
         try {
             const findedUserProfile = await UserProfile.findOne({username: otherUserName})
                 .lean();
-            const requestUserProfile = await UserProfile.findById(request.user.id)
+            const requestUserProfile = await UserProfile.findOne({userId: request.user.id})
                 .lean();
             if(!findedUserProfile || !requestUserProfile){
                 return response.status(400).send({error: "No se puedo encontrar el perfil"});

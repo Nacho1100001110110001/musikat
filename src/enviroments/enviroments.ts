@@ -1,4 +1,4 @@
-const pathBase = "https://pacheco.chillan.ubiobio.cl:3031/api";
+const pathBase = "https://redesserver.duckdns.org:3000/api";
 const pathBaseApi = "/api";
 
 export const enviroments = {
